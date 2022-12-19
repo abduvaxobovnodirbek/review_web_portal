@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "NODE_ENV=production node index",
+    "dev": "node index"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
