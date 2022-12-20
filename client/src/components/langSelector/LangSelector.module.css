@@ -1,0 +1,14 @@
+.selector {
+  z-index: 99;
+  outline: none;
+  border-radius: 50%;
+  padding-bottom: 0;
+  width: 50px;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.selector button {
+  border: none;
+}
