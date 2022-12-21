@@ -26,7 +26,7 @@ export const SearchIconWrapper = styled("div")(({ theme }) => ({
 }));
 
 export const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  background: "#FAFAFA",
+  background: "#F2F2F2",
   borderRadius: "17px",
   transition: "0.3s ease",
   "&:hover": {

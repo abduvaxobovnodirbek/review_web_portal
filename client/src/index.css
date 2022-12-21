@@ -7,10 +7,35 @@
   border-color: #afaeae !important;
 }
 
-.MuiTabs-indicator{
+.MuiTabs-indicator {
   background: black !important;
 }
 
-.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected{
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
   color: black !important;
+}
+
+.ant-btn {
+  border-color: #03776f !important;
+  color: #03776f !important;
+}
+
+.ant-btn:hover {
+  border-color: #03776f !important;
+  color: white !important;
+  background-color: #03776f !important;
+}
+
+.ant-btn_login {
+  border-color: #03776f !important;
+}
+
+.ant-btn_login:hover {
+  border-color: #03776f !important;
+}
+
+.ant-btn_submit {
+  border-color: #03776f !important;
+  background-color: #03776f !important;
+  color: white !important;
 }

@@ -10,10 +10,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import MailIcon from "@mui/icons-material/Mail";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import useWindowSize from "../../hooks/useWindowSize";
-import logo from "../../assets/logo_black.png";
+import logo from "../../assets/logo/logo_black.png";
 import LangSelector from "../../components/langSelector/LangSelector";
 import { Search, SearchIconWrapper, StyledInputBase } from "./HeaderStyle";
 import { renderMenu, renderMobileMenu, menuId, mobileMenuId } from "./Menu";
+import SignIn from "../../features/auth/button/SignIn";
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -81,26 +82,35 @@ export default function Header() {
 
           <Box sx={{ display: { sm: "none", xs: "none", md: "flex" } }}>
             <LangSelector />
-            <IconButton size="large" aria-label="show 4 new mails">
+            <SignIn />
+            {/* <IconButton size="large" aria-label="show 4 new mails">
               <Badge badgeContent={4} color="error">
                 <MailIcon sx={{ color: "black" }} />
               </Badge>
             </IconButton>
+
             <IconButton
-              size="large"
+              size="small"
               edge="end"
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
             >
-              <Avatar>N</Avatar>
-            </IconButton>
+              <Avatar sx = {{background:'#222'}}>N</Avatar>
+            </IconButton> */}
           </Box>
 
-          {width < 900 ? <LangSelector /> : ""}
+          {width < 900 ? (
+            <>
+              {" "}
+              <LangSelector /> <SignIn />
+            </>
+          ) : (
+            ""
+          )}
 
-          <Box sx={{ display: { sm: "flex", md: "none" } }}>
+          {/* <Box sx={{ display: { sm: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="show more"
@@ -110,7 +120,7 @@ export default function Header() {
             >
               <MoreIcon />
             </IconButton>
-          </Box>
+          </Box> */}
         </Toolbar>
       </AppBar>
 

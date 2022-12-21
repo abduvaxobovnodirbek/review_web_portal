@@ -29,3 +29,13 @@ export interface TabPanelProps {
   index: number;
   value: number;
 }
+
+export type childrenProps = {
+  children: JSX.Element;
+};
+
+export interface authButton {
+  icon: string;
+  text: string;
+  handleFunc: (response: any) => void;
+}

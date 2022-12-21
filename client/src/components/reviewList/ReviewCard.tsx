@@ -1,12 +1,10 @@
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
+import ReviewActions from "../../features/home/Review/ReviewActions";
+import randomImage from "../../assets/random.jpg";
 
 export default function ReviewCard() {
   return (
@@ -20,8 +18,15 @@ export default function ReviewCard() {
         title="Shrimp and Chorizo Paella"
         subheader="September 14, 2016"
       />
+
+      <div className="flex items-center justify-between">
+      <div>
       <CardContent>
-        <Typography variant="body1" color="text.primary" className = "!font-bold !text-lg">
+        <Typography
+          variant="body1"
+          color="text.primary"
+          className="!font-bold !text-lg"
+        >
           It's 2022, Please Don't Just Use “console.log” Anymore
         </Typography>
       </CardContent>
@@ -32,14 +37,12 @@ export default function ReviewCard() {
           mussels, if you like.
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-      </CardActions>
+      </div>
+
+      <img src={randomImage} alt="random photos" className="w-[200px] h-[150px] object-cover rounded-md" />
+      </div>
+
+      <ReviewActions />
     </Card>
   );
 }
