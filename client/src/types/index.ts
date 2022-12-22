@@ -39,3 +39,11 @@ export interface authButton {
   text: string;
   handleFunc: (response: any) => void;
 }
+
+export type ModalState = {
+  showModal: boolean;
+  showEmailLoginForm: boolean;
+  showEmailRegisterForm: boolean;
+  showSocialRegisterForm: boolean;
+  showSocialLoginForm: boolean;
+};

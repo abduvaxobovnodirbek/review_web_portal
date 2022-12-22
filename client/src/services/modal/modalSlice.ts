@@ -1,43 +1,50 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-type ModalState = {
-  showModal: boolean;
-  emailLoginForm: boolean;
-  emailRegisterForm: boolean;
-};
+import { ModalState } from "../../types";
 
 const initialState: ModalState = {
   showModal: false,
-  emailLoginForm: false,
-  emailRegisterForm: false,
+  showEmailLoginForm: false,
+  showEmailRegisterForm: false,
+  showSocialRegisterForm: false,
+  showSocialLoginForm: true,
 };
 
 const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    openModal(state) {
-      state.showModal = true;
-    },
-    closeModal(state) {
-      state.showModal = false;
+    toggleModal(state, action: PayloadAction<boolean>) {
+      state.showModal = action.payload;
     },
     toggleEmailLoginForm(state, action: PayloadAction<boolean>) {
-      state.emailLoginForm = action.payload;
-      state.emailRegisterForm = false;
+      state.showEmailLoginForm = action.payload;
+      state.showEmailRegisterForm = false;
     },
     toggleEmailRegisterForm(state, action: PayloadAction<boolean>) {
-      state.emailRegisterForm = action.payload;
-      state.emailLoginForm = false;
+      state.showEmailRegisterForm = action.payload;
+      state.showEmailLoginForm = false;
+    },
+    toggleSocialRegisterForm(state, action: PayloadAction<boolean>) {
+      state.showSocialRegisterForm = action.payload;
+      state.showEmailRegisterForm = false;
+      state.showEmailLoginForm = false;
+      state.showSocialLoginForm = false;
+    },
+    toggleSocialLoginForm(state, action: PayloadAction<boolean>) {
+      state.showSocialLoginForm = action.payload;
+      state.showEmailRegisterForm = false;
+      state.showEmailLoginForm = false;
+      state.showSocialRegisterForm = false;
     },
   },
 });
 
 export const {
-  openModal,
-  closeModal,
+  toggleModal,
   toggleEmailRegisterForm,
   toggleEmailLoginForm,
+  toggleSocialRegisterForm,
+  toggleSocialLoginForm,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

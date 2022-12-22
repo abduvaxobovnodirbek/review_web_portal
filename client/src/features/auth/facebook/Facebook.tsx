@@ -5,11 +5,13 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 
 const Facebook = () => {
-  const { emailRegisterForm } = useAppSelector((state) => state.authModal);
+  const { showSocialRegisterForm } = useAppSelector((state) => state.authModal);
   const { width } = useWindowSize();
+
   const responseFacebook = (response: any) => {
     console.log(response);
   };
+
   return (
     <div className="mb-3">
       <FacebookLogin
@@ -21,7 +23,7 @@ const Facebook = () => {
           <CustomButton
             icon={facebookImg}
             text={`${
-              !emailRegisterForm ? "Sign in" : "Register"
+              showSocialRegisterForm ? "Register" : "Sign in"
             } with Facebook`}
             handleFunc={renderProps.onClick}
           />

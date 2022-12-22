@@ -8,7 +8,7 @@ import { useAppSelector } from "../../../hooks/useAppSelector";
 const clientId = process.env.REACT_APP_CLIENT_ID || "";
 
 const GoogleLogin = () => {
-  const { emailRegisterForm } = useAppSelector((state) => state.authModal);
+  const { showSocialRegisterForm } = useAppSelector((state) => state.authModal);
 
   useEffect(() => {
     function start() {
@@ -39,7 +39,7 @@ const GoogleLogin = () => {
       <CustomButton
         handleFunc={signIn}
         icon={googleImg}
-        text={`${!emailRegisterForm ? "Sign in" : "Register"} with Google`}
+        text={`${showSocialRegisterForm ? "Register" : "Sign in"} with Google`}
       />
     </div>
   );

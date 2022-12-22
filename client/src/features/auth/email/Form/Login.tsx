@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Form, Input } from "antd";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useAppDispatch } from "../../../../hooks/useAppDispatch";
-import { toggleEmailLoginForm } from "../../../../services/modal/modalSlice";
+import { toggleSocialLoginForm } from "../../../../services/modal/modalSlice";
 
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -15,8 +15,8 @@ const Login: React.FC = () => {
     console.log("Failed:", errorInfo);
   };
 
-  const backToSignInOptions = (): void => {
-    dispatch(toggleEmailLoginForm(false));
+  const backToSocialLoginForm = (): void => {
+    dispatch(toggleSocialLoginForm(true));
   };
 
   return (
@@ -89,7 +89,7 @@ const Login: React.FC = () => {
 
         <Form.Item className="text-center">
           <Button className="ant-btn_submit w-[120px]" htmlType="submit">
-            Submit
+            Login
           </Button>
         </Form.Item>
       </Form>
@@ -99,7 +99,7 @@ const Login: React.FC = () => {
           cursor: "pointer",
           fontFamily: "sans-serif",
         }}
-        onClick={backToSignInOptions}
+        onClick={backToSocialLoginForm}
       >
         <ArrowBackIosIcon sx={{ fontSize: "15px" }} /> All sign in options
       </span>

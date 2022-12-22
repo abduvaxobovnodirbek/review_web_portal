@@ -1,11 +1,11 @@
 import { IconButton } from "@mui/material";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
-import { openModal } from "../../../services/modal/modalSlice";
+import { toggleModal } from "../../../services/modal/modalSlice";
 
 const SignIn = () => {
   const dispatch = useAppDispatch();
   const handleClickOpen = (): void => {
-    dispatch(openModal());
+    dispatch(toggleModal(true));
   };
   return (
     <IconButton size="small" aria-label="sign in" onClick={handleClickOpen}>

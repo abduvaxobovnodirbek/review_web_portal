@@ -4,21 +4,24 @@ import Facebook from "./facebook/Facebook";
 import Google from "./google/Google";
 import CustomModal from "./Modal/CustomModal";
 import EmailLogin from "../auth/email/Form/Login";
+import EmailRegister from "./email/Form/Register";
+
 const Auth = () => {
-  const { emailLoginForm, emailRegisterForm } = useAppSelector(
-    (state) => state.authModal
-  );
+  const { showEmailLoginForm, showSocialLoginForm, showEmailRegisterForm } =
+    useAppSelector((state) => state.authModal);
 
   return (
     <CustomModal>
-      {emailLoginForm ? (
+      {showEmailLoginForm ? (
         <EmailLogin />
-      ) : emailRegisterForm ? (
+      ) : showSocialLoginForm ? (
         <>
           <Google />
           <Facebook />
           <Email />
         </>
+      ) : showEmailRegisterForm ? (
+        <EmailRegister />
       ) : (
         <>
           <Google />
