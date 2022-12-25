@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Input from "../../components/input/Input";
+import ReviewCard from "../../components/review/ReviewCard";
 import RecentSearchList from "../../features/search/RecentSearchList";
 import useWindowSize from "../../hooks/useWindowSize";
 
@@ -24,7 +25,14 @@ const Search = () => {
         ) : (
           ""
         )}
+
         <RecentSearchList />
+        <div className="mx-4">
+          <ReviewCard />
+          <ReviewCard />
+          <ReviewCard />
+          <ReviewCard />
+        </div>
       </Grid>
     </Box>
   );

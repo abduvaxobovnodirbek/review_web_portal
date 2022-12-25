@@ -23,9 +23,8 @@ const Transition = React.forwardRef(function Transition(
 });
 
 export default function CustomModal({ children }: childrenProps) {
-  const { showModal, showEmailLoginForm } = useAppSelector(
-    (state) => state.authModal
-  );
+  const { showModal, showEmailLoginForm, showEmailRegisterForm } =
+    useAppSelector((state) => state.authModal);
   const dispatch = useAppDispatch();
 
   const handleClose = (): void => {
@@ -66,6 +65,16 @@ export default function CustomModal({ children }: childrenProps) {
             <span className="font-serif text-center">
               {" "}
               Sign in with email and password
+            </span>
+          </DialogTitle>
+        ) : showEmailRegisterForm ? (
+          <DialogTitle
+            className="flex justify-center  relative top-5"
+            sx={{ color: "#03776f" }}
+          >
+            <span className="font-serif text-center">
+              {" "}
+              Register with email and password
             </span>
           </DialogTitle>
         ) : (

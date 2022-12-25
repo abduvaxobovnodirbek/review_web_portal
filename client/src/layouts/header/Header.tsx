@@ -15,6 +15,7 @@ import LangSelector from "../../components/langSelector/LangSelector";
 import { Search, SearchIconWrapper, StyledInputBase } from "./HeaderStyle";
 import { renderMenu, renderMobileMenu, menuId, mobileMenuId } from "./Menu";
 import SignIn from "../../features/auth/button/SignIn";
+import NewReviewBtn from "../../components/button/NewReviewBtn";
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -82,8 +83,9 @@ export default function Header() {
 
           <Box sx={{ display: { sm: "none", xs: "none", md: "flex" } }}>
             <LangSelector />
+            <NewReviewBtn />
             <SignIn />
-            {/* <IconButton size="large" aria-label="show 4 new mails">
+            <IconButton size="large" aria-label="show 4 new mails">
               <Badge badgeContent={4} color="error">
                 <MailIcon sx={{ color: "black" }} />
               </Badge>
@@ -97,20 +99,21 @@ export default function Header() {
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
             >
-              <Avatar sx = {{background:'#222'}}>N</Avatar>
-            </IconButton> */}
+              <Avatar sx={{ background: "#222" }}>N</Avatar>
+            </IconButton>
           </Box>
 
           {width < 900 ? (
             <>
               {" "}
-              <LangSelector /> <SignIn />
+              <LangSelector />
+              <NewReviewBtn /> <SignIn />
             </>
           ) : (
             ""
           )}
 
-          {/* <Box sx={{ display: { sm: "flex", md: "none" } }}>
+          <Box sx={{ display: { sm: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="show more"
@@ -120,7 +123,7 @@ export default function Header() {
             >
               <MoreIcon />
             </IconButton>
-          </Box> */}
+          </Box>
         </Toolbar>
       </AppBar>
 

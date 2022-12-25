@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authModal from "./services/modal/modalSlice";
+import reviewSteps from "./services/reviewSteps/reviewStepsSlice";
 
 const store = configureStore({
   reducer: {
     authModal,
+    reviewSteps,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

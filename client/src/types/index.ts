@@ -47,3 +47,9 @@ export type ModalState = {
   showSocialRegisterForm: boolean;
   showSocialLoginForm: boolean;
 };
+
+export type Steps = {
+  stepFirst: boolean;
+  stepSecond: boolean;
+  stepThird: boolean;
+};

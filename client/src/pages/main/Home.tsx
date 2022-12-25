@@ -1,23 +1,24 @@
-import ReviewList from "../../components/reviewList/ReviewList";
+import ReviewList from "../../components/review/ReviewList";
 import Sharing from "../../features/home/Sharing/Sharing";
 import TabMenu from "../../features/home/Tab/TabMenu";
 import TrendReviews from "../../features/home/TrendReviews/TrendReviewList";
-import Wrapper from "../../features/home/Wrapper";
+import Wrapper from "../../layouts/Wrapper";
 import useWindowSize from "../../hooks/useWindowSize";
 
 const Home = () => {
-   const {width} = useWindowSize();
+  const { width } = useWindowSize();
 
   return (
-    <Wrapper>
+    <Wrapper flexOptions={"justify-between items-start"}>
       <TabMenu>
         <ReviewList />
       </TabMenu>
-      {width >900 ? <div className="w-[30%] border-l sticky top-0 min-h-screen">
-        <TrendReviews />
-        <Sharing />
-      </div>:null}
-      
+      {width > 900 ? (
+        <div className="w-[30%] border-l sticky top-0 min-h-screen">
+          <TrendReviews />
+          <Sharing />
+        </div>
+      ) : null}
     </Wrapper>
   );
 };
