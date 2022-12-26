@@ -1,10 +1,16 @@
 import FormComponent from "../../features/createReview/Form";
 import Stepper from "../../features/createReview/Stepper/Stepper";
-import Wrapper from "../../layouts/Wrapper";
+import useWindowSize from "../../hooks/useWindowSize";
+import Wrapper from "../../layouts/ContextWrapper";
 
 const CreateReview = () => {
+  const { width } = useWindowSize();
   return (
-    <Wrapper flexOptions={"justify-between w-[90%]"}>
+    <Wrapper
+      flexOptions={`w-[90%] ${
+        width > 1000 ? "justify-between" : "flex-col items-center"
+      }`}
+    >
       <Stepper />
       <FormComponent />
     </Wrapper>

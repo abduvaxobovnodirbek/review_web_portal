@@ -5,7 +5,6 @@ const CreateTags = ({ formik }: any) => {
   const options: SelectProps["options"] = [];
 
   const handleChange = (value: string) => {
-    console.log(value);
     formik.setFieldValue("tags", value);
   };
 
@@ -13,19 +12,30 @@ const CreateTags = ({ formik }: any) => {
     <>
       <label
         htmlFor="tag"
-        className="font-serif text-gray-400 tracking-wider cursor-pointer"
+        className={`font-serif text-gray-400 tracking-wider cursor-pointer ${
+          formik.touched.tags && formik.errors.tags ? "text-red-600" : ""
+        }`}
       >
-        Tags you defined:
+        {formik.touched.tags && formik.errors.tags
+          ? formik.errors.tags
+          : "Tags you defined:"}
       </label>
       <Select
         mode="tags"
         id="tag"
         style={{ width: "100%" }}
-        className="font-serif text-xl tracking-wider pb-3"
+        className={`font-serif text-xl tracking-wider pb-3 ${
+          formik.touched.tags && formik.errors.tags
+            ? "!border-red-500 border-b"
+            : ""
+        }`}
         onChange={handleChange}
         tokenSeparators={[","]}
         options={options}
         defaultValue={formik.values.tags}
+        onBlur={() => {
+          formik.setFieldTouched("tags", true);
+        }}
       />
     </>
   );

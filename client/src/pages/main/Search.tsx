@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Input from "../../components/input/Input";
+import Input from "../../components/searchInput/SearchInput";
 import ReviewCard from "../../components/review/ReviewCard";
 import RecentSearchList from "../../features/search/RecentSearchList";
 import useWindowSize from "../../hooks/useWindowSize";

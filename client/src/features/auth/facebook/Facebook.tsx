@@ -1,6 +1,6 @@
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import CustomButton from "../../../components/button/Button";
-import facebookImg from "../../../assets/social/facebook.svg";
+import facebookImg from "../../../assets/socialMedia/facebook.svg";
 import useWindowSize from "../../../hooks/useWindowSize";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 

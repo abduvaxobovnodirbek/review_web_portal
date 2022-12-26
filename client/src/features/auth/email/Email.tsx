@@ -1,4 +1,4 @@
-import emailIcon from "../../../assets/social/email.svg";
+import emailIcon from "../../../assets/socialMedia/email.svg";
 import CustomButton from "../../../components/button/Button";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { useAppSelector } from "../../../hooks/useAppSelector";

@@ -108,6 +108,7 @@
 
 .ant-select {
   text-align: center !important;
+  padding: 0% !important;
 }
 .ant-select-selection-item {
   width: auto !important;
@@ -144,4 +145,8 @@
   height: 7px !important;
   border-radius: 100% !important;
   background: red !important;
+}
+
+.ant-steps-inline .ant-steps-item {
+  width: 100px !important;
 }

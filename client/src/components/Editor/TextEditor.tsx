@@ -2,20 +2,17 @@ import { SetStateAction } from "react";
 import parser from "html-react-parser";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
-import { setOptions } from "./TextEditorConfigs";
+import { setOptions } from "./TextEditorConfig";
+import { textEditorTypes } from "../../types";
 
-interface textEditorProps {
-  displayMode: string;
-  formik: any;
-}
-
-const TextEditor = ({ displayMode, formik }: textEditorProps) => {
+const TextEditor = ({ displayMode, formik, createReview }: textEditorTypes) => {
   const handleChange = (content: SetStateAction<string>) => {
-    formik.setFieldValue("description", content);
+    if (formik && createReview) {
+      formik.setFieldValue("description", content);
+    }
   };
 
-  const description = formik.values.description
-
+  const description = createReview ? formik.values.description : "";
   return (
     <>
       {displayMode === "EDIT" ? (
@@ -26,6 +23,16 @@ const TextEditor = ({ displayMode, formik }: textEditorProps) => {
             autoFocus={true}
             lang="en"
             setOptions={setOptions}
+            placeholder={
+              formik && formik.errors.description
+                ? formik.errors.description
+                : "type review ..."
+            }
+            onBlur={() => {
+              if (formik) {
+                formik.setFieldTouched("description", true);
+              }
+            }}
           />
         </div>
       ) : (
@@ -33,9 +40,7 @@ const TextEditor = ({ displayMode, formik }: textEditorProps) => {
           {description && (
             <div>
               <div className="sun-editor">
-                <div className="sun-editor-editable">
-                  {parser(description)}
-                </div>
+                <div className="sun-editor-editable">{parser(description)}</div>
               </div>
             </div>
           )}

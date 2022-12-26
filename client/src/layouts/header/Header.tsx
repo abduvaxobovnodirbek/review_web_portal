@@ -85,9 +85,10 @@ export default function Header() {
             <LangSelector />
             <NewReviewBtn />
             <SignIn />
-            <IconButton size="large" aria-label="show 4 new mails">
-              <Badge badgeContent={4} color="error">
-                <MailIcon sx={{ color: "black" }} />
+
+            <IconButton size="large" aria-label="mail messages">
+              <Badge badgeContent={4} color="success">
+                <MailIcon sx={{ color: "#03776f" }} />
               </Badge>
             </IconButton>
 
@@ -99,7 +100,11 @@ export default function Header() {
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
             >
-              <Avatar sx={{ background: "#222" }}>N</Avatar>
+              <Avatar
+                sx={{ background: "#03776f", width: 35, height: 35 }}
+              >
+                N
+              </Avatar>
             </IconButton>
           </Box>
 

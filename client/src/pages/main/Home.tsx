@@ -2,7 +2,7 @@ import ReviewList from "../../components/review/ReviewList";
 import Sharing from "../../features/home/Sharing/Sharing";
 import TabMenu from "../../features/home/Tab/TabMenu";
 import TrendReviews from "../../features/home/TrendReviews/TrendReviewList";
-import Wrapper from "../../layouts/Wrapper";
+import Wrapper from "../../layouts/ContextWrapper";
 import useWindowSize from "../../hooks/useWindowSize";
 
 const Home = () => {

@@ -1,6 +1,4 @@
-import React from "react";
-
-const index = ({ children, flexOptions }: any) => {
+const ContextWrapper = ({ children, flexOptions }: any) => {
   return (
     <div className={`mx-auto w-[85%]  mt-10 flex  ${flexOptions}`}>
       {children}
@@ -8,4 +6,4 @@ const index = ({ children, flexOptions }: any) => {
   );
 };
 
-export default index;
+export default ContextWrapper;

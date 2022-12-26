@@ -55,3 +55,20 @@ export type Steps = {
   stepSecond: boolean;
   stepThird: boolean;
 };
+
+export type gradeType = {
+  formik?: any;
+  authorGrade?: boolean;
+  userGrade?: boolean;
+  count: number;
+  defaultValue: number;
+  labelText?: string;
+  disabled: boolean;
+  createReview: boolean;
+};
+
+export type textEditorTypes = {
+  displayMode: "EDIT" | "PREVIEW";
+  formik?: any;
+  createReview: boolean;
+};

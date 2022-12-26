@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useGoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
-import googleImg from "../../../assets/social/googleImg.svg";
+import googleImg from "../../../assets/socialMedia/googleImg.svg";
 import CustomButton from "../../../components/button/Button";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 

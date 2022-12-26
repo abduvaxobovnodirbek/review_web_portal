@@ -1,6 +1,6 @@
 import { AiOutlineSearch } from "react-icons/ai";
 
-const Input = () => {
+const SearchInput = () => {
   return (
     <div className="flex items-center">
       <div
@@ -25,4 +25,4 @@ const Input = () => {
   );
 };
 
-export default Input;
+export default SearchInput;

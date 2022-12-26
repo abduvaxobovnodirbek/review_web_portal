@@ -59,10 +59,10 @@ export const renderMobileMenu = ({
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails">
-          <Badge badgeContent={4} color="error">
-            <MailIcon sx={{ color: "black" }} />
+      <MenuItem className="!flex !justify-center">
+        <IconButton size="large" aria-label="show mails" >
+          <Badge badgeContent={4} color="success">
+            <MailIcon sx={{ color: "#03776f" }} />
           </Badge>
         </IconButton>
       </MenuItem>
@@ -74,7 +74,9 @@ export const renderMobileMenu = ({
           aria-controls="primary-search-account-menu"
           aria-haspopup="true"
         >
-          <Avatar>N</Avatar>
+          <Avatar sx={{ background: "#03776f", width: 35, height: 35 }}>
+            N
+          </Avatar>
         </IconButton>
       </MenuItem>
     </Menu>
