@@ -11,14 +11,27 @@ import Image from "./Image/Image";
 import Category from "./Category/Category";
 
 let validationSchema = Yup.object({
-  title: Yup.string().required("*review title field is required"),
-  description: Yup.string().required("*review description field is required"),
+  review_name: Yup.string().required("*review name  is required"),
+  reviewed_art: Yup.string().required("*reviewed piece of art  is required"),
+  category: Yup.string().required("*review category  is required"),
+  tags: Yup.array().min(1).required("*review tag is required"),
+  description: Yup.string().required("*review description is required"),
+  authorGrade: Yup.number().required("*author grade is required"),
+  imageList: Yup.array(),
 });
 
 type FormValues = Yup.InferType<typeof validationSchema>;
 
 const FormComponent = () => {
-  const initialValues: FormValues = { title: "", description: "" };
+  const initialValues: FormValues = {
+    review_name: "",
+    description: "",
+    reviewed_art: "",
+    category: "",
+    tags: [],
+    authorGrade: 5,
+    imageList: [],
+  };
 
   const { stepFirst, stepSecond } = useAppSelector(
     (state) => state.reviewSteps
@@ -37,21 +50,21 @@ const FormComponent = () => {
         enableReinitialize
       >
         {(formik) => {
-          console.log(formik.values.description);
+          console.log(formik.values);
           return (
             <Form>
               {stepFirst ? (
                 <>
                   <Title />
-                  <TextEditor displayMode="EDIT" />
+                  <TextEditor displayMode="EDIT" formik={formik} />
                 </>
               ) : stepSecond ? (
                 <div className=" w-[70%]">
                   <ReviewedArticle />
-                  <CreateTags />
+                  <CreateTags formik={formik} />
                   <Category />
-                  <AuthorGrade />
-                  <Image />
+                  <AuthorGrade formik={formik} viewer={false} />
+                  <Image formik={formik} />
                 </div>
               ) : (
                 <div>

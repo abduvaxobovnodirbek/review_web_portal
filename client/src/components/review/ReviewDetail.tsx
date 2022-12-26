@@ -1,46 +1,29 @@
 import { useEffect, useState } from "react";
 import { message, Skeleton } from "antd";
-import { Avatar, Button, CardHeader } from "@mui/material";
+import { Avatar, Button, CardHeader, Stack } from "@mui/material";
 import TextEditor from "../../features/createReview/TextEditor/TextEditor";
-import { useAppSelector } from "../../hooks/useAppSelector";
 import ImageCarousel from "../carousel/ImageCarousel";
+import AuthorGrade from "../../features/createReview/AuthorGrade/AuthorGrade";
+import Tag from "../tag/Tag";
 
 const ReviewDetail = ({ formik }: any) => {
-  const { previewImagesList } = useAppSelector((state) => state.reviewSteps);
   const [showImageList, setShowImageList] = useState<boolean>(false);
-  const [imageList, setImageList] = useState<string[]>([]);
-
-  useEffect(() => {
-    previewImagesList.map(async (file) => {
-      const reader = new FileReader();
-      const selectedFile = file;
-      if (selectedFile) {
-        reader.readAsDataURL(selectedFile);
-      }
-      reader.onload = (readerEvent: any) => {
-        if (selectedFile.type.includes("image")) {
-          if (!imageList.includes(readerEvent.target.result)) {
-            setImageList([...imageList, readerEvent.target.result]);
-          }
-        }
-      };
-    });
-  }, [imageList]);
+  const { imageList, review_name, reviewed_art, tags } = formik.values;
 
   useEffect(() => {
     setTimeout(() => {
       setShowImageList(true);
-    }, 2000);
+    }, 1000);
   }, []);
 
   return (
     <div className="max-w-[750px] mx-auto">
-      <h3
+      <header
         className="font-serif tracking-wider ml-3 p-3 text-white"
         style={{ background: "#03776f" }}
       >
         Demo visualization
-      </h3>
+      </header>
 
       <CardHeader
         avatar={
@@ -52,15 +35,30 @@ const ReviewDetail = ({ formik }: any) => {
         subheader="September 14, 2016"
       />
 
-      {showImageList && previewImagesList.length ? (
+      <h2 className="font-serif tracking-wider ml-3 p-3 mb-2 flex flex-col  text-lg font-bold text-center">
+        <span>{review_name}</span>
+        <span className="text-gray-400">({reviewed_art})</span>
+      </h2>
+
+      {showImageList && imageList.length ? (
         <ImageCarousel images={imageList} />
-      ) : previewImagesList.length && !showImageList ? (
+      ) : imageList.length && !showImageList ? (
         <Skeleton.Image active={true} className="!w-full !h-[300px]" />
       ) : (
         ""
       )}
 
-      <TextEditor displayMode="Preview" />
+      <TextEditor displayMode="Preview" formik={formik} />
+
+      <div className="ml-4">
+        <AuthorGrade formik={formik} viewer={true} />
+      </div>
+
+      <Stack direction="row" spacing={1} className="ml-4">
+        {tags.map((tag: string, i: number) => (
+          <Tag key={i} label={tag} />
+        ))}
+      </Stack>
 
       <Button
         type="submit"

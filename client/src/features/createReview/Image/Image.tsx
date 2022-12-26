@@ -3,25 +3,21 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Spin, Upload } from "antd";
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
-import { useAppDispatch } from "../../../hooks/useAppDispatch";
-import { setImagesPreviewList } from "../../../services/reviewSteps/reviewStepsSlice";
+import { getBase64 } from "../../../utils/Base64Conventer";
 
-const getBase64 = (file: RcFile): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
-
-const Image: React.FC = () => {
+const Image = ({ formik }: any) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const imageList = formik.values.imageList;
 
-  const dispatch = useAppDispatch();
   const handleCancel = () => setPreviewOpen(false);
+
+  const createImagePreview = async (file: UploadFile) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj as RcFile);
+    }
+  };
 
   const handlePreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
@@ -36,13 +32,13 @@ const Image: React.FC = () => {
   };
 
   const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-    localStorage.setItem("previewImages", JSON.stringify(newFileList));
+    formik.setFieldValue("imageList", newFileList);
+    createImagePreview(newFileList[newFileList.length - 1]);
   };
 
   const handleUpload = () => {
     const formData = new FormData();
-    fileList.forEach((file: any) => formData.append("files[]", file));
+    imageList.forEach((file: any) => formData.append("files[]", file));
   };
 
   const uploadButton = (
@@ -55,7 +51,7 @@ const Image: React.FC = () => {
     <div>
       <Upload
         listType="picture-card"
-        fileList={fileList}
+        fileList={imageList}
         onPreview={handlePreview}
         onChange={handleChange}
         accept={".png,.jpg,.jpeg,.svg,.gif"}
@@ -63,12 +59,11 @@ const Image: React.FC = () => {
           return <Spin></Spin>;
         }}
         beforeUpload={(file) => {
-          setFileList([...fileList, file]);
-          dispatch(setImagesPreviewList(file));
+          formik.setFieldValue("imageList", [...imageList, file]);
           return false;
         }}
       >
-        {fileList.length >= 8 ? null : uploadButton}
+        {imageList.length >= 8 ? null : uploadButton}
       </Upload>
       <Modal
         open={previewOpen}

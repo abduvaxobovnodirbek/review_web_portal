@@ -1,3 +1,5 @@
+import { Field } from "formik";
+
 const ReviewGroup = () => {
   return (
     <>
@@ -9,9 +11,9 @@ const ReviewGroup = () => {
       </label>
 
       <div className="mb-4">
-        <input
+        <Field
           id="reviewedArticle"
-          name=""
+          name="reviewed_art"
           type="text"
           className=" border-b outline-none w-[100%] focus:border-gray-400 p-3 transition-colors font-serif text-xl tracking-wider"
         />

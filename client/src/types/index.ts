@@ -54,5 +54,4 @@ export type Steps = {
   stepFirst: boolean;
   stepSecond: boolean;
   stepThird: boolean;
-  previewImagesList: any[];
 };

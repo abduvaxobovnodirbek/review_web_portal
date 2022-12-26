@@ -1,11 +1,13 @@
-import { useState, FC } from "react";
 import { Select } from "antd";
 import type { SelectProps } from "antd";
 
-const CreateTags: FC = () => {
+const CreateTags = ({ formik }: any) => {
   const options: SelectProps["options"] = [];
 
-  const handleChange = (value: string) => {};
+  const handleChange = (value: string) => {
+    console.log(value);
+    formik.setFieldValue("tags", value);
+  };
 
   return (
     <>
@@ -23,6 +25,7 @@ const CreateTags: FC = () => {
         onChange={handleChange}
         tokenSeparators={[","]}
         options={options}
+        defaultValue={formik.values.tags}
       />
     </>
   );

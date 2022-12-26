@@ -1,7 +1,10 @@
-import { FC } from "react";
 import { Rate } from "antd";
 
-const AuthorGrade: FC = () => {
+type gradeProps = {
+  formik: any;
+  viewer: boolean;
+};
+const AuthorGrade = ({ formik, viewer }: gradeProps) => {
   return (
     <div className="my-4">
       <label
@@ -13,8 +16,10 @@ const AuthorGrade: FC = () => {
       <Rate
         count={10}
         allowClear={false}
-        defaultValue={5}
-        className="text-3xl border-b pb-2 w-[100%] mt-2"
+        disabled={viewer}
+        defaultValue={formik.values.authorGrade}
+        onChange={(e) => formik.setFieldValue("authorGrade", e)}
+        className={`text-3xl ${!viewer ? "border-b" : ""} pb-2 w-[100%] mt-2`}
       />
     </div>
   );

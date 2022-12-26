@@ -1,25 +1,27 @@
-import { SetStateAction, useState } from "react";
+import { SetStateAction } from "react";
 import parser from "html-react-parser";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 import { setOptions } from "./TextEditorConfigs";
 
-const TextEditor = ({ displayMode }: any) => {
-  const [richTextEditor, setRichTextEditor] = useState(
-    localStorage.getItem("richText") || ""
-  );
+interface textEditorProps {
+  displayMode: string;
+  formik: any;
+}
 
+const TextEditor = ({ displayMode, formik }: textEditorProps) => {
   const handleChange = (content: SetStateAction<string>) => {
-    localStorage.setItem("richText", content as string);
-    setRichTextEditor(content);
+    formik.setFieldValue("description", content);
   };
+
+  const description = formik.values.description
 
   return (
     <>
       {displayMode === "EDIT" ? (
         <div>
           <SunEditor
-            defaultValue={richTextEditor || undefined}
+            defaultValue={description || undefined}
             onChange={handleChange}
             autoFocus={true}
             lang="en"
@@ -28,11 +30,11 @@ const TextEditor = ({ displayMode }: any) => {
         </div>
       ) : (
         <div>
-          {richTextEditor && (
+          {description && (
             <div>
               <div className="sun-editor">
                 <div className="sun-editor-editable">
-                  {parser(richTextEditor)}
+                  {parser(description)}
                 </div>
               </div>
             </div>
