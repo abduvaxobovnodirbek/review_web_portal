@@ -1,10 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { UploadFile } from "antd";
 import { Steps } from "../../types";
 
 const initialState: Steps = {
   stepFirst: true,
   stepSecond: false,
   stepThird: false,
+  previewImagesList: [],
 };
 
 const reviewStepsSlice = createSlice({
@@ -26,10 +28,21 @@ const reviewStepsSlice = createSlice({
       state.stepSecond = false;
       state.stepThird = true;
     },
+    setImagesPreviewList(state, action: PayloadAction<UploadFile>) {
+      state.previewImagesList.push(action.payload);
+    },
+    deleteImagesPreviewList(state) {
+      state.previewImagesList = [];
+    },
   },
 });
 
-export const { showStepFirst, showStepSecond, showStepThird } =
-  reviewStepsSlice.actions;
+export const {
+  showStepFirst,
+  showStepSecond,
+  showStepThird,
+  setImagesPreviewList,
+  deleteImagesPreviewList,
+} = reviewStepsSlice.actions;
 
 export default reviewStepsSlice.reducer;

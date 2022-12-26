@@ -37,12 +37,13 @@ const FormComponent = () => {
         enableReinitialize
       >
         {(formik) => {
+          console.log(formik.values.description);
           return (
             <Form>
               {stepFirst ? (
                 <>
                   <Title />
-                  <TextEditor />
+                  <TextEditor displayMode="EDIT" />
                 </>
               ) : stepSecond ? (
                 <div className=" w-[70%]">
@@ -53,9 +54,9 @@ const FormComponent = () => {
                   <Image />
                 </div>
               ) : (
-                <>
+                <div>
                   <DemoVisualization formik={formik} />
-                </>
+                </div>
               )}
             </Form>
           );

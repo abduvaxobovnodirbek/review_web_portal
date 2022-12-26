@@ -3,6 +3,8 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Spin, Upload } from "antd";
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { setImagesPreviewList } from "../../../services/reviewSteps/reviewStepsSlice";
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -18,6 +20,7 @@ const Image: React.FC = () => {
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
+  const dispatch = useAppDispatch();
   const handleCancel = () => setPreviewOpen(false);
 
   const handlePreview = async (file: UploadFile) => {
@@ -32,8 +35,10 @@ const Image: React.FC = () => {
     );
   };
 
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
     setFileList(newFileList);
+    localStorage.setItem("previewImages", JSON.stringify(newFileList));
+  };
 
   const handleUpload = () => {
     const formData = new FormData();
@@ -59,6 +64,7 @@ const Image: React.FC = () => {
         }}
         beforeUpload={(file) => {
           setFileList([...fileList, file]);
+          dispatch(setImagesPreviewList(file));
           return false;
         }}
       >

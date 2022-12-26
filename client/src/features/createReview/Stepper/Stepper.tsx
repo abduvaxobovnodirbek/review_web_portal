@@ -2,6 +2,7 @@ import { useState, useEffect, FC } from "react";
 import { Button, Steps } from "antd";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import {
+  deleteImagesPreviewList,
   showStepFirst,
   showStepSecond,
   showStepThird,
@@ -30,6 +31,7 @@ const Stepper: FC = () => {
 
   const prev = () => {
     setCurrent(current - 1);
+    dispatch(deleteImagesPreviewList());
   };
 
   return (

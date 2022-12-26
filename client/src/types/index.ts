@@ -1,3 +1,5 @@
+import { UploadFile } from "antd";
+
 export type windowSizeObject = {
   width: number;
   height: number;
@@ -52,4 +54,5 @@ export type Steps = {
   stepFirst: boolean;
   stepSecond: boolean;
   stepThird: boolean;
+  previewImagesList: any[];
 };
