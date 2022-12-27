@@ -1,9 +1,9 @@
-import { useEffect } from "react";
 import { useGoogleLogin } from "react-google-login";
-import { gapi } from "gapi-script";
 import googleImg from "../../../assets/socialMedia/googleImg.svg";
 import CustomButton from "../../../components/button/Button";
 import { useAppSelector } from "../../../hooks/useAppSelector";
+import { useEffect } from "react";
+import { gapi } from "gapi-script";
 
 const clientId = process.env.REACT_APP_CLIENT_ID || "";
 
@@ -19,19 +19,21 @@ const GoogleLogin = () => {
     }
 
     gapi.load("client:auth2", start);
-  }, []);
-
-  const onSuccess = async (res: any) => {
-    console.log("Google Login Name", res);
+  });
+  const onSuccess = async (response: any) => {
+    console.log(response, "success");
   };
 
-  const onFailure = (res: any) => {
-    console.log("Login failed: res:", res);
+  const onFailure = (response: any) => {
+    console.log(response, "failed");
   };
+
   const { signIn } = useGoogleLogin({
     onSuccess,
-    onFailure,
     clientId,
+    cookiePolicy: "single_host_origin",
+    onFailure,
+    isSignedIn: false,
   });
 
   return (
