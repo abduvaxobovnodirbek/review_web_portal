@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Super Admin",
+    "email": "superadmin@gmail.com",
+    "image": "",
+    "status": "true",
+    "role": "super_admin",
+    "password": "$2a$12$Fux14SeH1pAEmfdG8VmFI.s8PDafhLzDTxbFzY4BeN1SoNbty/S/y"
+  }
+]
