@@ -1,6 +1,6 @@
 import TelegramIcon from "@mui/icons-material/Telegram";
-import { Button } from "antd";
 import logo from "../../../assets/logo/logo_black.png";
+import { TelegramShareButton } from "react-share";
 
 const Sharing = () => {
   return (
@@ -16,7 +16,13 @@ const Sharing = () => {
       >
         Invite friends
       </h3>
-      <Button className="mt-3 mb-3 ant-btn">Share with Telegram</Button>
+      <TelegramShareButton
+        url={"http://localhost:3000/"}
+        className="mt-3 mb-3 ant-btn  ant-btn !px-4 !py-1 rounded-2xl"
+        style={{ border: "1px solid blue !important" }}
+      >
+        Share with Telegram
+      </TelegramShareButton>
     </div>
   );
 };
