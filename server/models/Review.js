@@ -20,6 +20,11 @@ const ReviewSchema = new mongoose.Schema(
       ref: "Category",
       required: [true, "Please add a review category"],
     },
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+      required: [true, "Please add a review owner"],
+    },
     tags: {
       type: [String],
       required: [true, "Please add a review tag"],

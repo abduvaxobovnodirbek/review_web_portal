@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -34,6 +33,14 @@ const UserSchema = new mongoose.Schema(
       default: "user",
       enum: ["user", "admin", "super_admin"],
     },
+    googleId: {
+      type: String,
+      default: null,
+    },
+    facebookId: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );
@@ -46,13 +53,6 @@ UserSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
-
-//Generate JWT using Instance methods
-UserSchema.methods.GenerateJWT = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE,
-  });
-};
 
 //Check the entered password with password in database
 UserSchema.methods.matchPassword = async function (enteredPassword) {
