@@ -10,51 +10,53 @@ const errorLoginUrl = "http://localhost:3000/login/error";
 // route         POST /api/v1/auth/email_register
 // access        Public
 exports.email_register = asyncHandler(async (req, res, next) => {
-  const { name, email, password } = req.body;
+  // const { name, email, password } = req.body;
 
-  const existedUser = await User.findOne({ email });
-  if (existedUser) {
-    return next(
-      new ErrorResponse(`The user with '${email}' already exists`, 400)
-    );
-  }
+  // const existedUser = await User.findOne({ email });
+  // if (existedUser) {
+  //   return next(
+  //     new ErrorResponse(`The user with '${email}' already exists`, 400)
+  //   );
+  // }
 
-  const user = await User.create({ name, email, password });
-
-  const accessToken = user.GenerateJWT();
-  res.status(200).json({ success: true, accessToken });
+  // await User.create({ name, email, password });
+  // next();
+  res.status(200).json({ success: true, user: req.user });
 });
 
 // description  Login User
 // route        POST /api/v1/auth/email_login
 // access       Public
 exports.email_login = asyncHandler(async (req, res, next) => {
-  const { email, password, authType, token } = req.body;
-  if (!email || !password) {
-    return next(new ErrorResponse(`Please provide credentials`, 400));
-  }
+  // const { email, password } = req.body;
+  // if (!email || !password) {
+  //   return next(new ErrorResponse(`Please provide credentials`, 400));
+  // }
 
-  const user = await User.findOne({ email }).select("+password");
+  // const user = await User.findOne({ email }).select("+password");
 
-  if (!user) {
-    return next(
-      new ErrorResponse(`The user with '${email}' not  registered`, 400)
-    );
-  }
+  // if (!user) {
+  //   return next(
+  //     new ErrorResponse(`The user with '${email}' not  registered`, 400)
+  //   );
+  // }
 
-  const isMatch = await user.matchPassword(password);
+  // const isMatch = await user.matchPassword(password);
 
-  if (!isMatch) {
-    return next(new ErrorResponse(`Invalid credentials entered`, 400));
-  }
+  // if (!isMatch) {
+  //   return next(new ErrorResponse(`Invalid credentials entered`, 400));
+  // }
 
-  if (user && !user.status) {
-    return next(new ErrorResponse(`User account is blocked`, 400));
-  }
+  // if (user && !user.status) {
+  //   return next(new ErrorResponse(`User account is blocked`, 400));
+  // }
 
-  const accessToken = user.GenerateJWT();
-  res.status(200).json({ success: true, accessToken });
+  res.status(200).json({ success: true, user: req.user });
 });
+
+exports.passportLogin = passport.authenticate("email_login");
+
+exports.passportRegister = passport.authenticate("email_register");
 
 // description    Register  or Login user with facebook
 // route         GET /api/v1/auth/google
@@ -72,7 +74,6 @@ exports.authGoogleRedirect = passport.authenticate("google", {
   successRedirect: successLoginUrl,
 });
 
-
 // description    Register  or Login user with facebook
 // route         GET /api/v1/auth/facebook
 // access        Public
@@ -88,9 +89,6 @@ exports.authFacebookRedirect = passport.authenticate("facebook", {
   failureRedirect: errorLoginUrl,
   successRedirect: successLoginUrl,
 });
-
-
-
 
 // description    user log out
 // route         GET /api/v1/auth/logout

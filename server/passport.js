@@ -1,5 +1,6 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const LocalStrategy = require("passport-local").Strategy;
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, FACEBOOK_ID } = process.env;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const User = require("./models/User");
@@ -71,9 +72,77 @@ passport.use(
   )
 );
 
+passport.use(
+  "email_register",
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+      passReqToCallback: true,
+    },
+    async (req, _email, _password, cb) => {
+      const { name, email, password } = req.body;
+      let newUser = {
+        email,
+        password,
+        name,
+      };
+
+      try {
+        const existingUser = await User.findOne({ email });
+
+        if (existingUser) {
+          return cb(null, false);
+        }
+        const new_user = await User.create(newUser);
+        return cb(null, new_user);
+      } catch (error) {
+        console.log("Error in authentication", error);
+        cb(error, null);
+      }
+    }
+  )
+);
+
+passport.use(
+  "email_login",
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+      passReqToCallback: true,
+    },
+    async (req, _email, _password, cb) => {
+      const { email, password } = req.body;
+
+      try {
+        if (!email || !password) {
+          return cb(null, false);
+        }
+
+        const existingUser = await User.findOne({ email });
+
+        if (!existingUser) {
+          return cb(null, false);
+        }
+
+        const isMatch = await existingUser.matchPassword(password);
+        if (!isMatch) {
+          return cb(null, false);
+        }
+
+        return cb(null, existingUser);
+      } catch (error) {
+        console.log("Error in authentication", error);
+        cb(error, null);
+      }
+    }
+  )
+);
+
 passport.serializeUser((user, cb) => {
   console.log("Serializing user:", user);
-  cb(null, user.id);
+  return cb(null, user.id);
 });
 
 passport.deserializeUser(async (id, cb) => {
@@ -84,5 +153,7 @@ passport.deserializeUser(async (id, cb) => {
 
   console.log("DeSerialized user", user);
 
-  if (user) cb(null, user);
+  if (user) {
+    return cb(null, user);
+  }
 });

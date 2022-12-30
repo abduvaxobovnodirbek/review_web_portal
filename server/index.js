@@ -6,6 +6,7 @@ const cors = require("cors");
 const passport = require("passport");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+
 const connectToDatabase = require("./configs/database");
 const errorHandler = require("./middlewares/error");
 require("./passport");
@@ -16,6 +17,7 @@ connectToDatabase();
 
 const authRouter = require("./routes/auth");
 const reviewRouter = require("./routes/review");
+const categoryRouter = require("./routes/category");
 
 const app = express();
 
@@ -25,20 +27,21 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-app.use(cors());
+app.use(cors({ origin: ["http://localhost:3000"] }));
 
 const store = new MongoDBStore({
   uri: process.env.MONGO_URI,
-  collection: "mySessions",
+  collection: "sessions",
 });
+
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
     secret: "secret",
-    saveUninitialized: true,
     resave: false,
+    saveUninitialized: true,
     cookie: { maxAge: oneDay },
-    store: store,
+    store,
   })
 );
 
@@ -47,6 +50,8 @@ app.use(passport.session());
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/reviews", reviewRouter);
+app.use("/api/v1/categories", categoryRouter);
+
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;

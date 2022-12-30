@@ -8,11 +8,13 @@ const {
   logout,
   authFacebook,
   authFacebookRedirect,
+  passportLogin,
+  passportRegister,
 } = require("../controllers/auth");
 const { isAuthorized } = require("../middlewares/routeProtect");
 
-router.post("/email_login", email_login);
-router.post("/email_register", email_register);
+router.post("/email_login", passportLogin, email_login);
+router.post("/email_register", passportRegister, email_register);
 router.get("/google", authGoogle);
 router.get("/google/callback", authGoogleRedirect);
 router.get("/facebook", authFacebook);

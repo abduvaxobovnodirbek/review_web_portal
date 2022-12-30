@@ -22,7 +22,6 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       minlength: 5,
-      select: false,
     },
     status: {
       type: Boolean,
