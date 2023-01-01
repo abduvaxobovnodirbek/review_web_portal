@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./layouts/header/Header";
 import routes from "./routes/Routes";
 import AuthModal from "./features/auth/index";
+import ProtectedRoute from "./middlewares/ProtectedRoute";
 
 const App = () => {
   return (
@@ -10,9 +11,19 @@ const App = () => {
       <AuthModal />
       <Routes>
         {routes.map((item, index) => {
-          return (
-            <Route path={item.path} element={<item.element />} key={index} />
-          );
+          if (item.protected) {
+            return (
+              <Route
+                path={item.path}
+                key={index}
+                element={<ProtectedRoute>{<item.element />}</ProtectedRoute>}
+              />
+            );
+          } else {
+            return (
+              <Route path={item.path} element={<item.element />} key={index} />
+            );
+          }
         })}
       </Routes>
     </>

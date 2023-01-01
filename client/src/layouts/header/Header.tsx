@@ -40,9 +40,9 @@ export default function Header() {
   const cookie = new Cookies();
 
   useEffect(() => {
-    dispatch(getCurrentUser()).then(() => {
-      cookie.set("userId", currentUser?._id);
-    });
+    dispatch(getCurrentUser())
+      .unwrap()
+      .then((data) => cookie.set("userId", data._id));
   }, [dispatch]);
 
   useEffect(() => {
@@ -74,6 +74,7 @@ export default function Header() {
     await logoutFunc(currentUser as User);
     dispatch(removeCurrentUser());
     cookie.remove("userId");
+    navigate("/");
   };
 
   return (

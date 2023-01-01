@@ -9,19 +9,23 @@ const routes: routesType = [
   {
     path: "/",
     element: Home,
+    protected: false,
   },
   {
     path: "/search",
     element: Search,
+    protected: false,
   },
   {
     path: "/create-review",
     element: CreateReview,
+    protected: true,
   },
 
   {
     path: "*",
     element: Error,
+    protected: false,
   },
 ];
 

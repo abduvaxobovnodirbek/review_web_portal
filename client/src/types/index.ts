@@ -26,6 +26,7 @@ export type headerMenu = {
 export type routesType = {
   path: string;
   element: () => JSX.Element;
+  protected: boolean;
 }[];
 
 //used in tab menu
