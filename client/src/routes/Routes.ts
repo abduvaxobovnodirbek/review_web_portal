@@ -18,6 +18,7 @@ const routes: routesType = [
     path: "/create-review",
     element: CreateReview,
   },
+
   {
     path: "*",
     element: Error,

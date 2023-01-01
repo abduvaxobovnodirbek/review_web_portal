@@ -3,24 +3,13 @@ const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middlewares/async");
 const User = require("../models/User");
 
-const successLoginUrl = "http://localhost:3000/login/success";
-const errorLoginUrl = "http://localhost:3000/login/error";
+const successLoginUrl = "http://localhost:3000";
+const errorLoginUrl = "http://localhost:3000";
 
 // description    Register user
 // route         POST /api/v1/auth/email_register
 // access        Public
 exports.email_register = asyncHandler(async (req, res, next) => {
-  // const { name, email, password } = req.body;
-
-  // const existedUser = await User.findOne({ email });
-  // if (existedUser) {
-  //   return next(
-  //     new ErrorResponse(`The user with '${email}' already exists`, 400)
-  //   );
-  // }
-
-  // await User.create({ name, email, password });
-  // next();
   res.status(200).json({ success: true, user: req.user });
 });
 
@@ -28,41 +17,21 @@ exports.email_register = asyncHandler(async (req, res, next) => {
 // route        POST /api/v1/auth/email_login
 // access       Public
 exports.email_login = asyncHandler(async (req, res, next) => {
-  // const { email, password } = req.body;
-  // if (!email || !password) {
-  //   return next(new ErrorResponse(`Please provide credentials`, 400));
-  // }
-
-  // const user = await User.findOne({ email }).select("+password");
-
-  // if (!user) {
-  //   return next(
-  //     new ErrorResponse(`The user with '${email}' not  registered`, 400)
-  //   );
-  // }
-
-  // const isMatch = await user.matchPassword(password);
-
-  // if (!isMatch) {
-  //   return next(new ErrorResponse(`Invalid credentials entered`, 400));
-  // }
-
-  // if (user && !user.status) {
-  //   return next(new ErrorResponse(`User account is blocked`, 400));
-  // }
-
   res.status(200).json({ success: true, user: req.user });
 });
 
-exports.passportLogin = passport.authenticate("email_login");
+exports.passportLogin = passport.authenticate("email_login", { session: true });
 
-exports.passportRegister = passport.authenticate("email_register");
+exports.passportRegister = passport.authenticate("email_register", {
+  session: true,
+});
 
 // description    Register  or Login user with facebook
 // route         GET /api/v1/auth/google
 // access        Public
 exports.authGoogle = passport.authenticate("google", {
   scope: ["profile", "email"],
+  session: true,
 });
 
 // description    After google successfully integrate it redirects to this api
@@ -79,6 +48,7 @@ exports.authGoogleRedirect = passport.authenticate("google", {
 // access        Public
 exports.authFacebook = passport.authenticate("facebook", {
   scope: ["profile", "email"],
+  session: true,
 });
 
 // description    After facebook successfully integrate it redirects to this api

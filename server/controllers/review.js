@@ -1,33 +1,62 @@
 const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middlewares/async");
 const Review = require("../models/Review");
+const { cloudinary } = require("../utils/cloudinary");
 
 // description    Get all reviews
 // route          GET /api/v1/reviews
 // access         Public
 exports.getReviews = asyncHandler(async (req, res, next) => {
-  const reqQuery = { ...req.query };
-  const removeFields = ["page", "limit"];
+  let query;
 
+  // Copy req.query
+  const reqQuery = { ...req.query };
+
+  // Fields to exclude
+  const removeFields = ["select", "sort", "page", "limit"];
+
+  // Loop over removeFields and delete them from reqQuery
   removeFields.forEach((param) => delete reqQuery[param]);
 
-  const reviews = await Review.find(reqQuery);
+  // Create query string
+  let queryStr = JSON.stringify(reqQuery);
 
+  // Create operators ($gt, $gte, etc)
+  queryStr = queryStr.replace(
+    /\b(gt|gte|lt|lte|in)\b/g,
+    (match) => `$${match}`
+  );
+
+  // Finding resource
+  query = Review.find(JSON.parse(queryStr));
+
+  // Select Fields
   if (req.query.select) {
     const fields = req.query.select.split(",").join(" ");
-    reviews = reviews.select(fields);
+    query = query.select(fields);
   }
 
+  // Sort
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(",").join(" ");
+    query = query.sort(sortBy);
+  } else {
+    query = query.sort("-createdAt");
+  }
+
+  // Pagination
   const page = parseInt(req.query.page, 10) || 1;
   const limit = parseInt(req.query.limit, 10) || 25;
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
   const total = await Review.countDocuments();
 
-  reviews = reviews.skip(startIndex).limit(limit);
+  query = query.skip(startIndex).limit(limit);
 
-  const results = await reviews;
+  // Executing query
+  const results = await query;
 
+  // Pagination result
   const pagination = {};
 
   if (endIndex < total) {
@@ -67,14 +96,28 @@ exports.getReview = asyncHandler(async (req, res, next) => {
 // description   Create new review
 // route         POST /api/v1/reviews
 // access        Private
+
 exports.createReview = asyncHandler(async (req, res, next) => {
   req.body.user = req.user.id;
+  let publicIds = [];
 
-  const review = await Review.create(req.body);
-
-  res.status(201).json({
-    success: true,
-    data: review,
+  req.body.imageList.map(async (image, index) => {
+    const uploadResponse = await cloudinary.uploader.upload(image, {
+      upload_preset: "dev_setups",
+    });
+    if (uploadResponse.public_id) {
+      publicIds = [...publicIds, uploadResponse.public_id.slice(11)];
+      if (publicIds.length === req.body.imageList.length) {
+        const review = await Review.create({
+          ...req.body,
+          imageList: publicIds,
+        });
+        res.status(201).json({
+          success: true,
+          data: review,
+        });
+      }
+    }
   });
 });
 

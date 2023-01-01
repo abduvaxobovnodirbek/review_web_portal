@@ -16,7 +16,7 @@ const Auth = () => {
         <EmailLogin />
       ) : showSocialLoginForm ? (
         <>
-            <Google />
+          <Google />
           <Facebook />
           <Email />
         </>
@@ -24,7 +24,7 @@ const Auth = () => {
         <EmailRegister />
       ) : (
         <>
-            <Google />
+          <Google />
           <Facebook />
           <Email />
         </>

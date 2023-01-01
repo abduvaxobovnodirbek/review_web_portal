@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { message, Skeleton } from "antd";
-import {  Avatar, Button, CardHeader, Stack } from "@mui/material";
+import { Skeleton } from "antd";
+import { Avatar, Button, CardHeader, Stack } from "@mui/material";
 import { format } from "date-fns";
 
 import ImageCarousel from "../../../components/carousel/ImageCarousel";
@@ -16,12 +16,11 @@ const DemoVisualization = ({ formik }: any) => {
   useEffect(() => {
     setTimeout(() => {
       setShowImageList(true);
-    }, 500);
+    }, 200);
   }, []);
 
   return (
     <div>
-    
       <header
         className="font-serif tracking-wider ml-3 p-3 text-white"
         style={{ background: "#03776f" }}
@@ -75,13 +74,16 @@ const DemoVisualization = ({ formik }: any) => {
         ))}
       </Stack>
 
-      <Button
-        type="submit"
-        disabled={formik.isSubmitting || !formik.isValid}
-        onClick={() => message.success("Processing complete!")}
-      >
-        Done
-      </Button>
+      <div className="w-[95%] flex justify-end my-3">
+        <Button
+          sx={{ border: "1px solid gray" }}
+          className="!rounded-2xl !bg-black !text-white !py-2 !px-4 !text-sm"
+          type="submit"
+          disabled={!formik.isValid}
+        >
+          Publish review
+        </Button>
+      </div>
     </div>
   );
 };

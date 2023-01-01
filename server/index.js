@@ -18,6 +18,7 @@ connectToDatabase();
 const authRouter = require("./routes/auth");
 const reviewRouter = require("./routes/review");
 const categoryRouter = require("./routes/category");
+const userRouter = require("./routes/user");
 
 const app = express();
 
@@ -27,7 +28,7 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-app.use(cors({ origin: ["http://localhost:3000"] }));
+app.use(cors({ origin: ["http://localhost:3000"], credentials: true }));
 
 const store = new MongoDBStore({
   uri: process.env.MONGO_URI,
@@ -37,7 +38,7 @@ const store = new MongoDBStore({
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
-    secret: "secret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: oneDay },
@@ -51,6 +52,7 @@ app.use(passport.session());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/reviews", reviewRouter);
 app.use("/api/v1/categories", categoryRouter);
+app.use("/api/v1/user", userRouter);
 
 app.use(errorHandler);
 

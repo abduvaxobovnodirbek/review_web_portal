@@ -19,6 +19,6 @@ router.get("/google", authGoogle);
 router.get("/google/callback", authGoogleRedirect);
 router.get("/facebook", authFacebook);
 router.get("/facebook/callback", authFacebookRedirect);
-router.get("/logout", isAuthorized, logout);
+router.post("/logout", isAuthorized, logout);
 
 module.exports = router;

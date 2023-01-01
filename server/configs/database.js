@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const { importData } = require("../seeder");
-
+//process.env.MONGO_URI
 const connectToDatabase = async () => {
   mongoose.set("strictQuery", false);
-  await mongoose.connect(process.env.MONGO_URI, {
+  await mongoose.connect("mongodb://localhost:27017/itransition", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });

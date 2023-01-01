@@ -1,5 +1,6 @@
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import { useCreateReviewMutation } from "../../services/api/review";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import CreateTags from "./CreateTags/CreateTags";
 import ReviewedArticle from "./ReviewedArticle/ReviewedArticle";
@@ -11,6 +12,8 @@ import Grade from "../../components/grade/Grade";
 import TextEditor from "../../components/Editor/TextEditor";
 import { Alert, Stack } from "@mui/material";
 import useWindowSize from "../../hooks/useWindowSize";
+import { message, Spin } from "antd";
+import Spinner from "../../components/spinner/Spinner";
 
 let validationSchema = Yup.object({
   review_name: Yup.string().required("*review name  is required"),
@@ -29,6 +32,9 @@ let validationSchema = Yup.object({
 type FormValues = Yup.InferType<typeof validationSchema>;
 
 const FormComponent = () => {
+  const [createReview, { isLoading, isError, isSuccess }] =
+    useCreateReviewMutation();
+
   const initialValues: FormValues = {
     review_name: "",
     description: "",
@@ -45,8 +51,21 @@ const FormComponent = () => {
     (state) => state.reviewSteps
   );
 
-  const handleSubmit = (data: FormValues, { resetForm }: any) => {
-    console.log(data);
+  const handleSubmit = async (data: FormValues, { resetForm }: any) => {
+    const images: string[] = [];
+    if (data.imageList) {
+      data.imageList.forEach((file: any) => images.push(file.preview));
+    }
+
+    await createReview({ ...data, imageList: images })
+      .unwrap()
+      .then((data) => {
+        message.success("Processing complete!");
+      })
+      .catch((err) => {
+        console.log(err);
+        message.error("something went wrong!");
+      });
   };
 
   return (
@@ -60,64 +79,65 @@ const FormComponent = () => {
         {(formik) => {
           return (
             <Form>
-              {stepFirst ? (
-                <>
-                  <Title formik={formik} />
+              {isLoading ? <Spinner isLoading  = {isLoading}/>:''}
+                {stepFirst ? (
+                  <>
+                    <Title formik={formik} />
 
-                  <TextEditor
-                    displayMode="EDIT"
-                    formik={formik}
-                    createReview={true}
-                  />
-                </>
-              ) : stepSecond ? (
-                <div className={`${width > 1000 ? "w-[70%]" : "w-[100%]"}`}>
-                  <ReviewedArticle formik={formik} />
-                  <CreateTags formik={formik} />
-                  <Category formik={formik} />
-                  <Grade
-                    formik={formik}
-                    createReview={true}
-                    defaultValue={formik.values.authorGrade}
-                    disabled={false}
-                    authorGrade={true}
-                    labelText="Author Grade:"
-                    count={10}
-                  />
+                    <TextEditor
+                      displayMode="EDIT"
+                      formik={formik}
+                      createReview={true}
+                    />
+                  </>
+                ) : stepSecond ? (
+                  <div className={`${width > 1000 ? "w-[70%]" : "w-[100%]"}`}>
+                    <ReviewedArticle formik={formik} />
+                    <CreateTags formik={formik} />
+                    <Category formik={formik} />
+                    <Grade
+                      formik={formik}
+                      createReview={true}
+                      defaultValue={formik.values.authorGrade}
+                      disabled={false}
+                      authorGrade={true}
+                      labelText="Author Grade:"
+                      count={10}
+                    />
 
-                  <Image formik={formik} />
-                </div>
-              ) : (
-                <div className="max-w-[750px] mx-auto">
-                  {Object.values(formik.errors).length ||
-                  !formik.values.description ? (
-                    <>
-                      <header
-                        className="font-serif tracking-wider p-3 text-white"
-                        style={{ background: "#f6f6f6", color: "red" }}
-                      >
-                        Please step back and fill the required form
-                      </header>
-                      <Stack
-                        sx={{ width: "100%", marginTop: "35px" }}
-                        spacing={2}
-                      >
-                        {Object.values(formik.errors).map(
-                          (errName: any, i: number) => {
-                            return (
-                              <Alert severity="error" key={i}>
-                                {errName}
-                              </Alert>
-                            );
-                          }
-                        )}
-                      </Stack>
-                    </>
-                  ) : (
-                    <DemoVisualization formik={formik} />
-                  )}
-                </div>
-              )}
+                    <Image formik={formik} />
+                  </div>
+                ) : (
+                  <div className="max-w-[750px] mx-auto">
+                    {Object.values(formik.errors).length ||
+                    !formik.values.description ? (
+                      <>
+                        <header
+                          className="font-serif tracking-wider p-3 text-white"
+                          style={{ background: "#f6f6f6", color: "red" }}
+                        >
+                          Please step back and fill the required form
+                        </header>
+                        <Stack
+                          sx={{ width: "100%", marginTop: "35px" }}
+                          spacing={2}
+                        >
+                          {Object.values(formik.errors).map(
+                            (errName: any, i: number) => {
+                              return (
+                                <Alert severity="error" key={i}>
+                                  {errName}
+                                </Alert>
+                              );
+                            }
+                          )}
+                        </Stack>
+                      </>
+                    ) : (
+                      <DemoVisualization formik={formik} />
+                    )}
+                  </div>
+                )}
             </Form>
           );
         }}

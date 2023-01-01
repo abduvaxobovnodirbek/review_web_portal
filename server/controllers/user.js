@@ -1,3 +1,4 @@
+const User = require("../models/User");
 const asyncHandler = require("../middlewares/async");
 
 // description    Get me (authenticated user)

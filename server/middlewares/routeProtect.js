@@ -6,7 +6,8 @@ exports.isAuthorized = asyncHandler(async (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  new ErrorResponse(`You are not authorized to access this route`, 401);
+  console.log(req)
+  next(new ErrorResponse(`You are not authorized to access this route`, 401));
 });
 
 // Grant access to specific roles

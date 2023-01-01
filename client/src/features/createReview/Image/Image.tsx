@@ -5,11 +5,13 @@ import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
 import { getBase64 } from "../../../utils/Base64Conventer";
 
+
 const Image = ({ formik }: any) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const imageList = formik.values.imageList;
+  
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -36,10 +38,7 @@ const Image = ({ formik }: any) => {
     createImagePreview(newFileList[newFileList.length - 1]);
   };
 
-  const handleUpload = () => {
-    const formData = new FormData();
-    imageList.forEach((file: any) => formData.append("files[]", file));
-  };
+  
 
   const uploadButton = (
     <div>

@@ -1,5 +1,5 @@
 import { UploadFile } from "antd";
-
+import { User } from "./api";
 export type windowSizeObject = {
   width: number;
   height: number;
@@ -9,6 +9,7 @@ export type windowSizeObject = {
 export type headerMobileMenu = {
   mobileMoreAnchorEl: HTMLElement | null;
   isMobileMenuOpen: boolean;
+  user: User;
   handleMobileMenuClose: any;
   handleProfileMenuOpen: any;
 };
@@ -16,6 +17,8 @@ export type headerMobileMenu = {
 export type headerMenu = {
   anchorEl: HTMLElement | null;
   isMenuOpen: boolean;
+  user: User;
+  handleLogout: () => void;
   handleMenuClose: () => void;
 };
 
