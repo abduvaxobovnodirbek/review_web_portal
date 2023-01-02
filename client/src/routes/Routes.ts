@@ -2,7 +2,8 @@ import Error from "../pages/main/Error";
 import Home from "../pages/main/Home";
 import Search from "../pages/main/Search";
 import CreateReview from "../pages/main/CreateReview";
-
+import UserProfile from "../pages/main/UserProfile";
+import ReviewDetail from "../pages/main/ReviewDetail";
 import { routesType } from "../types";
 
 const routes: routesType = [
@@ -21,7 +22,16 @@ const routes: routesType = [
     element: CreateReview,
     protected: true,
   },
-
+  {
+    path: "/user-profile",
+    element: UserProfile,
+    protected: true,
+  },
+  {
+    path: "/reviews/:id",
+    element: ReviewDetail,
+    protected: false,
+  },
   {
     path: "*",
     element: Error,

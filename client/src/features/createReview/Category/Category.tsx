@@ -1,6 +1,8 @@
 import { Field } from "formik";
+import { useGetCategoriesQuery } from "../../../services/api/category";
 
 const Category = ({ formik }: any) => {
+  const { data } = useGetCategoriesQuery();
   return (
     <div className="mt-3">
       <label
@@ -30,10 +32,14 @@ const Category = ({ formik }: any) => {
         }}
       >
         <option value=""></option>
-        <option value="movie">Movie</option>
-        <option value="game">Game</option>
-        <option value="film">Film</option>
-        <option value="book">Book</option>
+        {data &&
+          data.map((category, index) => {
+            return (
+              <option value={category._id} key={index}>
+                {category.name}
+              </option>
+            );
+          })}
       </Field>
     </div>
   );

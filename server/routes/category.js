@@ -13,15 +13,15 @@ const {
   isActiveUser,
   authorize,
 } = require("../middlewares/routeProtect");
-
+//isAuthorized, isActiveUser, authorize("super_admin"),
 router
   .route("/")
   .get(getCategories)
-  .post(isAuthorized, isActiveUser, authorize("super_admin"), createCategory);
+  .post( createCategory);
 
 router
   .route("/:id")
-  .put(isAuthorized, isActiveUser, authorize("super_admin"), updateCategory)
-  .delete(isAuthorized, isActiveUser, authorize("super_admin"), deleteCategory);
+  .put( updateCategory)
+  .delete( deleteCategory);
 
 module.exports = router;

@@ -1,8 +1,13 @@
 import { Select } from "antd";
 import type { SelectProps } from "antd";
+import { useGetTagsQuery } from "../../../services/api/review";
 
 const CreateTags = ({ formik }: any) => {
-  const options: SelectProps["options"] = [];
+  const getTagsFunc = useGetTagsQuery();
+  const options: SelectProps["options"] =
+    getTagsFunc.data?.map((tag) => {
+      return { value: tag, label: tag };
+    }) || [];
 
   const handleChange = (value: string) => {
     formik.setFieldValue("tags", value);

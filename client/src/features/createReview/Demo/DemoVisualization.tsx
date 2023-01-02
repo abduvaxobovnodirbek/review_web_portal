@@ -48,7 +48,7 @@ const DemoVisualization = ({ formik }: any) => {
       </h2>
 
       {showImageList && imageList.length ? (
-        <ImageCarousel images={imageList} />
+        <ImageCarousel images={imageList} cloudImages={false} />
       ) : imageList.length && !showImageList ? (
         <Skeleton.Image active={true} className="!w-full !h-[300px]" />
       ) : (

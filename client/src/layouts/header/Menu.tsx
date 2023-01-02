@@ -6,7 +6,6 @@ import Menu from "@mui/material/Menu";
 import MailIcon from "@mui/icons-material/Mail";
 import { headerMenu, headerMobileMenu } from "../../types/index";
 import LangSelector from "../../components/langSelector/LangSelector";
-
 export const menuId = "primary-search-account-menu";
 
 export const renderMenu = ({
@@ -29,14 +28,19 @@ export const renderMenu = ({
         horizontal: "right",
       }}
       open={isMenuOpen}
-      onClose={handleMenuClose}
+      onClose={()=>handleMenuClose('/')}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem
+        onClick={() => {
+          handleMenuClose('/user-profile');
+        }}
+      >
+        Profile
+      </MenuItem>
       <MenuItem
         onClick={() => {
           handleLogout();
-          handleMenuClose();
+          handleMenuClose("/");
         }}
       >
         Log out

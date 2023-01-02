@@ -19,7 +19,7 @@ export type headerMenu = {
   isMenuOpen: boolean;
   user: User;
   handleLogout: () => void;
-  handleMenuClose: () => void;
+  handleMenuClose: (str: string) => void;
 };
 
 //used in  routes
@@ -38,6 +38,10 @@ export interface TabPanelProps {
 
 export type childrenProps = {
   children: JSX.Element;
+};
+
+export type TabTypes = {
+  tabOptions: { names: string[] };
 };
 
 export interface authButton {
@@ -75,4 +79,5 @@ export type textEditorTypes = {
   displayMode: "EDIT" | "PREVIEW";
   formik?: any;
   createReview: boolean;
+  review?: string;
 };

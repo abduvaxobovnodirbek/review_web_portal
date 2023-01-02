@@ -5,14 +5,19 @@ import "suneditor/dist/css/suneditor.min.css";
 import { setOptions } from "./TextEditorConfig";
 import { textEditorTypes } from "../../types";
 
-const TextEditor = ({ displayMode, formik, createReview }: textEditorTypes) => {
+const TextEditor = ({
+  displayMode,
+  formik,
+  createReview,
+  review,
+}: textEditorTypes) => {
   const handleChange = (content: SetStateAction<string>) => {
     if (formik && createReview) {
       formik.setFieldValue("description", content);
     }
   };
 
-  const description = createReview ? formik.values.description : "";
+  const description = createReview ? formik.values.description : review;
   return (
     <>
       {displayMode === "EDIT" ? (

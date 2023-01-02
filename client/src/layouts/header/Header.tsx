@@ -61,9 +61,10 @@ export default function Header() {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
+  const handleMenuClose = (route:string) => {
     setAnchorEl(null);
     handleMobileMenuClose();
+    navigate(route)
   };
 
   const handleMobileMenuOpen = (event: MouseEvent<HTMLElement>) => {

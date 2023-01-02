@@ -5,6 +5,7 @@ const {
   createReview,
   deleteReview,
   updateReview,
+  getTags,
 } = require("../controllers/review");
 
 const router = express.Router();
@@ -15,6 +16,8 @@ router
   .route("/")
   .get(getReviews)
   .post(isAuthorized, isActiveUser, createReview);
+
+router.route("/tags").get(getTags);
 
 router
   .route("/:id")

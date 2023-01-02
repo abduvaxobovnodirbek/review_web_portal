@@ -28,10 +28,10 @@ const Search = () => {
 
         <RecentSearchList />
         <div className="mx-4">
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
+          <ReviewCard includeHead={true} />
+          <ReviewCard includeHead={true} />
+          <ReviewCard includeHead={true} />
+          <ReviewCard includeHead={true} />
         </div>
       </Grid>
     </Box>

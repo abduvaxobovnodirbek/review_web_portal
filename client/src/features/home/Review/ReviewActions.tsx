@@ -5,11 +5,12 @@ import Tooltip from "@mui/material/Tooltip";
 import ThumbUpRoundedIcon from "@mui/icons-material/ThumbUpRounded";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import Chip from "@mui/material/Chip";
+import { ReviewDetail } from "../../../types/api";
 
-const ReviewActions = () => {
+const ReviewActions = ({ review }: { review: ReviewDetail }) => {
   return (
     <CardActions disableSpacing>
-      <Tooltip title="Like" placement="top" sx={{ color: "#03776f" }}>
+      <Tooltip title="Like" placement="top" sx={{ color: "#03776f" }} className = "!px-0">
         <IconButton aria-label="like button">
           <ThumbUpRoundedIcon />
         </IconButton>
@@ -27,9 +28,9 @@ const ReviewActions = () => {
         </IconButton>
       </Tooltip>
 
-      <Tooltip title="Tag" placement="top">
+      <Tooltip title="Category" placement="top">
         <Chip
-          label="Javascript"
+          label={review.category.name}
           component={"div"}
           className="!cursor-pointer"
         />

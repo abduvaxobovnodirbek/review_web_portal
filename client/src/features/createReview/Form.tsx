@@ -32,7 +32,7 @@ let validationSchema = Yup.object({
 type FormValues = Yup.InferType<typeof validationSchema>;
 
 const FormComponent = () => {
-  const [createReview, { isLoading, isError, isSuccess }] =
+  const [createReview, { isLoading }] =
     useCreateReviewMutation();
 
   const initialValues: FormValues = {
@@ -60,11 +60,11 @@ const FormComponent = () => {
     await createReview({ ...data, imageList: images })
       .unwrap()
       .then((data) => {
-        message.success("Processing complete!");
+        message.success("Successfully created new review!");
       })
       .catch((err) => {
         console.log(err);
-        message.error("something went wrong!");
+        message.error("something went wrong try again!");
       });
   };
 
@@ -79,65 +79,65 @@ const FormComponent = () => {
         {(formik) => {
           return (
             <Form>
-              {isLoading ? <Spinner isLoading  = {isLoading}/>:''}
-                {stepFirst ? (
-                  <>
-                    <Title formik={formik} />
+              {isLoading ? <Spinner isLoading={isLoading} /> : ""}
+              {stepFirst ? (
+                <>
+                  <Title formik={formik} />
 
-                    <TextEditor
-                      displayMode="EDIT"
-                      formik={formik}
-                      createReview={true}
-                    />
-                  </>
-                ) : stepSecond ? (
-                  <div className={`${width > 1000 ? "w-[70%]" : "w-[100%]"}`}>
-                    <ReviewedArticle formik={formik} />
-                    <CreateTags formik={formik} />
-                    <Category formik={formik} />
-                    <Grade
-                      formik={formik}
-                      createReview={true}
-                      defaultValue={formik.values.authorGrade}
-                      disabled={false}
-                      authorGrade={true}
-                      labelText="Author Grade:"
-                      count={10}
-                    />
+                  <TextEditor
+                    displayMode="EDIT"
+                    formik={formik}
+                    createReview={true}
+                  />
+                </>
+              ) : stepSecond ? (
+                <div className={`${width > 1000 ? "w-[70%]" : "w-[100%]"}`}>
+                  <ReviewedArticle formik={formik} />
+                  <CreateTags formik={formik} />
+                  <Category formik={formik} />
+                  <Grade
+                    formik={formik}
+                    createReview={true}
+                    defaultValue={formik.values.authorGrade}
+                    disabled={false}
+                    authorGrade={true}
+                    labelText="Author Grade:"
+                    count={10}
+                  />
 
-                    <Image formik={formik} />
-                  </div>
-                ) : (
-                  <div className="max-w-[750px] mx-auto">
-                    {Object.values(formik.errors).length ||
-                    !formik.values.description ? (
-                      <>
-                        <header
-                          className="font-serif tracking-wider p-3 text-white"
-                          style={{ background: "#f6f6f6", color: "red" }}
-                        >
-                          Please step back and fill the required form
-                        </header>
-                        <Stack
-                          sx={{ width: "100%", marginTop: "35px" }}
-                          spacing={2}
-                        >
-                          {Object.values(formik.errors).map(
-                            (errName: any, i: number) => {
-                              return (
-                                <Alert severity="error" key={i}>
-                                  {errName}
-                                </Alert>
-                              );
-                            }
-                          )}
-                        </Stack>
-                      </>
-                    ) : (
-                      <DemoVisualization formik={formik} />
-                    )}
-                  </div>
-                )}
+                  <Image formik={formik} />
+                </div>
+              ) : (
+                <div className="max-w-[750px] mx-auto">
+                  {Object.values(formik.errors).length ||
+                  !formik.values.description ? (
+                    <>
+                      <header
+                        className="font-serif tracking-wider p-3 text-white"
+                        style={{ background: "#f6f6f6", color: "red" }}
+                      >
+                        Please step back and fill the required form
+                      </header>
+                      <Stack
+                        sx={{ width: "100%", marginTop: "35px" }}
+                        spacing={2}
+                      >
+                        {Object.values(formik.errors).map(
+                          (errName: any, i: number) => {
+                            return (
+                              <Alert severity="error" key={i}>
+                                {errName}
+                              </Alert>
+                            );
+                          }
+                        )}
+                      </Stack>
+                    </>
+                  ) : (
+                    <DemoVisualization formik={formik} />
+                  )}
+                </div>
+              )}
             </Form>
           );
         }}

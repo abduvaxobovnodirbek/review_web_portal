@@ -3,11 +3,12 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import useWindowSize from "../../../hooks/useWindowSize";
-import { childrenProps } from "../../../types";
+import { childrenProps, TabTypes } from "../../../types";
 
-
-
-export default function TabMenu({ children }: childrenProps) {
+export default function TabMenu({
+  children,
+  tabOptions,
+}: TabTypes & childrenProps) {
   const [value, setValue] = useState(0);
   const { width } = useWindowSize();
   const handleChange = (event: SyntheticEvent, newValue: number) => {
@@ -27,8 +28,9 @@ export default function TabMenu({ children }: childrenProps) {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Recently Added" />
-          <Tab label="Following" />
+          {tabOptions.names.map((tab, i) => (
+            <Tab label={tab} key={i} />
+          ))}
         </Tabs>
       </Box>
 
