@@ -12,6 +12,7 @@ const ReviewDetail = () => {
   const { data: review, isLoading: reviewLoading } = useGetReviewDetailQuery(
     id || ""
   );
+  console.log(review,id)
   return (
     <ContextWrapper
       flexOptions={`justify-between items-start ${

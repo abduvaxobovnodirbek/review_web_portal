@@ -56,6 +56,7 @@ export type ModalState = {
   showEmailRegisterForm: boolean;
   showSocialRegisterForm: boolean;
   showSocialLoginForm: boolean;
+  showProfileModal:boolean
 };
 
 export type Steps = {

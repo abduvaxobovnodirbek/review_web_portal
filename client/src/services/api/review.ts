@@ -30,6 +30,12 @@ export const reviewApi = createApi({
             ]
           : [{ type: "Review", id: "LIST" }],
     }),
+    getPersonalReviews: build.query<ReviewDetail[], void>({
+      query: () => "reviews/personal",
+      transformResponse(baseQueryReturnValue: any, meta, arg) {
+        return baseQueryReturnValue.data;
+      },
+    }),
     getTags: build.query<string[], void>({
       query: () => "reviews/tags",
       transformResponse(baseQueryReturnValue: any, meta, arg) {
@@ -65,4 +71,5 @@ export const {
   useGetReviewsQuery,
   useGetTagsQuery,
   useGetReviewDetailQuery,
+  useGetPersonalReviewsQuery,
 } = reviewApi;

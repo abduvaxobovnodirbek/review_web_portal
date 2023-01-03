@@ -6,6 +6,7 @@ const {
   deleteReview,
   updateReview,
   getTags,
+  getPersonalReviews,
 } = require("../controllers/review");
 
 const router = express.Router();
@@ -18,6 +19,7 @@ router
   .post(isAuthorized, isActiveUser, createReview);
 
 router.route("/tags").get(getTags);
+router.route("/personal").get(isAuthorized, getPersonalReviews);
 
 router
   .route("/:id")

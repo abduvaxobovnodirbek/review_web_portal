@@ -7,6 +7,7 @@ const initialState: ModalState = {
   showEmailRegisterForm: false,
   showSocialRegisterForm: false,
   showSocialLoginForm: true,
+  showProfileModal: false,
 };
 
 const modalSlice = createSlice({
@@ -36,6 +37,9 @@ const modalSlice = createSlice({
       state.showEmailLoginForm = false;
       state.showSocialRegisterForm = false;
     },
+    toggleProfileModal(state, action: PayloadAction<boolean>) {
+      state.showProfileModal = action.payload;
+    },
   },
 });
 
@@ -45,6 +49,7 @@ export const {
   toggleEmailLoginForm,
   toggleSocialRegisterForm,
   toggleSocialLoginForm,
+  toggleProfileModal,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

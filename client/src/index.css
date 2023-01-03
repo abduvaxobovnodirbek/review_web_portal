@@ -155,3 +155,7 @@
   position: fixed !important;
   right: 12% !important;
 }
+
+.ant-modal-wrap {
+  z-index: 10002 !important;
+}

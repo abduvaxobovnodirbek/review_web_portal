@@ -80,7 +80,7 @@ exports.getReviews = asyncHandler(async (req, res, next) => {
 });
 
 // description   Get single review
-// route         GET /api/v1/review/:id
+// route         GET /api/v1/reviews/:id
 // access        Public
 exports.getReview = asyncHandler(async (req, res, next) => {
   const review = await Review.findById(req.params.id).populate("user category");
@@ -92,6 +92,21 @@ exports.getReview = asyncHandler(async (req, res, next) => {
   }
 
   res.status(200).json({ success: true, data: review });
+});
+
+// description   Get all reviews that belong to single user
+// route         GET /api/v1/reviews/personal
+// access        Private
+exports.getPersonalReviews = asyncHandler(async (req, res, next) => {
+  const reviews = await Review.find({ user: req.user })
+    .populate("user category")
+    .sort("-createdAt");
+
+  if (!reviews) {
+    return next(new ErrorResponse(`Reviews not found`, 404));
+  }
+
+  res.status(200).json({ success: true, data: reviews });
 });
 
 // description   Create new review

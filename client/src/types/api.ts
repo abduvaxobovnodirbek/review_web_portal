@@ -16,6 +16,7 @@ export interface User {
   updatedAt: Date;
   __v: number;
   password?: string;
+  userInfo?: string;
 }
 
 export interface Category {
