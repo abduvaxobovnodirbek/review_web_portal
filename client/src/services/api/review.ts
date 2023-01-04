@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ReviewDetail, ReviewsType } from "../../types/api";
+import { ReviewAndUser, ReviewDetail, ReviewsType } from "../../types/api";
 
 export const reviewApi = createApi({
   reducerPath: "reviewApi",
@@ -7,18 +7,12 @@ export const reviewApi = createApi({
     baseUrl: process.env.REACT_APP_BASE_URL,
     credentials: "include",
   }),
-  tagTypes: ["Review"],
+  tagTypes: ["Review", "ReviewDetail"],
   refetchOnReconnect: true,
   refetchOnMountOrArgChange: true,
   endpoints: (build) => ({
     getReviews: build.query<ReviewsType, number>({
       query: (page) => `reviews?page=${page}&limit=5`,
-      serializeQueryArgs: ({ endpointName }) => {
-        return endpointName;
-      },
-      merge: (currentCache: any, newItems: any) => {
-        currentCache.data.push(...newItems.data);
-      },
       providesTags: (result) =>
         result
           ? [
@@ -29,6 +23,15 @@ export const reviewApi = createApi({
               { type: "Review", id: "LIST" },
             ]
           : [{ type: "Review", id: "LIST" }],
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+      merge: (currentCache: any, newItems: any) => {
+        currentCache.data.push(...newItems.data);
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
     }),
     getPersonalReviews: build.query<ReviewDetail[], void>({
       query: () => "reviews/personal",
@@ -54,6 +57,29 @@ export const reviewApi = createApi({
       transformResponse(baseQueryReturnValue: any, meta, arg) {
         return baseQueryReturnValue.data;
       },
+      providesTags: (result) =>
+        result
+          ? [
+              {
+                type: "ReviewDetail" as const,
+                id: result._id,
+              },
+              { type: "ReviewDetail", id: "LIST" },
+            ]
+          : [{ type: "ReviewDetail", id: "LIST" }],
+    }),
+    likeReview: build.mutation<ReviewDetail, string>({
+      query: (id) => ({
+        url: `reviews/like/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: [
+        { type: "Review", id: "LIST" },
+        { type: "ReviewDetail", id: "LIST" },
+      ],
+    }),
+    getUserAllReviews: build.query<ReviewAndUser, string>({
+      query: (id) => `reviews/user/${id}`,
     }),
     createReview: build.mutation<any, any>({
       query: (body) => ({
@@ -72,4 +98,6 @@ export const {
   useGetTagsQuery,
   useGetReviewDetailQuery,
   useGetPersonalReviewsQuery,
+  useGetUserAllReviewsQuery,
+  useLikeReviewMutation,
 } = reviewApi;

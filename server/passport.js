@@ -34,7 +34,7 @@ passport.use(
         const new_user = await User.create(defaultUser);
         return cb(null, new_user);
       } catch (error) {
-        console.log("Error in authentication", error);
+        // console.log("Error in authentication", error);
         cb(error, null);
       }
     }
@@ -65,7 +65,7 @@ passport.use(
         const new_user = await User.create(defaultUser);
         return cb(null, new_user);
       } catch (error) {
-        console.log("Error in authentication", error);
+        // console.log("Error in authentication", error);
         cb(error, null);
       }
     }
@@ -97,7 +97,7 @@ passport.use(
         const new_user = await User.create(newUser);
         return cb(null, new_user);
       } catch (error) {
-        console.log("Error in authentication", error);
+        // console.log("Error in authentication", error);
         cb(error, null);
       }
     }
@@ -133,7 +133,7 @@ passport.use(
 
         return cb(null, existingUser);
       } catch (error) {
-        console.log("Error in authentication", error);
+        // console.log("Error in authentication", error);
         cb(error, null);
       }
     }
@@ -141,17 +141,17 @@ passport.use(
 );
 
 passport.serializeUser((user, cb) => {
-  console.log("Serializing user:", user);
+  // console.log("Serializing user:", user);
   return cb(null, user.id);
 });
 
 passport.deserializeUser(async (id, cb) => {
   const user = await User.findById(id).catch((err) => {
-    console.log("Error deserializing", err);
+    // console.log("Error deserializing", err);
     cb(err, null);
   });
 
-  console.log("DeSerialized user", user);
+  // console.log("DeSerialized user", user);
 
   if (user) {
     return cb(null, user);

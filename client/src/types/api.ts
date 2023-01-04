@@ -30,6 +30,7 @@ export interface ReviewsType {
   count: number;
   pagination: Pagination;
   data: ReviewDetail[];
+  nextPage: boolean;
 }
 
 export interface ReviewDetail {
@@ -49,3 +50,13 @@ export interface ReviewDetail {
 }
 
 export interface Pagination {}
+
+export interface ReviewAndUser {
+  success: boolean;
+  data?: ReviewAndUserData;
+}
+
+export interface ReviewAndUserData {
+  reviews: ReviewDetail[];
+  user: User;
+}

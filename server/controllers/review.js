@@ -1,8 +1,8 @@
 const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middlewares/async");
 const Review = require("../models/Review");
-const { cloudinary } = require("../utils/cloudinary");
 const User = require("../models/User");
+const { cloudinary } = require("../utils/cloudinary");
 
 // description    Get all reviews
 // route          GET /api/v1/reviews
@@ -59,12 +59,13 @@ exports.getReviews = asyncHandler(async (req, res, next) => {
 
   // Pagination result
   const pagination = {};
-
+  let nextPage = false;
   if (endIndex < total) {
     pagination.next = {
       page: page + 1,
       limit,
     };
+    nextPage = true;
   }
 
   if (startIndex > 0) {
@@ -76,7 +77,7 @@ exports.getReviews = asyncHandler(async (req, res, next) => {
 
   res
     .status(200)
-    .json({ success: true, count: total, pagination, data: results });
+    .json({ success: true, count: total, pagination, data: results, nextPage });
 });
 
 // description   Get single review
@@ -231,4 +232,46 @@ exports.getTags = asyncHandler(async (req, res, next) => {
   console.log(tags);
 
   res.status(200).json({ success: true, tags });
+});
+
+// description   Get all reviews that belong to single user
+// route         GET /api/v1/reviews/check/:id
+// access        Public
+exports.getUserAllReviews = asyncHandler(async (req, res, next) => {
+  const reviews = await Review.find({ user: req.params.id })
+    .populate("user category")
+    .sort("-createdAt");
+  const user = await User.findById(req.params.id);
+  console.log(reviews, user);
+  if (!reviews) {
+    return next(new ErrorResponse(`Reviews not found`, 404));
+  }
+
+  res.status(200).json({ success: true, data: { reviews, user } });
+});
+
+// description   like functionality for each reviews
+// route         GET /api/v1/reviews/like/:id
+// access        Private
+exports.likeReview = asyncHandler( async(req, res, next) => {
+  const { id } = req.params;
+
+  const review = await Review.findById(id);
+
+  if (!review) {
+    return next(new ErrorResponse(`Review not found`, 404));
+  }
+
+  const index = review.likes.findIndex((id) => id === req.user.id);
+
+  if (index === -1) {
+    review.likes.push(req.user.id);
+  } else {
+    review.likes = review.likes.filter((id) => id !== req.user.id);
+  }
+
+  const updatedReview = await Review.findByIdAndUpdate(id, review, {
+    new: true,
+  });
+  res.status(201).json({ success: true, data: updatedReview });
 });

@@ -6,6 +6,9 @@ import Menu from "@mui/material/Menu";
 import MailIcon from "@mui/icons-material/Mail";
 import { headerMenu, headerMobileMenu } from "../../types/index";
 import LangSelector from "../../components/langSelector/LangSelector";
+import { FaUser } from "react-icons/fa";
+import { BiBookmarks, BiLogOut } from "react-icons/bi";
+
 export const menuId = "primary-search-account-menu";
 
 export const renderMenu = ({
@@ -28,22 +31,31 @@ export const renderMenu = ({
         horizontal: "right",
       }}
       open={isMenuOpen}
-      onClose={()=>handleMenuClose('/')}
+      onClose={() => handleMenuClose("/")}
     >
       <MenuItem
         onClick={() => {
-          handleMenuClose('/user-profile');
+          handleMenuClose("/user-profile");
         }}
+        className="!flex !items-center"
       >
-        Profile
+        <FaUser className="mr-2" /> <span className="text-gray-600 text-sm font-serif">Profile</span>
+      </MenuItem>
+      <MenuItem onClick={() => {
+          handleMenuClose("/saved-reviews");
+        }} className="!flex !items-center">
+        <BiBookmarks className="mr-2" />{" "}
+        <span className="text-gray-600 text-sm font-serif">Saved</span>
       </MenuItem>
       <MenuItem
         onClick={() => {
           handleLogout();
           handleMenuClose("/");
         }}
+        className="!flex !items-center"
       >
-        Log out
+        <BiLogOut className="mr-2" />{" "}
+        <span className="text-gray-600 text-sm font-serif">Log out</span>
       </MenuItem>
     </Menu>
   );

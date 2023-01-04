@@ -17,8 +17,7 @@ const Profile = ({ user }: { user: User | undefined }) => {
         114 followers
       </span>
       <span className="px-3 text-center mt-6 font-serif text-gray-600">
-        Chief Decision Scientist, Google. ❤️ Stats, ML/AI, data, puns, art,
-        theatre, decision science. All views are my own. twitter.com/quaesita
+        {user?.userInfo}
       </span>
       <Button className="mt-3 w-[150px] font-bold">Follow</Button>
     </div>

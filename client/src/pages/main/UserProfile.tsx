@@ -56,7 +56,7 @@ const UserProfile = () => {
         )}
         {reviews?.length ? (
           reviews?.map((review: ReviewDetail, i: number) => (
-            <ReviewCard includeHead={false} review={review} key={i} />
+            <ReviewCard includeSaveBtn = {true} includeHead={false} review={review} key={i} />
           ))
         ) : reviews?.length === 0 ? (
           <div

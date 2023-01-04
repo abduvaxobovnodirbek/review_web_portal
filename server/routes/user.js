@@ -7,6 +7,11 @@ const {
   deleteUser,
 } = require("../controllers/user");
 const {
+  getSavedReviews,
+  createSavedReview,
+  removeSavedReview,
+} = require("../controllers/userBasket");
+const {
   isAuthorized,
   authorize,
   isActiveUser,
@@ -19,6 +24,19 @@ router.get(
   authorize("admin", "super_admin"),
   getAllUsers
 );
+
+router
+  .route("/saved-reviews")
+  .get(isAuthorized, getSavedReviews)
+  .post(isAuthorized, isActiveUser, createSavedReview);
+
+router.patch(
+  "/saved-reviews/:id",
+  isAuthorized,
+  isActiveUser,
+  removeSavedReview
+);
+
 router
   .route("/:id")
   .put(isAuthorized, isActiveUser, updateUser)

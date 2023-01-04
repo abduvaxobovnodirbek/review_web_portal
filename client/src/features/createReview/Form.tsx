@@ -14,6 +14,7 @@ import { Alert, Stack } from "@mui/material";
 import useWindowSize from "../../hooks/useWindowSize";
 import { message, Spin } from "antd";
 import Spinner from "../../components/spinner/Spinner";
+import { useNavigate } from "react-router-dom";
 
 let validationSchema = Yup.object({
   review_name: Yup.string().required("*review name  is required"),
@@ -51,6 +52,8 @@ const FormComponent = () => {
     (state) => state.reviewSteps
   );
 
+  const navigate = useNavigate()
+
   const handleSubmit = async (data: FormValues, { resetForm }: any) => {
     const images: string[] = [];
     if (data.imageList) {
@@ -61,6 +64,7 @@ const FormComponent = () => {
       .unwrap()
       .then((data) => {
         message.success("Successfully created new review!");
+        navigate('/user-profile')
       })
       .catch((err) => {
         console.log(err);

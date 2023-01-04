@@ -10,14 +10,25 @@ import ReviewActions from "../../features/home/Review/ReviewActions";
 import useWindowSize from "../../hooks/useWindowSize";
 import { ReviewDetail } from "../../types/api";
 import CloudinaryImage from "./CloudinaryImage";
+import { Chip, IconButton, Tooltip } from "@mui/material";
+import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import Cookies from "universal-cookie";
 
 export default function ReviewCard({
   includeHead,
   review,
+  includeSaveBtn,
+  handleAddToBasket,
 }: {
   includeHead: boolean;
   review?: ReviewDetail;
+  handleAddToBasket?: (str: string) => void;
+  includeSaveBtn: boolean;
 }) {
+  const cookie = new Cookies();
+
+  const { currentUser } = useAppSelector((state) => state.users);
   const { width } = useWindowSize();
   const navigate = useNavigate();
 
@@ -43,21 +54,58 @@ export default function ReviewCard({
       {includeHead ? (
         <CardHeader
           avatar={
-            review?.user.image ? (
+            review?.user?.image ? (
               <Avatar>
-                <img src={review?.user?.image} alt="avatar img" />
+                <img
+                  src={review?.user?.image}
+                  alt="avatar img"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/user-reviews/${review?.user._id}`);
+                  }}
+                />
               </Avatar>
             ) : (
               <Avatar sx={{ background: "#00000064" }} aria-label="recipe">
-                {review?.user.name.at(0)}
+                <span
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/user-reviews/${review?.user._id}`);
+                  }}
+                >
+                  {review?.user?.name?.at(0)}
+                </span>
               </Avatar>
             )
           }
-          title={review?.user.name}
+          title={review?.user?.name}
           subheader={format(
             new Date(review?.createdAt || Date.now()),
             "MMM do. yyyy"
           )}
+          action={
+            includeSaveBtn &&
+            !cookie.get("user_basket")?.includes(review?._id) ? (
+              <Tooltip title="Save" placement="top">
+                <IconButton
+                  aria-label="save btn"
+                  disabled={!currentUser}
+                  sx={currentUser ? { color: "#03776f" } : {}}
+                  className="!mr-2"
+                  onClick={(e: any) => {
+                    e.stopPropagation();
+                    if (handleAddToBasket) {
+                      handleAddToBasket(review?._id || "");
+                    }
+                  }}
+                >
+                  <BookmarkAddIcon />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              ""
+            )
+          }
           className="!px-0"
         />
       ) : (
@@ -96,7 +144,22 @@ export default function ReviewCard({
         )}
       </div>
 
-      {review ? <ReviewActions review={review} /> : ""}
+      {review && review.category.name ? (
+        <div className="flex justify-between items-center border-b pb-1">
+          <span className="font-serif text-gray-500 text-sm">
+            review category
+          </span>
+          <Tooltip title="Category" placement="top">
+            <Chip
+              label={review.category.name}
+              component={"div"}
+              className="!cursor-pointer !px-4 !py-0 ml-2"
+            />
+          </Tooltip>
+        </div>
+      ) : (
+        ""
+      )}
     </Card>
   );
 }

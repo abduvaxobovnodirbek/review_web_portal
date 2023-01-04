@@ -53,6 +53,12 @@ export default function Header() {
     }
   }, [isSuccess, isError]);
 
+  useEffect(() => {
+    if (!cookie.get("user_basket")) {
+      cookie.set("user_basket", []);
+    }
+  }, []);
+
   const handleProfileMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -61,10 +67,10 @@ export default function Header() {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = (route:string) => {
+  const handleMenuClose = (route: string) => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    navigate(route)
+    navigate(route);
   };
 
   const handleMobileMenuOpen = (event: MouseEvent<HTMLElement>) => {
