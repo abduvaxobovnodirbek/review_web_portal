@@ -1,11 +1,9 @@
-import { UploadFile } from "antd";
 import { User } from "./api";
 export type windowSizeObject = {
   width: number;
   height: number;
 };
 
-//used in header
 export type headerMobileMenu = {
   mobileMoreAnchorEl: HTMLElement | null;
   isMobileMenuOpen: boolean;
@@ -13,7 +11,7 @@ export type headerMobileMenu = {
   handleMobileMenuClose: any;
   handleProfileMenuOpen: any;
 };
-//used in header
+
 export type headerMenu = {
   anchorEl: HTMLElement | null;
   isMenuOpen: boolean;
@@ -22,19 +20,11 @@ export type headerMenu = {
   handleMenuClose: (str: string) => void;
 };
 
-//used in  routes
 export type routesType = {
   path: string;
   element: () => JSX.Element;
   protected: boolean;
 }[];
-
-//used in tab menu
-export interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
 
 export type childrenProps = {
   children: JSX.Element;
@@ -44,19 +34,13 @@ export type TabTypes = {
   tabOptions: { names: string[] };
 };
 
-export interface authButton {
-  icon: string;
-  text: string;
-  handleFunc: (response: any) => void;
-}
-
 export type ModalState = {
   showModal: boolean;
   showEmailLoginForm: boolean;
   showEmailRegisterForm: boolean;
   showSocialRegisterForm: boolean;
   showSocialLoginForm: boolean;
-  showProfileModal:boolean
+  showProfileModal: boolean;
 };
 
 export type Steps = {
@@ -82,3 +66,15 @@ export type textEditorTypes = {
   createReview: boolean;
   review?: string;
 };
+
+export interface authButton {
+  icon: string;
+  text: string;
+  handleFunc: (response: any) => void;
+}
+
+export interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}

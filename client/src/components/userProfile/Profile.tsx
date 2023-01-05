@@ -1,15 +1,21 @@
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Avatar } from "@mui/material";
 import { Button } from "antd";
 import { User } from "../../types/api";
+import Cloudinary from "../cloudImage/Cloudinary";
 
 const Profile = ({ user }: { user: User | undefined }) => {
   return (
     <div className="flex items-center flex-col">
-      <Avatar
-        sx={{ background: "#03776f", width: 150, height: 150 }}
-        src={user?.image}
-        alt="avatar img"
-      />
+      {user?.image ? (
+        <div className="!overflow-hidden !rounded-[100%] !h-[150px] !w-[150px]">
+          <Cloudinary img={user?.image} />
+        </div>
+      ) : (
+        <Avatar sx={{ background: "#03776f", width: 150, height: 150 }}>
+          <AccountCircleIcon className="text-white !text-7xl" />
+        </Avatar>
+      )}
       <span className="text-center mt-6 font-serif font-bold text-gray-600">
         {user?.name}
       </span>

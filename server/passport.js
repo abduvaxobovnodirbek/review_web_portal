@@ -4,6 +4,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, FACEBOOK_ID } = process.env;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const User = require("./models/User");
+const { cloudinary } = require("./utils/cloudinary");
 
 const GOOGLE_CALLBACK_URL = "http://localhost:5000/api/v1/auth/google/callback";
 const FACEBOOK_CALLBACK_URL =
@@ -21,7 +22,6 @@ passport.use(
       const defaultUser = {
         name: `${profile.name.givenName} ${profile.name.familyName}`,
         email: profile.emails[0].value,
-        image: profile.photos[0].value,
         googleId: profile.id,
       };
 
@@ -31,6 +31,18 @@ passport.use(
         if (existingUser) {
           return cb(null, existingUser);
         }
+
+        const uploadResponse = await cloudinary.uploader.upload(
+          profile.photos[0].value,
+          {
+            upload_preset: "dev_setups",
+          }
+        );
+
+        if (uploadResponse.public_id) {
+          defaultUser.image = uploadResponse.public_id.slice(11);
+        }
+
         const new_user = await User.create(defaultUser);
         return cb(null, new_user);
       } catch (error) {
@@ -52,16 +64,27 @@ passport.use(
       const defaultUser = {
         name: `${profile.name.givenName} ${profile.name.familyName}`,
         email: profile.emails[0].value,
-        image: profile.photos[0].value,
-        facebookId: profile.id,
+        googleId: profile.id,
       };
 
       try {
-        const existingUser = await User.findOne({ facebookId: profile.id });
+        const existingUser = await User.findOne({ googleId: profile.id });
 
         if (existingUser) {
           return cb(null, existingUser);
         }
+
+        const uploadResponse = await cloudinary.uploader.upload(
+          profile.photos[0].value,
+          {
+            upload_preset: "dev_setups",
+          }
+        );
+
+        if (uploadResponse.public_id) {
+          defaultUser.image = uploadResponse.public_id.slice(11);
+        }
+
         const new_user = await User.create(defaultUser);
         return cb(null, new_user);
       } catch (error) {

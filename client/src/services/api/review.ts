@@ -7,7 +7,7 @@ export const reviewApi = createApi({
     baseUrl: process.env.REACT_APP_BASE_URL,
     credentials: "include",
   }),
-  tagTypes: ["Review", "ReviewDetail"],
+  tagTypes: ["Review", "ReviewDetail", "PersonalReview"],
   refetchOnReconnect: true,
   refetchOnMountOrArgChange: true,
   endpoints: (build) => ({
@@ -38,6 +38,16 @@ export const reviewApi = createApi({
       transformResponse(baseQueryReturnValue: any, meta, arg) {
         return baseQueryReturnValue.data;
       },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }: any) => ({
+                type: "PersonalReview" as const,
+                id,
+              })),
+              { type: "PersonalReview", id: "LIST" },
+            ]
+          : [{ type: "PersonalReview", id: "LIST" }],
     }),
     getTags: build.query<string[], void>({
       query: () => "reviews/tags",
@@ -89,6 +99,16 @@ export const reviewApi = createApi({
       }),
       invalidatesTags: [{ type: "Review", id: "LIST" }],
     }),
+    deleteReview: build.mutation<any, string>({
+      query: (id) => ({
+        url: `reviews/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [
+        { type: "Review", id: "LIST" },
+        { type: "PersonalReview", id: "LIST" },
+      ],
+    }),
   }),
 });
 
@@ -100,4 +120,5 @@ export const {
   useGetPersonalReviewsQuery,
   useGetUserAllReviewsQuery,
   useLikeReviewMutation,
+  useDeleteReviewMutation
 } = reviewApi;

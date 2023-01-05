@@ -4,8 +4,15 @@ import { Modal, Spin, Upload } from "antd";
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
 import { getBase64 } from "../../utils/Base64Conventer";
+import { ImCancelCircle } from "react-icons/im";
 
-const ProfileImage = ({ formik }: any) => {
+const ProfileImage = ({
+  formik,
+  handleNewImage,
+}: {
+  formik: any;
+  handleNewImage: (val: boolean) => void;
+}) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
@@ -43,7 +50,7 @@ const ProfileImage = ({ formik }: any) => {
     </div>
   );
   return (
-    <div>
+    <div className=" flex !relative items-end justify-center">
       <Upload
         listType="picture-card"
         fileList={imageList}
@@ -70,6 +77,14 @@ const ProfileImage = ({ formik }: any) => {
       >
         <img alt="example" style={{ width: "100%" }} src={previewImage} />
       </Modal>
+
+      <ImCancelCircle
+        onClick={() => {
+          handleNewImage(false);
+          formik.setFieldValue("image", []);
+        }}
+        className="!cursor-pointer !text-gray-600 absolute -right-5"
+      />
     </div>
   );
 };

@@ -47,6 +47,8 @@ export interface ReviewDetail {
   createdAt: Date;
   updatedAt: Date;
   __v: number;
+  key?: number;
+
 }
 
 export interface Pagination {}

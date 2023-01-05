@@ -12,7 +12,7 @@ const ReviewDetail = () => {
   const { data: review, isLoading: reviewLoading } = useGetReviewDetailQuery(
     id || ""
   );
-  console.log(review,id)
+  console.log(review, id);
   return (
     <ContextWrapper
       flexOptions={`justify-between items-start ${
@@ -27,7 +27,7 @@ const ReviewDetail = () => {
           <Skeleton active className="!w-[90%] mt-8" />
         </div>
       ) : (
-        <ReviewInfo width={width} review={review} />
+        <ReviewInfo cardExist={true} width={width} review={review} />
       )}
 
       {width > 900 ? (

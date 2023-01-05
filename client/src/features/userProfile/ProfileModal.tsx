@@ -48,13 +48,16 @@ export default function ProfileModal() {
         }}
       >
         <DialogTitle
-          className="flex justify-center  relative top-5"
+          className="relative top-5 w-[100%]"
           sx={{ color: "#03776f" }}
         >
-          <span className="font-serif text-center"> Edit Profile</span>
+          <h3 className="font-serif text-center w-[100%]">
+            {" "}
+            Edit Profile
+          </h3>
         </DialogTitle>
         <DialogContent className="mt-12">
-          <ProfileForm/>
+          <ProfileForm />
         </DialogContent>
       </Dialog>
     </div>

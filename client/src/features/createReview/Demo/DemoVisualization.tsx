@@ -7,12 +7,15 @@ import ImageCarousel from "../../../components/carousel/ImageCarousel";
 import TextEditor from "../../../components/Editor/TextEditor";
 import Grade from "../../../components/grade/Grade";
 import Tag from "../../../components/tag/Tag";
+import { useAppSelector } from "../../../hooks/useAppSelector";
+import Cloudinary from "../../../components/cloudImage/Cloudinary";
 
 const DemoVisualization = ({ formik }: any) => {
   const [showImageList, setShowImageList] = useState<boolean>(false);
   const { imageList, review_name, reviewed_art, tags, authorGrade } =
     formik.values;
-
+  const { currentUser } = useAppSelector((state) => state.users);
+  console.log(currentUser);
   useEffect(() => {
     setTimeout(() => {
       setShowImageList(true);
@@ -31,10 +34,10 @@ const DemoVisualization = ({ formik }: any) => {
       <CardHeader
         avatar={
           <Avatar sx={{ background: "#00000064" }} aria-label="recipe">
-            R
+            {currentUser?.image ? <Cloudinary img={currentUser?.image} /> : ""}
           </Avatar>
         }
-        title="Shrimp and Chorizo Paella"
+        title={currentUser?.name}
         subheader={format(new Date(Date.now()), "MMM do. yyyy")}
       />
 

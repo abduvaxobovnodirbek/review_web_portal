@@ -14,6 +14,7 @@ import { Chip, IconButton, Tooltip } from "@mui/material";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import Cookies from "universal-cookie";
+import Cloudinary from "../cloudImage/Cloudinary";
 
 export default function ReviewCard({
   includeHead,
@@ -56,14 +57,14 @@ export default function ReviewCard({
           avatar={
             review?.user?.image ? (
               <Avatar>
-                <img
-                  src={review?.user?.image}
-                  alt="avatar img"
+                <div
                   onClick={(e) => {
                     e.stopPropagation();
                     navigate(`/user-reviews/${review?.user._id}`);
                   }}
-                />
+                >
+                  <Cloudinary img={review?.user?.image} />
+                </div>
               </Avatar>
             ) : (
               <Avatar sx={{ background: "#00000064" }} aria-label="recipe">

@@ -4,14 +4,13 @@ import { Modal, Spin, Upload } from "antd";
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
 import { getBase64 } from "../../../utils/Base64Conventer";
-
+import CloudinaryImage from "../../../components/review/CloudinaryImage";
 
 const Image = ({ formik }: any) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const imageList = formik.values.imageList;
-  
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -37,8 +36,6 @@ const Image = ({ formik }: any) => {
     formik.setFieldValue("imageList", newFileList);
     createImagePreview(newFileList[newFileList.length - 1]);
   };
-
-  
 
   const uploadButton = (
     <div>

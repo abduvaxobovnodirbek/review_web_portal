@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const asyncHandler = require("../middlewares/async");
 const ErrorResponse = require("../utils/errorResponse");
+const { cloudinary } = require("../utils/cloudinary");
 
 // description    Get me (authenticated user)
 // route         GET /api/v1/user/me
@@ -48,6 +49,17 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
         401
       )
     );
+  }
+
+  if (req.body.image) {
+    const cloudinaryUpload = await cloudinary.uploader.upload(req.body.image, {
+      upload_preset: "dev_setups",
+    });
+    await cloudinary.uploader.destroy(
+      "dev_setups/" + req.body.public_id,
+      function (err, result) {}
+    );
+    req.body.image = cloudinaryUpload.public_id.slice(11);
   }
 
   user = await User.findOneAndUpdate({ email: req.user.email }, req.body, {

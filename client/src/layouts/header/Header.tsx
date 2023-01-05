@@ -7,9 +7,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import SearchIcon from "@mui/icons-material/Search";
-import MailIcon from "@mui/icons-material/Mail";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import useWindowSize from "../../hooks/useWindowSize";
 import logo from "../../assets/logo/logo_black.png";
@@ -25,6 +23,7 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { isAuthenticated } from "../../utils/AuthUserDefiner";
 import { useLogoutMutation } from "../../services/api/auth";
 import Spinner from "../../components/spinner/Spinner";
+import Cloudinary from "../../components/cloudImage/Cloudinary";
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -131,13 +130,6 @@ export default function Header() {
               <LangSelector />
               {isAuthenticated() && currentUser ? <NewReviewBtn /> : ""}
               {isAuthenticated() && currentUser ? "" : <SignIn />}
-
-              {/* <IconButton size="large" aria-label="mail messages">
-              <Badge badgeContent={4} color="success">
-                <MailIcon sx={{ color: "#03776f" }} />
-              </Badge>
-            </IconButton> */}
-
               {isAuthenticated() && currentUser ? (
                 <IconButton
                   size="small"
@@ -147,11 +139,17 @@ export default function Header() {
                   aria-haspopup="true"
                   onClick={handleProfileMenuOpen}
                 >
-                  <Avatar
-                    sx={{ background: "#03776f", width: 35, height: 35 }}
-                    src={currentUser?.image}
-                    alt="avatar img"
-                  />
+                  {currentUser?.image ? (
+                    <div className="overflow-hidden w-[35px] h-[35px] rounded-full">
+                      <Cloudinary img={currentUser?.image} />
+                    </div>
+                  ) : (
+                    <Avatar
+                      sx={{ background: "#03776f", width: 35, height: 35 }}
+                    >
+                      <span>{currentUser.name.slice(0, 1)}</span>
+                    </Avatar>
+                  )}
                 </IconButton>
               ) : (
                 ""

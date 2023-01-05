@@ -5,8 +5,9 @@ import CreateReview from "../pages/main/CreateReview";
 import UserProfile from "../pages/main/UserProfile";
 import ReviewDetail from "../pages/main/ReviewDetail";
 import { routesType } from "../types";
-import UserReviews from "../pages/main/UserReviews";
+import UserReviews from "../pages/main/OtherUserReviews";
 import SavedReviews from "../pages/main/SavedReviews";
+import PersonalReviews from "../pages/main/PersonalReviews";
 
 const routes: routesType = [
   {
@@ -27,6 +28,11 @@ const routes: routesType = [
   {
     path: "/user-profile",
     element: UserProfile,
+    protected: true,
+  },
+  {
+    path: "/personal-reviews",
+    element: PersonalReviews,
     protected: true,
   },
   {

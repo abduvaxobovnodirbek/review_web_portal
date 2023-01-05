@@ -1,13 +1,13 @@
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import MailIcon from "@mui/icons-material/Mail";
 import { headerMenu, headerMobileMenu } from "../../types/index";
 import LangSelector from "../../components/langSelector/LangSelector";
 import { FaUser } from "react-icons/fa";
 import { BiBookmarks, BiLogOut } from "react-icons/bi";
+import { MdOutlineRateReview } from "react-icons/md";
+import Cloudinary from "../../components/cloudImage/Cloudinary";
 
 export const menuId = "primary-search-account-menu";
 
@@ -39,11 +39,24 @@ export const renderMenu = ({
         }}
         className="!flex !items-center"
       >
-        <FaUser className="mr-2" /> <span className="text-gray-600 text-sm font-serif">Profile</span>
+        <FaUser className="mr-2" />{" "}
+        <span className="text-gray-600 text-sm font-serif">Profile</span>
       </MenuItem>
-      <MenuItem onClick={() => {
+      <MenuItem
+        onClick={() => {
+          handleMenuClose("/personal-reviews");
+        }}
+        className="!flex !items-center"
+      >
+        <MdOutlineRateReview className="mr-2" />{" "}
+        <span className="text-gray-600 text-sm font-serif">Review List</span>
+      </MenuItem>
+      <MenuItem
+        onClick={() => {
           handleMenuClose("/saved-reviews");
-        }} className="!flex !items-center">
+        }}
+        className="!flex !items-center"
+      >
         <BiBookmarks className="mr-2" />{" "}
         <span className="text-gray-600 text-sm font-serif">Saved</span>
       </MenuItem>
@@ -86,14 +99,6 @@ export const renderMobileMenu = ({
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {/* <MenuItem className="!flex !justify-center">
-        <IconButton size="large" aria-label="show mails" >
-          <Badge badgeContent={4} color="success">
-            <MailIcon sx={{ color: "#03776f" }} />
-          </Badge>
-        </IconButton>
-      </MenuItem> */}
-
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -101,11 +106,15 @@ export const renderMobileMenu = ({
           aria-controls="primary-search-account-menu"
           aria-haspopup="true"
         >
-          <Avatar
-            sx={{ background: "#03776f", width: 35, height: 35 }}
-            src={user?.image}
-            alt="avatar img"
-          />
+          {user?.image ? (
+            <div className="overflow-hidden w-[35px] h-[35px] rounded-full">
+              <Cloudinary img={user?.image} />
+            </div>
+          ) : (
+            <Avatar sx={{ background: "#03776f", width: 35, height: 35 }}>
+              <span>{user.name.slice(0, 1)}</span>
+            </Avatar>
+          )}
         </IconButton>
       </MenuItem>
 

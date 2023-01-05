@@ -1,13 +1,17 @@
+import { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import { AccountCircle } from "@mui/icons-material";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { message, Spin } from "antd";
 import Spinner from "../../components/spinner/Spinner";
 import ProfileImage from "./ProfileImage";
-import { Button } from "@mui/material";
+import { Avatar, Button } from "@mui/material";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { editUser } from "../../services/api/user";
 import { toggleProfileModal } from "../../services/modal/modalSlice";
+import Cloudinary from "../../components/cloudImage/Cloudinary";
+import { FaUserEdit } from "react-icons/fa";
 
 let validationSchema = Yup.object({
   image: Yup.array(),
@@ -19,7 +23,7 @@ type FormValues = Yup.InferType<typeof validationSchema>;
 const ProfileForm = () => {
   const { currentUser, loading } = useAppSelector((state) => state.users);
   const dispatch = useAppDispatch();
-
+  const [newProfileImg, setNewProfileImg] = useState<boolean>(false);
   const initialValues: FormValues = {
     image: [],
     name: currentUser?.name || "",
@@ -29,7 +33,11 @@ const ProfileForm = () => {
   const handleUpdateUser = async (data: FormValues, { resetForm }: any) => {
     let user = {};
     if (data.image?.length) {
-      user = { ...data, image: data.image[0].preview };
+      user = {
+        ...data,
+        image: data.image[0].preview,
+        public_id: currentUser?.image,
+      };
     } else {
       user = { name: data.name, userInfo: data.userInfo };
     }
@@ -44,7 +52,9 @@ const ProfileForm = () => {
       });
   };
 
-  console.log(currentUser);
+  const handleNewImage = (value: boolean) => {
+    setNewProfileImg(value);
+  };
 
   return (
     <div>
@@ -58,8 +68,51 @@ const ProfileForm = () => {
           return (
             <Form>
               {loading ? <Spinner isLoading={loading} /> : ""}
-              <div className="flex justify-center w-[100%]">
-                <ProfileImage formik={formik} />
+              <div className="flex justify-center w-[100%] mb-4">
+                {newProfileImg ? (
+                  <ProfileImage
+                    formik={formik}
+                    handleNewImage={handleNewImage}
+                  />
+                ) : (
+                  <div>
+                    {currentUser?.image ? (
+                      <div className=" flex !relative items-end justify-center">
+                        <div className="!rounded-full flex overflow-hidden w-[100px] h-[100px]">
+                          <Cloudinary img={currentUser.image} />
+                        </div>
+                        <FaUserEdit
+                          onClick={() => {
+                            handleNewImage(true);
+                          }}
+                          className="!cursor-pointer !text-gray-600 absolute -right-2"
+                          fontSize={30}
+                          color="gray"
+                        />
+                      </div>
+                    ) : (
+                      <div className=" flex !relative items-end justify-center">
+                        <Avatar
+                          sx={{
+                            background: "#03776f",
+                            width: 70,
+                            height: 70,
+                          }}
+                        >
+                          <AccountCircle className="text-white !text-7xl" />
+                        </Avatar>
+                        <FaUserEdit
+                          onClick={() => {
+                            handleNewImage(true);
+                          }}
+                          className="!cursor-pointer !text-gray-600 absolute -right-2"
+                          fontSize={30}
+                          color="gray"
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
               <div className="flex items-center flex-col w-[100%]">
                 <Field
@@ -93,17 +146,13 @@ const ProfileForm = () => {
                 ) : (
                   ""
                 )}
-                <Button
-                  sx={{
-                    border: "1px solid transparent",
-                    background: "#ffffff",
-                  }}
-                  className="!rounded-2xl !mt-4 !text-black !py-2 !px-4 !text-sm"
+                <button
+                  className="!rounded-2xl !mt-4 !text-white bg-gray-600 !py-2 !px-4 !text-sm"
                   type="submit"
                   disabled={!formik.isValid}
                 >
                   Confirm Changes
-                </Button>
+                </button>
               </div>
             </Form>
           );

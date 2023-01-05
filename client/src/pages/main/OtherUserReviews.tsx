@@ -8,11 +8,10 @@ import ContextWrapper from "../../layouts/ContextWrapper";
 import { ReviewDetail } from "../../types/api";
 import ProfileModal from "../../features/userProfile/ProfileModal";
 
-const UserReviews = () => {
+const OtherUserReviews = () => {
   const { id } = useParams();
   const { isLoading, data: reviews } = useGetUserAllReviewsQuery(id || "");
   const { width } = useWindowSize();
-  console.log(reviews)
   return (
     <ContextWrapper
       flexOptions={`justify-between items-start ${
@@ -39,7 +38,12 @@ const UserReviews = () => {
         )}
         {reviews?.data?.reviews.length ? (
           reviews?.data?.reviews?.map((review: ReviewDetail, i: number) => (
-            <ReviewCard includeSaveBtn = {true} includeHead={false} review={review} key={i} />
+            <ReviewCard
+              includeSaveBtn={true}
+              includeHead={false}
+              review={review}
+              key={i}
+            />
           ))
         ) : (
           <>
@@ -59,4 +63,4 @@ const UserReviews = () => {
   );
 };
 
-export default UserReviews;
+export default OtherUserReviews;

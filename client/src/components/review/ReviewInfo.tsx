@@ -7,50 +7,57 @@ import Grade from "../../components/grade/Grade";
 import Tag from "../../components/tag/Tag";
 import ReviewActions from "../../features/home/Review/ReviewActions";
 import { ReviewDetail } from "../../types/api";
+import Cloudinary from "../cloudImage/Cloudinary";
 
 const ReviewInfo = ({
   width,
   review,
+  cardExist,
 }: {
   width: number;
+  cardExist: boolean;
   review: ReviewDetail | undefined;
 }) => {
   const navigate = useNavigate();
   return (
     <div className={`${width < 900 ? "w-[100%]" : "w-[70%]"} p-4`}>
-      <CardHeader
-        avatar={
-          review?.user.image ? (
-            <Avatar>
-              <img
-                src={review?.user?.image}
-                alt="avatar img"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/user-reviews/${review?.user._id}`);
-                }}
-              />
-            </Avatar>
-          ) : (
-            <Avatar sx={{ background: "#00000064" }} aria-label="recipe">
-              <span
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/user-reviews/${review?.user._id}`);
-                }}
-              >
-                {review?.user.name.at(0)}
-              </span>
-            </Avatar>
-          )
-        }
-        title={review?.user?.name}
-        subheader={format(
-          new Date(review?.createdAt || Date.now()),
-          "MMM do. yyyy"
-        )}
-        action={<ReviewActions review={review as ReviewDetail} />}
-      />
+      {cardExist ? (
+        <CardHeader
+          avatar={
+            review?.user.image ? (
+              <Avatar>
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/user-reviews/${review?.user._id}`);
+                  }}
+                >
+                  <Cloudinary img={review?.user?.image} />
+                </div>
+              </Avatar>
+            ) : (
+              <Avatar sx={{ background: "#00000064" }} aria-label="recipe">
+                <span
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/user-reviews/${review?.user._id}`);
+                  }}
+                >
+                  {review?.user.name.at(0)}
+                </span>
+              </Avatar>
+            )
+          }
+          title={review?.user?.name}
+          subheader={format(
+            new Date(review?.createdAt || Date.now()),
+            "MMM do. yyyy"
+          )}
+          action={<ReviewActions review={review as ReviewDetail} />}
+        />
+      ) : (
+        ""
+      )}
 
       <h2 className="font-serif tracking-wider ml-3 p-3 mb-2 flex flex-col  text-lg font-bold text-center">
         <span>{review?.review_name}</span>
