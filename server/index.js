@@ -41,18 +41,18 @@ const store = new MongoDBStore({
 });
 
 const oneDay = 1000 * 60 * 60 * 24;
+app.enable("trust proxy", true);
 app.use(
   session({
+    proxy: true,
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
       maxAge: oneDay,
-      secure: true,
       httpOnly: false,
-      sameSite: "none",
+      secure: false,
     },
-    name: "cookienamefordevelopment",
     store,
   })
 );

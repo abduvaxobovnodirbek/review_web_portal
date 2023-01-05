@@ -8,7 +8,7 @@ import TextEditor from "../../../components/Editor/TextEditor";
 import Grade from "../../../components/grade/Grade";
 import Tag from "../../../components/tag/Tag";
 import { useAppSelector } from "../../../hooks/useAppSelector";
-import Cloudinary from "../../../components/cloudImage/Cloudinary";
+import Cloudinary from "../../../components/CloudImage/Cloudinary";
 
 const DemoVisualization = ({ formik }: any) => {
   const [showImageList, setShowImageList] = useState<boolean>(false);

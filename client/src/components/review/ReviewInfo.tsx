@@ -7,7 +7,7 @@ import Grade from "../../components/grade/Grade";
 import Tag from "../../components/tag/Tag";
 import ReviewActions from "../../features/home/Review/ReviewActions";
 import { ReviewDetail } from "../../types/api";
-import Cloudinary from "../cloudImage/Cloudinary";
+import Cloudinary from "../CloudImage/Cloudinary";
 
 const ReviewInfo = ({
   width,

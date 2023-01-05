@@ -14,7 +14,7 @@ import { Chip, IconButton, Tooltip } from "@mui/material";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import Cookies from "universal-cookie";
-import Cloudinary from "../cloudImage/Cloudinary";
+import Cloudinary from "../CloudImage/Cloudinary";
 
 export default function ReviewCard({
   includeHead,

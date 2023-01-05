@@ -23,7 +23,7 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { isAuthenticated } from "../../utils/AuthUserDefiner";
 import { useLogoutMutation } from "../../services/api/auth";
 import Spinner from "../../components/spinner/Spinner";
-import Cloudinary from "../../components/cloudImage/Cloudinary";
+import Cloudinary from "../../components/CloudImage/Cloudinary";
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

@@ -7,7 +7,7 @@ import LangSelector from "../../components/langSelector/LangSelector";
 import { FaUser } from "react-icons/fa";
 import { BiBookmarks, BiLogOut } from "react-icons/bi";
 import { MdOutlineRateReview } from "react-icons/md";
-import Cloudinary from "../../components/cloudImage/Cloudinary";
+import Cloudinary from "../../components/CloudImage/Cloudinary";
 
 export const menuId = "primary-search-account-menu";
 

@@ -10,7 +10,7 @@ import { Avatar, Button } from "@mui/material";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { editUser } from "../../services/api/user";
 import { toggleProfileModal } from "../../services/modal/modalSlice";
-import Cloudinary from "../../components/cloudImage/Cloudinary";
+import Cloudinary from "../../components/CloudImage/Cloudinary";
 import { FaUserEdit } from "react-icons/fa";
 
 let validationSchema = Yup.object({

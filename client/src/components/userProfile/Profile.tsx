@@ -2,7 +2,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Avatar } from "@mui/material";
 import { Button } from "antd";
 import { User } from "../../types/api";
-import Cloudinary from "../cloudImage/Cloudinary";
+import Cloudinary from "../CloudImage/Cloudinary";
 
 const Profile = ({ user }: { user: User | undefined }) => {
   return (
