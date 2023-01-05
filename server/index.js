@@ -46,7 +46,13 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: oneDay },
+    cookie: {
+      maxAge: oneDay,
+      secure: true,
+      httpOnly: false,
+      sameSite: "none",
+    },
+    name: "cookienamefordevelopment",
     store,
   })
 );
