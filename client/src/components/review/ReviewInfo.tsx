@@ -8,6 +8,11 @@ import Grade from "../grade/Grade";
 import Tag from "../tag/Tag";
 import ReviewActions from "../../features/home/Review/ReviewActions";
 import Cloudinary from "../CloudImage/Cloudinary";
+import GradeForArt from "../../features/gradeForArt/GradeForArt";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { useEffect, useState } from "react";
+
+import GradeText from "./GradeText";
 
 const ReviewInfo = ({
   width,
@@ -21,6 +26,21 @@ const ReviewInfo = ({
   review: ReviewDetail | undefined;
 }) => {
   const navigate = useNavigate();
+  const { currentUser } = useAppSelector((state) => state.users);
+  const [grade, setGrade] = useState<number>(0);
+  const [showRate, setShowRate] = useState<boolean>(false);
+
+  useEffect(() => {
+    review?.rating.map((each) => {
+      if (each.user === currentUser?._id) {
+        setGrade(each.userGrade);
+        return each.user;
+      }
+      return null;
+    });
+    setShowRate(true);
+  }, [currentUser?._id, review?.rating]);
+
   return (
     <div className={`${width < 900 ? "w-[100%]" : "w-[70%]"} p-4`}>
       {cardExist ? (
@@ -67,7 +87,7 @@ const ReviewInfo = ({
       </h2>
 
       {review?.imageList.length ? (
-        <ImageCarousel images={review?.imageList}  />
+        <ImageCarousel images={review?.imageList} />
       ) : (
         ""
       )}
@@ -79,23 +99,44 @@ const ReviewInfo = ({
       />
 
       <div
-        className={`ml-4 flex justify-between items-center ${
-          width < 600 ? "flex-col" : ""
+        className={`ml-4 flex justify-between items-end ${
+          width < 700 ? "flex-col !items-start !justify-end" : ""
         }`}
       >
-        <Grade
-          createReview={false}
-          disabled={true}
-          authorGrade={true}
-          defaultValue={review?.authorGrade || 1}
-          count={10}
-        />
+        <div>
+          <p className="text-gray-600 text-sm font-serif relative top-5">
+            Review Author grade for{" "}
+            <b className="ml-1 italic">{review?.reviewed_art}</b>{" "}
+          </p>
+          <Grade
+            createReview={false}
+            disabled={true}
+            authorGrade={true}
+            defaultValue={review?.authorGrade || 1}
+            count={10}
+          />
+        </div>
         {reviewActionExist ? (
-          <ReviewActions review={review as ReviewDetail} />
+          <div className="relative -left-5 -top-4">
+            <ReviewActions review={review as ReviewDetail} />
+          </div>
         ) : (
           ""
         )}
       </div>
+
+      {(currentUser && currentUser._id) !== review?.user._id && showRate ? (
+        <div className="flex flex-col ml-4">
+          <GradeText currentUser={currentUser} review={review} />
+          <GradeForArt
+            currentUser={currentUser}
+            reviewId={review?._id || ""}
+            grade={grade}
+          />
+        </div>
+      ) : (
+        ""
+      )}
 
       <Stack direction="row" spacing={1} className={`ml-4 flex`}>
         {review?.tags.map((tag: string, i: number) => (

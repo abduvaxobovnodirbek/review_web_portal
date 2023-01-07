@@ -1,5 +1,5 @@
 import { useState, MouseEvent, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { message } from "antd";
 import Cookies from "universal-cookie";
 import Avatar from "@mui/material/Avatar";
@@ -37,6 +37,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [logoutFunc, { isSuccess, isLoading, isError }] = useLogoutMutation();
   const cookie = new Cookies();
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(getCurrentUser())
@@ -201,6 +202,7 @@ export default function Header() {
               handleMenuClose,
               user: currentUser as User,
               handleLogout,
+              location,
             })
           : ""}
       </Box>

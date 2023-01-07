@@ -3,14 +3,23 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { reviewApi } from "../../services/api/review";
 import { followUser } from "../../services/api/user";
+import { User } from "../../types/api";
 
-const Follow = ({ userId, refetch }: { userId: string; refetch: any }) => {
+const Follow = ({
+  user,
+  refetch,
+}: {
+  user: User | undefined;
+  refetch: any;
+}) => {
   const dispatch = useAppDispatch();
 
   const { currentUser, loading } = useAppSelector((state) => state.users);
 
   const handleClick = (): void => {
-    dispatch(followUser({ followTo: userId, user: currentUser?._id || "" }))
+    dispatch(
+      followUser({ followTo: user?._id || "", user: currentUser?._id || "" })
+    )
       .unwrap()
       .then((data) => {
         message.success("Success!");
@@ -35,7 +44,9 @@ const Follow = ({ userId, refetch }: { userId: string; refetch: any }) => {
         onClick={handleClick}
         disabled={currentUser?._id === undefined}
       >
-        Follow
+        {user?.followers?.includes(currentUser?._id || "")
+          ? "Unfollow user"
+          : "Follow user"}
       </Button>
     </>
   );

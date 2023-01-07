@@ -51,10 +51,7 @@ export default function ProfileModal() {
           className="relative top-5 w-[100%]"
           sx={{ color: "#03776f" }}
         >
-          <h3 className="font-serif text-center w-[100%]">
-            {" "}
-            Edit Profile
-          </h3>
+          <p className="font-serif text-center w-[100%]"> Edit Profile</p>
         </DialogTitle>
         <DialogContent className="mt-12">
           <ProfileForm />

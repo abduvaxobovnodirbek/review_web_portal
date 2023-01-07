@@ -41,6 +41,20 @@ const ReviewSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    likeCount: { type: Number, default: 0 },
+    rating: {
+      type: [
+        {
+          user: {
+            type: mongoose.Schema.ObjectId,
+            ref: "User",
+          },
+          userGrade: Number,
+        },
+      ],
+      default: [],
+    },
+    averageRate: Number,
   },
   { timestamps: true }
 );

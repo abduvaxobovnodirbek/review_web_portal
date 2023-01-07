@@ -18,6 +18,7 @@ export type headerMenu = {
   user: User;
   handleLogout: () => void;
   handleMenuClose: (str: string) => void;
+  location: any;
 };
 
 export type routesType = {

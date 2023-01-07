@@ -46,6 +46,9 @@ export interface ReviewDetail {
   authorGrade: number;
   imageList: string[];
   likes: any[];
+  likeCount:number;
+  rating: any[];
+  averageRate?: number;
   createdAt: Date;
   updatedAt: Date;
   __v: number;

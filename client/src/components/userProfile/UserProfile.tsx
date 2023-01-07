@@ -33,7 +33,7 @@ const UserProfile = ({
       <span className="px-3 text-center mt-6 font-serif text-gray-600">
         {user?.userInfo}
       </span>
-      {showFollowBtn ? <Follow userId={user?._id || ""} refetch = {refetch} /> : ""}
+      {showFollowBtn ? <Follow user={user} refetch = {refetch} /> : ""}
     </div>
   );
 };

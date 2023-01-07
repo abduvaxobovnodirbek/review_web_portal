@@ -1,18 +1,15 @@
 import HTMLReactParser, { domToReact } from "html-react-parser";
 import { useNavigate } from "react-router-dom";
-import Cookies from "universal-cookie";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
-import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { format } from "date-fns";
-import { Chip, IconButton, Tooltip } from "@mui/material";
-import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
+import { Chip, Tooltip } from "@mui/material";
 import useWindowSize from "../../hooks/useWindowSize";
 import { ReviewDetail } from "../../types/api";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import Cloudinary from "../CloudImage/Cloudinary";
+import { AiFillStar } from "react-icons/ai";
+import CardHead from "./CardHead";
 
 export default function ReviewCard({
   includeHead,
@@ -25,8 +22,6 @@ export default function ReviewCard({
   handleAddToBasket?: (str: string) => void;
   includeSaveBtn: boolean;
 }) {
-  const cookie = new Cookies();
-
   const { currentUser } = useAppSelector((state) => state.users);
   const { width } = useWindowSize();
   const navigate = useNavigate();
@@ -38,7 +33,9 @@ export default function ReviewCard({
       }
 
       if (domeNode) {
-        return <span className="mr-1">{domToReact(domeNode.children, options)}</span>;
+        return (
+          <span className="mr-1">{domToReact(domeNode.children, options)}</span>
+        );
       }
     },
   };
@@ -51,63 +48,11 @@ export default function ReviewCard({
       onClick={() => navigate(`/reviews/${review?._id}`)}
     >
       {includeHead ? (
-        <CardHeader
-          avatar={
-            review?.user?.image ? (
-              <div
-                className="w-[35px] h-[35px] rounded-full overflow-hidden"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/user-all-reviews/${review?.user._id}`);
-                }}
-              >
-                <Cloudinary img={review?.user?.image} />
-              </div>
-            ) : (
-              <Avatar sx={{ background: "#00000064" }} aria-label="recipe">
-                <span
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigate(`/user-all-reviews/${review?.user._id}`);
-                  }}
-                >
-                  {review?.user?.name?.at(0)}
-                </span>
-              </Avatar>
-            )
-          }
-          title={review?.user?.name}
-          subheader={format(
-            new Date(review?.createdAt || Date.now()),
-            "MMM do. yyyy"
-          )}
-          action={
-            includeSaveBtn &&
-            !cookie.get("user_basket")?.includes(review?._id) ? (
-              <Tooltip title="Save" placement="top">
-                <span
-                  onClick={(e: any) => {
-                    e.stopPropagation();
-                    if (handleAddToBasket && currentUser?._id) {
-                      handleAddToBasket(review?._id || "");
-                    }
-                  }}
-                >
-                  <IconButton
-                    aria-label="save btn"
-                    disabled={!currentUser}
-                    sx={currentUser ? { color: "#03776f" } : {}}
-                    className="!mr-2"
-                  >
-                    <BookmarkAddIcon />
-                  </IconButton>
-                </span>
-              </Tooltip>
-            ) : (
-              ""
-            )
-          }
-          className="!px-0"
+        <CardHead
+          currentUser={currentUser}
+          review={review}
+          handleAddToBasket={handleAddToBasket}
+          includeSaveBtn={includeSaveBtn}
         />
       ) : (
         ""
@@ -153,16 +98,25 @@ export default function ReviewCard({
 
       {review && review.category.name ? (
         <div className="flex justify-between items-center border-b pb-1">
-          <span className="font-serif text-gray-500 text-sm">
-            review category
-          </span>
-          <Tooltip title="Category" placement="top">
-            <Chip
-              label={review.category.name}
-              component={"div"}
-              className="!cursor-pointer !px-4 !py-0 ml-2"
-            />
-          </Tooltip>
+          <div>
+            <span className="font-serif text-gray-500 text-sm">
+              review category |
+            </span>
+            <Tooltip title="Category" placement="top">
+              <Chip
+                label={review.category.name}
+                component={"div"}
+                className="!cursor-pointer !px-4 !py-0 ml-2"
+              />
+            </Tooltip>
+          </div>
+          <p className="flex items-center font-serif text-gray-500">
+            <span className="mr-1">
+              <span className=" text-sm mr-2">average rate:</span>
+              {review?.averageRate ? review?.averageRate : 0}
+            </span>{" "}
+            <AiFillStar />
+          </p>
         </div>
       ) : (
         ""

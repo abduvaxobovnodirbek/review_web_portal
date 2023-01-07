@@ -16,6 +16,7 @@ export const renderMenu = ({
   isMenuOpen,
   handleMenuClose,
   handleLogout,
+  location,
 }: headerMenu) => {
   return (
     <Menu
@@ -31,7 +32,7 @@ export const renderMenu = ({
         horizontal: "right",
       }}
       open={isMenuOpen}
-      onClose={() => handleMenuClose("/")}
+      onClose={() => handleMenuClose(location.pathname)}
     >
       <MenuItem
         onClick={() => {

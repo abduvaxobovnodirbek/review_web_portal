@@ -14,8 +14,9 @@ const Grade = ({
   const handleChange = (value: number) => {
     if (createReview) {
       formik.setFieldValue("authorGrade", value);
-    } else {
+    } else if (userGrade) {
       formik.setFieldValue("userGrade", value);
+      formik.submitForm();
     }
   };
 
@@ -30,6 +31,7 @@ const Grade = ({
       <Rate
         count={count}
         allowClear={false}
+        allowHalf={userGrade ? true : false}
         disabled={disabled}
         defaultValue={defaultValue}
         onChange={handleChange}
