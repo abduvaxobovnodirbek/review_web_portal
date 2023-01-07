@@ -99,3 +99,47 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ success: true, data: {} });
 });
+
+// description   Follow to another review publisher
+// route         PUT /api/v1/user/follow
+// access        Private
+exports.followToUser = asyncHandler(async (req, res, next) => {
+  let followTo = await User.findById(req.body.followTo);
+  if (!followTo) {
+    return next(
+      new ErrorResponse(`user not found with id of ${req.body.followTo}`, 404)
+    );
+  }
+
+  let user = await User.findById(req.body.user);
+
+  if (user.id.toString() !== req.user.id) {
+    return next(
+      new ErrorResponse(
+        `User ${user.id} do not have permission to follow ${req.body.followTo}`,
+        401
+      )
+    );
+  }
+
+  if (user.following.includes(req.body.followTo)) {
+    user.following = user.following.filter(
+      (id) => id.toString() !== req.body.followTo
+    );
+  } else {
+    user.following = [...user.following, req.body.followTo];
+  }
+  const updated_user = await user.save();
+
+  if (followTo.followers.includes(req.body.user)) {
+    followTo.followers = followTo.followers.filter(
+      (id) => id.toString() !== req.body.user
+    );
+  } else {
+    followTo.followers = [...followTo.followers, req.body.user];
+  }
+
+  await followTo.save();
+
+  res.status(200).json({ success: true, data: updated_user });
+});

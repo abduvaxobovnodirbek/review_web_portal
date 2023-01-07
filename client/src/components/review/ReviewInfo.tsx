@@ -1,21 +1,23 @@
 import { Avatar, CardHeader, Stack } from "@mui/material";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import ImageCarousel from "../../components/carousel/ImageCarousel";
-import TextEditor from "../../components/Editor/TextEditor";
-import Grade from "../../components/grade/Grade";
-import Tag from "../../components/tag/Tag";
-import ReviewActions from "../../features/home/Review/ReviewActions";
 import { ReviewDetail } from "../../types/api";
+import ImageCarousel from "../carousel/ImageCarousel";
+import TextEditor from "../Editor/TextEditor";
+import Grade from "../grade/Grade";
+import Tag from "../tag/Tag";
+import ReviewActions from "../../features/home/Review/ReviewActions";
 import Cloudinary from "../CloudImage/Cloudinary";
 
 const ReviewInfo = ({
   width,
   review,
   cardExist,
+  reviewActionExist,
 }: {
   width: number;
   cardExist: boolean;
+  reviewActionExist: boolean;
   review: ReviewDetail | undefined;
 }) => {
   const navigate = useNavigate();
@@ -29,7 +31,7 @@ const ReviewInfo = ({
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigate(`/user-reviews/${review?.user._id}`);
+                    navigate(`/user-all-reviews/${review?.user._id}`);
                   }}
                 >
                   <Cloudinary img={review?.user?.image} />
@@ -40,7 +42,7 @@ const ReviewInfo = ({
                 <span
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigate(`/user-reviews/${review?.user._id}`);
+                    navigate(`/user-all-reviews/${review?.user._id}`);
                   }}
                 >
                   {review?.user.name.at(0)}
@@ -65,7 +67,7 @@ const ReviewInfo = ({
       </h2>
 
       {review?.imageList.length ? (
-        <ImageCarousel images={review?.imageList} cloudImages={true} />
+        <ImageCarousel images={review?.imageList}  />
       ) : (
         ""
       )}
@@ -88,7 +90,11 @@ const ReviewInfo = ({
           defaultValue={review?.authorGrade || 1}
           count={10}
         />
-        <ReviewActions review={review as ReviewDetail} />
+        {reviewActionExist ? (
+          <ReviewActions review={review as ReviewDetail} />
+        ) : (
+          ""
+        )}
       </div>
 
       <Stack direction="row" spacing={1} className={`ml-4 flex`}>

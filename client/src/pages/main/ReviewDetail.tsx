@@ -1,18 +1,21 @@
 import { Skeleton } from "antd";
 import { useParams } from "react-router-dom";
+import { useGetReviewDetailQuery } from "../../services/api/review";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import ReviewInfo from "../../components/review/ReviewInfo";
-import Profile from "../../components/userProfile/Profile";
+import UserProfile from "../../components/userProfile/UserProfile";
 import useWindowSize from "../../hooks/useWindowSize";
 import ContextWrapper from "../../layouts/ContextWrapper";
-import { useGetReviewDetailQuery } from "../../services/api/review";
 
 const ReviewDetail = () => {
   const { width } = useWindowSize();
   const { id } = useParams();
-  const { data: review, isLoading: reviewLoading } = useGetReviewDetailQuery(
-    id || ""
-  );
-  console.log(review, id);
+  const { currentUser } = useAppSelector((state) => state.users);
+  const {
+    data: review,
+    isLoading: reviewLoading,
+    refetch,
+  } = useGetReviewDetailQuery(id || "");
   return (
     <ContextWrapper
       flexOptions={`justify-between items-start ${
@@ -27,7 +30,12 @@ const ReviewDetail = () => {
           <Skeleton active className="!w-[90%] mt-8" />
         </div>
       ) : (
-        <ReviewInfo cardExist={true} width={width} review={review} />
+        <ReviewInfo
+          reviewActionExist={true}
+          cardExist={true}
+          width={width}
+          review={review}
+        />
       )}
 
       {width > 900 ? (
@@ -42,7 +50,13 @@ const ReviewDetail = () => {
               <Skeleton active className="!w-[90%] mt-8" />
             </div>
           ) : (
-            <Profile user={review?.user} />
+            <UserProfile
+              user={review?.user}
+              refetch={refetch}
+              showFollowBtn={
+                (currentUser && currentUser._id) !== review?.user._id
+              }
+            />
           )}
         </div>
       ) : null}

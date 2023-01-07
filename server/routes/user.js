@@ -5,6 +5,7 @@ const {
   getAllUsers,
   updateUser,
   deleteUser,
+  followToUser,
 } = require("../controllers/user");
 const {
   getSavedReviews,
@@ -18,6 +19,8 @@ const {
 } = require("../middlewares/routeProtect");
 
 router.get("/me", isAuthorized, getMe);
+router.put("/follow", isAuthorized, followToUser);
+
 router.get(
   "/all",
   isAuthorized,

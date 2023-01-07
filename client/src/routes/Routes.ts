@@ -1,13 +1,13 @@
 import Error from "../pages/main/Error";
 import Home from "../pages/main/Home";
 import Search from "../pages/main/Search";
-import CreateReview from "../pages/main/CreateReview";
-import UserProfile from "../pages/main/UserProfile";
+import ReviewCreate from "../pages/main/ReviewCreate";
+import Profile from "../pages/main/Profile";
 import ReviewDetail from "../pages/main/ReviewDetail";
-import { routesType } from "../types";
-import UserReviews from "../pages/main/OtherUserReviews";
+import UsersAllReviews from "../pages/main/UsersAllReviews";
 import SavedReviews from "../pages/main/SavedReviews";
-import PersonalReviews from "../pages/main/PersonalReviews";
+import SelfReviews from "../pages/main/SelfReviews";
+import { routesType } from "../types";
 
 const routes: routesType = [
   {
@@ -21,34 +21,34 @@ const routes: routesType = [
     protected: false,
   },
   {
-    path: "/create-review",
-    element: CreateReview,
-    protected: true,
-  },
-  {
-    path: "/user-profile",
-    element: UserProfile,
-    protected: true,
-  },
-  {
-    path: "/personal-reviews",
-    element: PersonalReviews,
-    protected: true,
-  },
-  {
-    path: "/user-reviews/:id",
-    element: UserReviews,
+    path: "/reviews/:id",
+    element: ReviewDetail,
     protected: false,
+  },
+  {
+    path: "/user-all-reviews/:id",
+    element: UsersAllReviews,
+    protected: false,
+  },
+  {
+    path: "/review-create",
+    element: ReviewCreate,
+    protected: true,
+  },
+  {
+    path: "/profile",
+    element: Profile,
+    protected: true,
+  },
+  {
+    path: "/self-reviews",
+    element: SelfReviews,
+    protected: true,
   },
   {
     path: "/saved-reviews",
     element: SavedReviews,
-    protected:true,
-  },
-  {
-    path: "/reviews/:id",
-    element: ReviewDetail,
-    protected: false,
+    protected: true,
   },
   {
     path: "*",

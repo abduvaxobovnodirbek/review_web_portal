@@ -35,7 +35,7 @@ export const renderMenu = ({
     >
       <MenuItem
         onClick={() => {
-          handleMenuClose("/user-profile");
+          handleMenuClose("/profile");
         }}
         className="!flex !items-center"
       >
@@ -44,7 +44,7 @@ export const renderMenu = ({
       </MenuItem>
       <MenuItem
         onClick={() => {
-          handleMenuClose("/personal-reviews");
+          handleMenuClose("/self-reviews");
         }}
         className="!flex !items-center"
       >

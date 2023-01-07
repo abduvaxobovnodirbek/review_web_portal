@@ -17,6 +17,8 @@ export interface User {
   __v: number;
   password?: string;
   userInfo?: string;
+  following?: string[];
+  followers?: string[];
 }
 
 export interface Category {
@@ -48,10 +50,12 @@ export interface ReviewDetail {
   updatedAt: Date;
   __v: number;
   key?: number;
-
 }
 
-export interface Pagination {}
+export interface Pagination {
+  next?: { page: number };
+  prev?: { page: number };
+}
 
 export interface ReviewAndUser {
   success: boolean;
@@ -62,3 +66,14 @@ export interface ReviewAndUserData {
   reviews: ReviewDetail[];
   user: User;
 }
+
+export type FormValues = {
+  review_name: string;
+  reviewed_art: string;
+  category: string;
+  tags: any[];
+  description: string;
+  authorGrade: number;
+  imageList: any[] | undefined;
+  review_id?: string;
+};

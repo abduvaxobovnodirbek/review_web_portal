@@ -1,3 +1,4 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import ShareIcon from "@mui/icons-material/Share";
@@ -12,24 +13,32 @@ import { useLikeReviewMutation } from "../../../services/api/review";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { useInsertToBasketMutation } from "../../../services/api/basket";
 import Spinner from "../../../components/spinner/Spinner";
-import { useLocation, useNavigate } from "react-router-dom";
 
 const ReviewActions = ({ review }: { review: ReviewDetail }) => {
-  const [likeReview] = useLikeReviewMutation();
+  const [likeReview, { isLoading: like_review_loading }] =
+    useLikeReviewMutation();
+  const [insertToBasket, { isLoading: insert_to_basket_loading }] =
+    useInsertToBasketMutation();
+
   const { currentUser } = useAppSelector((state) => state.users);
-  const [insertToBasket, { isLoading }] = useInsertToBasketMutation();
   const cookie = new Cookies();
   const getCookie = cookie.get("user_basket");
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleLikeReview = async (e: any) => {
+  const handleLikeReview = (e: any) => {
     e.stopPropagation();
-    await likeReview(review._id);
+    likeReview(review._id)
+      .unwrap()
+      .then(() => {
+        message.success("review like has been updated successfully!");
+        navigate(location.pathname);
+      })
+      .catch((err) => message.error("something went wrong try again!"));
   };
 
-  const handleAddToBasket = async (id: string) => {
-    await insertToBasket({ reviewId: id })
+  const handleAddToBasket = (id: string) => {
+    insertToBasket({ reviewId: id })
       .unwrap()
       .then(() => {
         cookie.set("user_basket", [...cookie.get("user_basket"), id]);
@@ -41,7 +50,11 @@ const ReviewActions = ({ review }: { review: ReviewDetail }) => {
 
   return (
     <>
-      {isLoading ? <Spinner isLoading={isLoading} /> : ""}
+      {insert_to_basket_loading || like_review_loading ? (
+        <Spinner isLoading={insert_to_basket_loading || like_review_loading} />
+      ) : (
+        ""
+      )}
       <CardActions disableSpacing>
         <Tooltip title="Like" placement="top" className="!px-0">
           <>
@@ -66,18 +79,23 @@ const ReviewActions = ({ review }: { review: ReviewDetail }) => {
             placement="top"
             sx={currentUser ? { color: "#03776f" } : {}}
           >
-            <IconButton
-              aria-label="save btn"
-              disabled={!currentUser}
+            <span
               onClick={(e: any) => {
                 e.stopPropagation();
-                if (handleAddToBasket) {
+                if (handleAddToBasket && currentUser?._id) {
                   handleAddToBasket(review?._id || "");
                 }
               }}
             >
-              <BookmarkAddIcon />
-            </IconButton>
+              <IconButton
+                aria-label="save btn"
+                disabled={!currentUser}
+                sx={currentUser ? { color: "#03776f" } : {}}
+                className="!mr-2"
+              >
+                <BookmarkAddIcon />
+              </IconButton>
+            </span>
           </Tooltip>
         ) : (
           ""

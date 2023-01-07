@@ -1,19 +1,17 @@
 import HTMLReactParser, { domToReact } from "html-react-parser";
 import { useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { format } from "date-fns";
-import ReviewActions from "../../features/home/Review/ReviewActions";
-import useWindowSize from "../../hooks/useWindowSize";
-import { ReviewDetail } from "../../types/api";
-import CloudinaryImage from "./CloudinaryImage";
 import { Chip, IconButton, Tooltip } from "@mui/material";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
+import useWindowSize from "../../hooks/useWindowSize";
+import { ReviewDetail } from "../../types/api";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import Cookies from "universal-cookie";
 import Cloudinary from "../CloudImage/Cloudinary";
 
 export default function ReviewCard({
@@ -40,7 +38,7 @@ export default function ReviewCard({
       }
 
       if (domeNode) {
-        return <p className="mr-1">{domToReact(domeNode.children, options)}</p>;
+        return <span className="mr-1">{domToReact(domeNode.children, options)}</span>;
       }
     },
   };
@@ -56,22 +54,21 @@ export default function ReviewCard({
         <CardHeader
           avatar={
             review?.user?.image ? (
-              <Avatar>
-                <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigate(`/user-reviews/${review?.user._id}`);
-                  }}
-                >
-                  <Cloudinary img={review?.user?.image} />
-                </div>
-              </Avatar>
+              <div
+                className="w-[35px] h-[35px] rounded-full overflow-hidden"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/user-all-reviews/${review?.user._id}`);
+                }}
+              >
+                <Cloudinary img={review?.user?.image} />
+              </div>
             ) : (
               <Avatar sx={{ background: "#00000064" }} aria-label="recipe">
                 <span
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigate(`/user-reviews/${review?.user._id}`);
+                    navigate(`/user-all-reviews/${review?.user._id}`);
                   }}
                 >
                   {review?.user?.name?.at(0)}
@@ -88,20 +85,23 @@ export default function ReviewCard({
             includeSaveBtn &&
             !cookie.get("user_basket")?.includes(review?._id) ? (
               <Tooltip title="Save" placement="top">
-                <IconButton
-                  aria-label="save btn"
-                  disabled={!currentUser}
-                  sx={currentUser ? { color: "#03776f" } : {}}
-                  className="!mr-2"
+                <span
                   onClick={(e: any) => {
                     e.stopPropagation();
-                    if (handleAddToBasket) {
+                    if (handleAddToBasket && currentUser?._id) {
                       handleAddToBasket(review?._id || "");
                     }
                   }}
                 >
-                  <BookmarkAddIcon />
-                </IconButton>
+                  <IconButton
+                    aria-label="save btn"
+                    disabled={!currentUser}
+                    sx={currentUser ? { color: "#03776f" } : {}}
+                    className="!mr-2"
+                  >
+                    <BookmarkAddIcon />
+                  </IconButton>
+                </span>
               </Tooltip>
             ) : (
               ""
@@ -139,7 +139,13 @@ export default function ReviewCard({
         </div>
 
         {review?.imageList.length ? (
-          <CloudinaryImage img={review.imageList[0]} />
+          <div
+            className={`${
+              width > 576 ? "w-[350px] h-[120px]" : "w-[100%] h-[220px]"
+            }`}
+          >
+            <Cloudinary img={review.imageList[0]} />
+          </div>
         ) : (
           ""
         )}

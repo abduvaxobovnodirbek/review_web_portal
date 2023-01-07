@@ -6,7 +6,7 @@ const NewReviewBtn = () => {
   const navigate = useNavigate();
 
   const handleClick = (): void => {
-    navigate("/create-review");
+    navigate("/review-create");
   };
   return (
     <>

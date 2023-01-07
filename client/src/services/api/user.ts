@@ -58,6 +58,24 @@ export const editUser = createAsyncThunk<
   }
 });
 
+export const followUser = createAsyncThunk<
+  User,
+  { followTo: string; user: string },
+  { rejectValue: any }
+>("user/followUser", async function (user, { rejectWithValue }) {
+  try {
+    const response = await api.put(`user/follow`, user);
+    if (!response.status) {
+      return rejectWithValue("Server Error!");
+    }
+    const data = await response.data.data;
+
+    return data;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -82,6 +100,15 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(editUser.fulfilled, (state, action) => {
+        state.currentUser = action.payload;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(followUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(followUser.fulfilled, (state, action) => {
         state.currentUser = action.payload;
         state.loading = false;
         state.error = null;

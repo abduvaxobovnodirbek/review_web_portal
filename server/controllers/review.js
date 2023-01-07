@@ -116,7 +116,7 @@ exports.getPersonalReviews = asyncHandler(async (req, res, next) => {
 
 exports.createReview = asyncHandler(async (req, res, next) => {
   req.body.user = req.user.id;
-  
+
   let publicIds = [];
 
   if (req.body.imageList.length) {
@@ -154,7 +154,11 @@ exports.createReview = asyncHandler(async (req, res, next) => {
 // route         PUT /api/v1/reviews/:id
 // access        Private
 exports.updateReview = asyncHandler(async (req, res, next) => {
+  req.body.user = req.user.id;
+
   let review = await Review.findById(req.params.id);
+  let images = [...req.body.imageList];
+  let new_images = [];
 
   if (!review) {
     return next(
@@ -175,12 +179,37 @@ exports.updateReview = asyncHandler(async (req, res, next) => {
     );
   }
 
-  review = await Review.findOneAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  if (images.length) {
+    images.map(async (image) => {
+      const uploadResponse = await cloudinary.uploader.upload(image, {
+        upload_preset: "dev_setups",
+      });
+      if (uploadResponse.public_id) {
+        new_images = [...new_images, uploadResponse.public_id.slice(11)];
+        if (new_images.length === req.body.imageList.length) {
+          const review = await Review.findOneAndUpdate(
+            req.params.id,
+            { ...req.body, imageList: new_images },
+            {
+              new: true,
+              runValidators: true,
+            }
+          );
+          res.status(201).json({
+            success: true,
+            data: review,
+          });
+        }
+      }
+    });
+  } else {
+    const review = await Review.findOneAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
-  res.status(200).json({ success: true, data: review });
+    res.status(200).json({ success: true, data: review });
+  }
 });
 
 // description    Delete Review
@@ -253,7 +282,7 @@ exports.getUserAllReviews = asyncHandler(async (req, res, next) => {
 // description   like functionality for each reviews
 // route         GET /api/v1/reviews/like/:id
 // access        Private
-exports.likeReview = asyncHandler( async(req, res, next) => {
+exports.likeReview = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
   const review = await Review.findById(id);
@@ -274,4 +303,48 @@ exports.likeReview = asyncHandler( async(req, res, next) => {
     new: true,
   });
   res.status(201).json({ success: true, data: updatedReview });
+});
+
+// description   Get all reviews that user follows
+// route         GET /api/v1/reviews/following
+// access        Private
+exports.getFollowingReviews = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+
+  if (!user) {
+    return next(new ErrorResponse(`User not found`, 404));
+  }
+
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 10;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+  const total = await Review.countDocuments();
+
+  const pagination = {};
+  let nextPage = false;
+  if (endIndex < total) {
+    pagination.next = {
+      page: page + 1,
+      limit,
+    };
+    nextPage = true;
+  }
+
+  if (startIndex > 0) {
+    pagination.prev = {
+      page: page - 1,
+      limit,
+    };
+  }
+
+  const reviews = await Review.find({ user: { $in: user.following } })
+    .skip(startIndex)
+    .limit(limit)
+    .populate("user category")
+    .sort("-createdAt");
+
+  res
+    .status(200)
+    .json({ success: true, count: total, pagination, data: reviews, nextPage });
 });

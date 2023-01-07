@@ -1,5 +1,14 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ReviewAndUser, ReviewDetail, ReviewsType } from "../../types/api";
+import {
+  createApi,
+  fetchBaseQuery,
+  FetchBaseQueryMeta,
+} from "@reduxjs/toolkit/query/react";
+import {
+  FormValues,
+  ReviewAndUser,
+  ReviewDetail,
+  ReviewsType,
+} from "../../types/api";
 
 export const reviewApi = createApi({
   reducerPath: "reviewApi",
@@ -7,12 +16,12 @@ export const reviewApi = createApi({
     baseUrl: process.env.REACT_APP_BASE_URL,
     credentials: "include",
   }),
-  tagTypes: ["Review", "ReviewDetail", "PersonalReview"],
+  tagTypes: ["Review", "ReviewDetail", "PersonalReview", "FollowingReview"],
   refetchOnReconnect: true,
   refetchOnMountOrArgChange: true,
   endpoints: (build) => ({
     getReviews: build.query<ReviewsType, number>({
-      query: (page) => `reviews?page=${page}&limit=5`,
+      query: (page) => `reviews?page=${page}&limit=10`,
       providesTags: (result) =>
         result
           ? [
@@ -26,12 +35,57 @@ export const reviewApi = createApi({
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
       },
-      merge: (currentCache: any, newItems: any) => {
-        currentCache.data.push(...newItems.data);
+      merge: (
+        currentCache: ReviewsType,
+        newItems: ReviewsType,
+        otherArgs: {
+          arg: number;
+          baseQueryMeta: FetchBaseQueryMeta | undefined;
+          requestId: string;
+          fulfilledTimeStamp: number;
+        }
+      ) => {
+        if (otherArgs?.arg > 1) {
+          currentCache.data.push(...newItems.data);
+        }
       },
       forceRefetch({ currentArg, previousArg }) {
         return currentArg !== previousArg;
       },
+    }),
+    getFollowingReviews: build.query<ReviewsType, number>({
+      query: (page) => `reviews/following?page=${page}&limit=5`,
+
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
+      merge: (
+        currentCache: ReviewsType,
+        newItems: ReviewsType,
+        otherArgs: {
+          arg: number;
+          baseQueryMeta: FetchBaseQueryMeta | undefined;
+          requestId: string;
+          fulfilledTimeStamp: number;
+        }
+      ) => {
+        if (otherArgs?.arg > 1) {
+          currentCache.data.push(...newItems.data);
+        }
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.data.map(({ id }: any) => ({
+                type: "FollowingReview" as const,
+                id,
+              })),
+              { type: "FollowingReview", id: "LIST" },
+            ]
+          : [{ type: "FollowingReview", id: "LIST" }],
     }),
     getPersonalReviews: build.query<ReviewDetail[], void>({
       query: () => "reviews/personal",
@@ -91,7 +145,7 @@ export const reviewApi = createApi({
     getUserAllReviews: build.query<ReviewAndUser, string>({
       query: (id) => `reviews/user/${id}`,
     }),
-    createReview: build.mutation<any, any>({
+    createReview: build.mutation<any, FormValues>({
       query: (body) => ({
         url: "reviews",
         method: "POST",
@@ -109,6 +163,17 @@ export const reviewApi = createApi({
         { type: "PersonalReview", id: "LIST" },
       ],
     }),
+    editReview: build.mutation<any, FormValues>({
+      query: (body) => ({
+        url: `reviews/${body.review_id}`,
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: [
+        { type: "Review", id: "LIST" },
+        { type: "PersonalReview", id: "LIST" },
+      ],
+    }),
   }),
 });
 
@@ -120,5 +185,7 @@ export const {
   useGetPersonalReviewsQuery,
   useGetUserAllReviewsQuery,
   useLikeReviewMutation,
-  useDeleteReviewMutation
+  useDeleteReviewMutation,
+  useEditReviewMutation,
+  useGetFollowingReviewsQuery,
 } = reviewApi;

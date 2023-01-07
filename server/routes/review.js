@@ -9,6 +9,7 @@ const {
   getPersonalReviews,
   getUserAllReviews,
   likeReview,
+  getFollowingReviews,
 } = require("../controllers/review");
 
 const router = express.Router();
@@ -21,6 +22,7 @@ router
   .post(isAuthorized, isActiveUser, createReview);
 
 router.patch("/like/:id", isAuthorized, isActiveUser, likeReview);
+router.get("/following", isAuthorized, getFollowingReviews);
 router.get("/user/:id", getUserAllReviews);
 router.get("/tags", getTags);
 router.get("/personal", isAuthorized, getPersonalReviews);

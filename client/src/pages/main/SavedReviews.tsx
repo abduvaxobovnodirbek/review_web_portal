@@ -1,13 +1,13 @@
 import { MdBookmarkRemove } from "react-icons/md";
 import { message, Skeleton } from "antd";
 import Cookies from "universal-cookie";
-import ReviewCard from "../../components/review/ReviewCard";
-import ContextWrapper from "../../layouts/ContextWrapper";
 import {
   useGetBasketQuery,
   useRemoveFromBasketMutation,
 } from "../../services/api/basket";
 import { ReviewDetail } from "../../types/api";
+import ReviewCard from "../../components/review/ReviewCard";
+import ContextWrapper from "../../layouts/ContextWrapper";
 import Spinner from "../../components/spinner/Spinner";
 
 const SavedReviews = () => {
@@ -15,7 +15,7 @@ const SavedReviews = () => {
   const [removeFromBasket, { isLoading: remove_basket_loading }] =
     useRemoveFromBasketMutation();
 
-  const {data, isLoading: get_reviews_loading } = useGetBasketQuery();
+  const { data, isLoading: get_reviews_loading } = useGetBasketQuery();
 
   const handleClear = async (id: string) => {
     const newCookie = [...cookie.get("user_basket")].filter(
