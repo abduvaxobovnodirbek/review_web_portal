@@ -21,6 +21,13 @@ const ReviewsTable = ({
 
   const { width } = useWindowSize();
 
+  const filterData = (data: ReviewDetail[]) => (formatter: any) =>
+    reviews?.map((item) => ({
+      text: formatter(item),
+      value: formatter(item),
+    }));
+  
+
   const handleDelete = async (id: string) => {
     await deleteReview(id)
       .unwrap()
@@ -36,6 +43,8 @@ const ReviewsTable = ({
         handleDelete,
         setShowEditForm,
         setReview,
+        filterData,
+        reviews
       })}
       dataSource={reviews}
       rowKey="_id"

@@ -1,31 +1,48 @@
+import _ from "lodash";
 import { Popconfirm } from "antd";
+import ThumbUpRoundedIcon from "@mui/icons-material/ThumbUpRounded";
 import { format } from "date-fns";
 import type { ColumnsType } from "antd/es/table";
 import { ReviewDetail } from "../../types/api";
 import { MdDelete } from "react-icons/md";
-import { AiFillEdit } from "react-icons/ai";
+import { AiFillEdit, AiFillStar } from "react-icons/ai";
+import { ColumnProps } from "../../types";
 
 const ColumnData = ({
   handleDelete,
   setShowEditForm,
   setReview,
-}: {
-  handleDelete: (str: string) => void;
-  setShowEditForm: React.Dispatch<React.SetStateAction<boolean>>;
-  setReview: React.Dispatch<React.SetStateAction<ReviewDetail | undefined>>;
-}) => {
+  filterData,
+  reviews,
+}: ColumnProps) => {
   const columns: ColumnsType<ReviewDetail> = [
     {
       title: "Reviewed Art",
       width: 100,
       dataIndex: "reviewed_art",
       key: "1",
+      filters: _.uniqWith(
+        filterData(reviews || [])((i: ReviewDetail) => i?.reviewed_art),
+        _.isEqual
+      ),
+      filterMode: "tree",
+      filterSearch: true,
+      onFilter: (value: string | number | boolean, record) =>
+        record.reviewed_art.startsWith(value as string),
     },
     {
       title: "Review Name",
       width: 100,
       dataIndex: "review_name",
       key: "2",
+      filters: _.uniqWith(
+        filterData(reviews || [])((i: ReviewDetail) => i?.review_name),
+        _.isEqual
+      ),
+      filterMode: "tree",
+      filterSearch: true,
+      onFilter: (value: string | number | boolean, record) =>
+        record.review_name.startsWith(value as string),
     },
 
     {
@@ -36,12 +53,30 @@ const ColumnData = ({
       render(value, record, index) {
         return <span>{record.category?.name}</span>;
       },
+      filters: _.uniqWith(
+        filterData(reviews || [])((i: ReviewDetail) => i?.category.name),
+        _.isEqual
+      ),
+      filterMode: "tree",
+      filterSearch: true,
+      onFilter: (value: string | number | boolean, record) =>
+        record.category.name.startsWith(value as string),
     },
     {
       title: "Author Grade",
       dataIndex: "authorGrade",
       key: "4",
       width: 60,
+      sorter: (a, b) => a.authorGrade - b.authorGrade,
+      render(value, record, index) {
+        return (
+          <span className="flex items-center">
+            {" "}
+            <AiFillStar style={{ color: "#03776f", marginRight: "2px" }} />{" "}
+            {record.likeCount}
+          </span>
+        );
+      },
     },
     {
       title: "Likes",
@@ -49,8 +84,15 @@ const ColumnData = ({
       key: "5",
       width: 60,
       render(value, record, index) {
-        return <span>{record.likes?.length}</span>;
+        return (
+          <span>
+            {" "}
+            <ThumbUpRoundedIcon sx={{ color: "#03776f" }} />{" "}
+            {record.likes?.length}
+          </span>
+        );
       },
+      sorter: (a, b) => a.likeCount - b.likeCount,
     },
     {
       title: "Created date",
@@ -64,6 +106,8 @@ const ColumnData = ({
           </span>
         );
       },
+      sorter: (a, b) =>
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
     },
     {
       title: "Action",

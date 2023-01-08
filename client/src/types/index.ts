@@ -1,4 +1,4 @@
-import { User } from "./api";
+import { ReviewDetail, User } from "./api";
 export type windowSizeObject = {
   width: number;
   height: number;
@@ -78,4 +78,17 @@ export interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
+}
+
+export interface ColumnProps {
+  handleDelete: (str: string) => void;
+  setShowEditForm: React.Dispatch<React.SetStateAction<boolean>>;
+  setReview: React.Dispatch<React.SetStateAction<ReviewDetail | undefined>>;
+  filterData: (data: ReviewDetail[]) => (formatter: any) =>
+    | {
+        text: any;
+        value: any;
+      }[]
+    | undefined;
+  reviews: ReviewDetail[] | undefined;
 }
