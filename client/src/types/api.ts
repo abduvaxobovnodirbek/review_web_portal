@@ -48,6 +48,7 @@ export interface ReviewDetail {
   likes: any[];
   likeCount:number;
   rating: any[];
+  comments?: any[];
   averageRate?: number;
   createdAt: Date;
   updatedAt: Date;

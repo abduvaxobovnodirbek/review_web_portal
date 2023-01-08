@@ -3,7 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { reviewApi } from "./services/api/review";
 import { authApi } from "./services/api/auth";
 import { categoryApi } from "./services/api/category";
-import { rateApi } from "./services/api/rating";
+import { rate_comment_api } from "./services/api/rating_comment";
 import { basketApi } from "./services/api/basket";
 import { trendReviewApi } from "./services/api/trendReviews";
 import users from "./services/api/user";
@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   [categoryApi.reducerPath]: categoryApi.reducer,
   [basketApi.reducerPath]: basketApi.reducer,
-  [rateApi.reducerPath]: rateApi.reducer,
+  [rate_comment_api.reducerPath]: rate_comment_api.reducer,
   [trendReviewApi.reducerPath]: trendReviewApi.reducer,
 
   authModal,
@@ -33,7 +33,7 @@ const store = configureStore({
       .concat(authApi.middleware)
       .concat(categoryApi.middleware)
       .concat(basketApi.middleware)
-      .concat(rateApi.middleware)
+      .concat(rate_comment_api.middleware)
       .concat(trendReviewApi.middleware),
 });
 

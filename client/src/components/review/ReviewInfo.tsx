@@ -13,6 +13,7 @@ import { useAppSelector } from "../../hooks/useAppSelector";
 import { useEffect, useState } from "react";
 
 import GradeText from "./GradeText";
+import Comments from "../../features/comments/Comments";
 
 const ReviewInfo = ({
   width,
@@ -143,6 +144,8 @@ const ReviewInfo = ({
           <Tag key={i} label={tag} />
         ))}
       </Stack>
+
+      <Comments reviewId={review?._id} currentUser={currentUser} />
     </div>
   );
 };

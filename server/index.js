@@ -19,6 +19,8 @@ const authRouter = require("./routes/auth");
 const reviewRouter = require("./routes/review");
 const categoryRouter = require("./routes/category");
 const userRouter = require("./routes/user");
+const Review = require("./models/Review");
+const User = require("./models/User");
 
 const app = express();
 
@@ -30,7 +32,7 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(
   cors({
-    origin: ["http://localhost:3000","https://reportus.netlify.app/"],
+    origin: ["http://localhost:3000", "https://reportus.netlify.app/"],
     credentials: true,
   })
 );
@@ -66,9 +68,51 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(
+const server = app.listen(
   PORT,
   console.log(
     `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
   )
 );
+
+let io = require("./socket").init(server);
+io.on("connection", (socket) => {
+  socket.io = io;
+  console.log("Client connected");
+
+  socket.on("send_comment", async ({ text, reviewId, currentUserId }) => {
+    const review = await Review.findById(reviewId)
+      .populate("comments.user")
+      .select("comments");
+
+    const user = await User.findById(currentUserId);
+
+    if (!review || !user) {
+      return socket.emit("send_comment_result", false);
+    }
+
+    review.comments.push({
+      user: currentUserId,
+      text,
+    });
+
+    await review.save();
+    const updated = await Review.findById(reviewId)
+      .populate("comments.user")
+      .select("comments");
+    socket.nsp.to(reviewId).emit("updateComments", updated);
+    return socket.emit("send_comment_result", true);
+  });
+
+  socket.on("getAllComments", async ({ reviewId }) => {
+    await socket.join(reviewId);
+    const review = await Review.findById(reviewId)
+      .populate("comments.user")
+      .select("comments");
+    if (!review) {
+      return socket.emit("getAllComments_result", null);
+    }
+
+    return socket.nsp.to(reviewId).emit("getAllComments_result", review);
+  });
+});

@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import Grade from "../../components/grade/Grade";
 import Spinner from "../../components/spinner/Spinner";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { useRateReviewMutation } from "../../services/api/rating";
+import { useRateReviewMutation } from "../../services/api/rating_comment";
 import { reviewApi } from "../../services/api/review";
 import { User } from "../../types/api";
 

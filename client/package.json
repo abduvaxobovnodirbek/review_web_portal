@@ -6,6 +6,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.0",
     "@reduxjs/toolkit": "^1.9.1",
@@ -34,6 +35,7 @@
     "react-router-dom": "^6.5.0",
     "react-scripts": "5.0.1",
     "react-share": "^4.4.1",
+    "socket.io-client": "^4.5.4",
     "suneditor": "^2.44.3",
     "suneditor-react": "^3.4.1",
     "swiper": "^8.4.5",

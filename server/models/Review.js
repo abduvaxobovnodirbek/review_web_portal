@@ -41,6 +41,19 @@ const ReviewSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    comments: {
+      type: [
+        {
+          user: {
+            type: mongoose.Schema.ObjectId,
+            ref: "User",
+          },
+          text: String,
+          createdAt: { type: Date, default: Date.now },
+        },
+      ],
+      default: [],
+    },
     likeCount: { type: Number, default: 0 },
     rating: {
       type: [
