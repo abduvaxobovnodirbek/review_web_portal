@@ -1,28 +1,11 @@
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
-import Box from "@mui/material/Box";
 import { message } from "antd";
-import { TabPanelProps } from "../../../types";
 import { useInsertToBasketMutation } from "../../../services/api/user/basket";
 import Spinner from "../../../components/spinner/Spinner";
 import FollowingReviews from "./FollowingReviews";
 import RecentlyAddedReviews from "./RecentlyAddedReviews";
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-}
+import TabPanel from "../../../components/TabPanel/TabPanel";
 
 const ReviewList = ({ value }: any) => {
   const [insertToBasket, { isLoading }] = useInsertToBasketMutation();

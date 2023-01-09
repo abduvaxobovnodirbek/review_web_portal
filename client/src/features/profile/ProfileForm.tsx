@@ -3,15 +3,17 @@ import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { AccountCircle } from "@mui/icons-material";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { message, Spin } from "antd";
+import { message } from "antd";
 import Spinner from "../../components/spinner/Spinner";
 import ProfileImage from "./ProfileImage";
-import { Avatar, Button } from "@mui/material";
+import { Avatar } from "@mui/material";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { editUser } from "../../services/api/user/user";
+import { editUser, getCurrentUser } from "../../services/api/user/user";
 import { toggleProfileModal } from "../../services/ui/modalSlice";
 import Cloudinary from "../../components/CloudImage/Cloudinary";
 import { FaUserEdit } from "react-icons/fa";
+import { User } from "../../types/api";
+import { adminControlApi } from "../../services/api/admin/admin";
 
 let validationSchema = Yup.object({
   image: Yup.array(),
@@ -20,32 +22,47 @@ let validationSchema = Yup.object({
 });
 type FormValues = Yup.InferType<typeof validationSchema>;
 
-const ProfileForm = () => {
-  const { currentUser, loading } = useAppSelector((state) => state.users);
+const ProfileForm = ({ user }: { user?: User }) => {
+  let { currentUser, loading } = useAppSelector((state) => state.users);
   const dispatch = useAppDispatch();
   const [newProfileImg, setNewProfileImg] = useState<boolean>(false);
+
   const initialValues: FormValues = {
     image: [],
-    name: currentUser?.name || "",
-    userInfo: currentUser?.userInfo || "",
+    name: user?.name || currentUser?.name || "",
+    userInfo: user?.userInfo || currentUser?.userInfo || "",
   };
 
   const handleUpdateUser = async (data: FormValues, { resetForm }: any) => {
-    let user = {};
+    let info = {};
     if (data.image?.length) {
-      user = {
+      info = {
         ...data,
         image: data.image[0].preview,
         public_id: currentUser?.image,
       };
     } else {
-      user = { name: data.name, userInfo: data.userInfo };
+      info = {
+        name: data.name,
+        userInfo: data.userInfo,
+      };
     }
-    dispatch(editUser({ id: currentUser?._id || "", data: user }))
+    dispatch(
+      editUser({
+        id: user?._id || currentUser?._id || "",
+        data: { ...info, email: user?.email || currentUser?.email },
+      })
+    )
       .unwrap()
       .then(() => {
         message.success("Successfully  profile edited!");
         dispatch(toggleProfileModal(false));
+        if (user) {
+          dispatch(
+            adminControlApi.util.invalidateTags([{ type: "Users", id: "LIST" }])
+          );
+          dispatch(getCurrentUser());
+        }
       })
       .catch(() => {
         message.error("Something went wrong");
@@ -76,10 +93,10 @@ const ProfileForm = () => {
                   />
                 ) : (
                   <div>
-                    {currentUser?.image ? (
+                    {user?.image || currentUser?.image ? (
                       <div className=" flex !relative items-end justify-center">
                         <div className="!rounded-full flex overflow-hidden w-[100px] h-[100px]">
-                          <Cloudinary img={currentUser.image} />
+                          <Cloudinary img={user?.image || currentUser?.image} />
                         </div>
                         <FaUserEdit
                           onClick={() => {

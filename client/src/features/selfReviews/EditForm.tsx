@@ -1,6 +1,6 @@
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, Stack } from "@mui/material";
 import { message } from "antd";
 import { useAppSelector } from "../../hooks/useAppSelector";
@@ -17,6 +17,8 @@ import useWindowSize from "../../hooks/useWindowSize";
 import { ReviewDetail } from "../../types/api";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { useEditReviewMutation } from "../../services/api/review/review";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { adminControlApi } from "../../services/api/admin/admin";
 
 let validationSchema = Yup.object({
   review_name: Yup.string().required("*review name  is required"),
@@ -51,13 +53,15 @@ const EditForm = ({
     imageList: [],
   };
   const [editReview, { isLoading }] = useEditReviewMutation();
-
+  const { currentUser } = useAppSelector((state) => state.users);
+  const location = useLocation();
   const { width } = useWindowSize();
 
   const { stepFirst, stepSecond } = useAppSelector(
     (state) => state.reviewSteps
   );
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (data: FormValues, { resetForm }: any) => {
     const images: string[] = [];
@@ -67,11 +71,25 @@ const EditForm = ({
       });
     }
 
-    editReview({ ...data, imageList: images, review_id: review?._id || "" })
+    editReview({
+      ...data,
+      imageList: images,
+      review_id: review?._id || "",
+      userId: review?.user._id || currentUser?._id || "",
+    })
       .unwrap()
       .then((data) => {
         message.success("Successfully edited  review!");
-        navigate("/profile");
+        if (location.pathname !== "/admin/panel") {
+          navigate("/profile");
+        } else {
+          dispatch(
+            adminControlApi.util.invalidateTags([
+              { type: "Reviews", id: "LIST" },
+            ])
+          );
+          setShowEditForm(false);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -86,7 +104,7 @@ const EditForm = ({
         onClick={() => setShowEditForm(false)}
       >
         <MdOutlineArrowBackIos />{" "}
-        <span className="ml-2 font-serif text-blue-900">
+        <span className="ml-2 font-serif text-blue-900 z-50">
           back to reviews table
         </span>
       </div>
@@ -155,7 +173,7 @@ const EditForm = ({
                         </Stack>
                       </>
                     ) : (
-                      <DemoVisualization formik={formik} />
+                      <DemoVisualization formik={formik} review={review} />
                     )}
                   </div>
                 )}

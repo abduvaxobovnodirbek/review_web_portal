@@ -10,6 +10,7 @@ import SelfReviews from "../pages/main/user/SelfReviews";
 import { routesType } from "../types";
 import Tags from "../pages/main/home/Tags";
 import Category from "../pages/main/home/Category";
+import AdminPanel from "../pages/admin/AdminPanel";
 
 const routes: routesType = [
   {
@@ -60,6 +61,11 @@ const routes: routesType = [
   {
     path: "/saved-reviews",
     element: SavedReviews,
+    protected: true,
+  },
+  {
+    path: "/admin/panel",
+    element: AdminPanel,
     protected: true,
   },
   {

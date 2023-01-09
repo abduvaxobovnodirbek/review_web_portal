@@ -10,8 +10,15 @@ import Tag from "../../../components/tag/Tag";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import Cloudinary from "../../../components/CloudImage/Cloudinary";
 import useEffectOnce from "../../../hooks/useEffectOnce";
+import { ReviewDetail } from "../../../types/api";
 
-const DemoVisualization = ({ formik }: any) => {
+const DemoVisualization = ({
+  formik,
+  review,
+}: {
+  formik: any;
+  review?: ReviewDetail;
+}) => {
   const [showImageList, setShowImageList] = useState<boolean>(false);
   const { imageList, review_name, reviewed_art, tags, authorGrade } =
     formik.values;
@@ -36,10 +43,14 @@ const DemoVisualization = ({ formik }: any) => {
       <CardHeader
         avatar={
           <Avatar sx={{ background: "#00000064" }} aria-label="recipe">
-            {currentUser?.image ? <Cloudinary img={currentUser?.image} /> : ""}
+            {review?.user.image || currentUser?.image ? (
+              <Cloudinary img={review?.user.image || currentUser?.image} />
+            ) : (
+              ""
+            )}
           </Avatar>
         }
-        title={currentUser?.name}
+        title={review?.user.name|| currentUser?.name}
         subheader={format(new Date(Date.now()), "MMM do. yyyy")}
       />
 

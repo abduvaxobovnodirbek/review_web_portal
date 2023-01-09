@@ -8,20 +8,15 @@ const {
 
 const router = express.Router();
 
-const {
-  isAuthorized,
-  isActiveUser,
-  authorize,
-} = require("../middlewares/routeProtect");
-//isAuthorized, isActiveUser, authorize("super_admin"),
+const { isAuthorized, authorize } = require("../middlewares/routeProtect");
 router
   .route("/")
   .get(getCategories)
-  .post( createCategory);
+  .post(isAuthorized, authorize("super_admin"), createCategory);
 
 router
   .route("/:id")
-  .put( updateCategory)
-  .delete( deleteCategory);
+  .put(isAuthorized, authorize("super_admin"), updateCategory)
+  .delete(isAuthorized, authorize("super_admin"), deleteCategory);
 
 module.exports = router;

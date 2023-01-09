@@ -8,6 +8,7 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { toggleProfileModal } from "../../services/ui/modalSlice";
 import { Fade } from "@mui/material";
 import ProfileForm from "./ProfileForm";
+import { User } from "../../types/api";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -18,7 +19,7 @@ const Transition = React.forwardRef(function Transition(
   return <Fade ref={ref} {...props} />;
 });
 
-export default function ProfileModal() {
+export default function ProfileModal({user}:{user?:User}) {
   const { showProfileModal } = useAppSelector((state) => state.authModal);
   const dispatch = useAppDispatch();
 
@@ -54,7 +55,7 @@ export default function ProfileModal() {
           <p className="font-serif text-center w-[100%]"> Edit Profile</p>
         </DialogTitle>
         <DialogContent className="mt-12">
-          <ProfileForm />
+          <ProfileForm user = {user}/>
         </DialogContent>
       </Dialog>
     </div>

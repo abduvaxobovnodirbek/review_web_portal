@@ -6,6 +6,7 @@ const {
   updateUser,
   deleteUser,
   followToUser,
+  statusChange,
 } = require("../controllers/user/user");
 const {
   getSavedReviews,
@@ -38,6 +39,13 @@ router.patch(
   isAuthorized,
   isActiveUser,
   removeSavedReview
+);
+
+router.patch(
+  "/status/:id",
+  isAuthorized,
+  authorize("super_admin"),
+  statusChange
 );
 
 router

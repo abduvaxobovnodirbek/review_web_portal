@@ -159,3 +159,7 @@
 .ant-modal-wrap {
   z-index: 10002 !important;
 }
+
+.ant-switch {
+  background-color: rgb(132, 135, 141);
+}

@@ -6,6 +6,7 @@ import { headerMenu, headerMobileMenu } from "../../types/index";
 import LangSelector from "../../components/langSelector/LangSelector";
 import { FaUser } from "react-icons/fa";
 import { BiBookmarks, BiLogOut } from "react-icons/bi";
+import { GrUserAdmin } from "react-icons/gr";
 import { MdOutlineRateReview } from "react-icons/md";
 import Cloudinary from "../../components/CloudImage/Cloudinary";
 
@@ -17,6 +18,7 @@ export const renderMenu = ({
   handleMenuClose,
   handleLogout,
   location,
+  user,
 }: headerMenu) => {
   return (
     <Menu
@@ -61,6 +63,19 @@ export const renderMenu = ({
         <BiBookmarks className="mr-2" />{" "}
         <span className="text-gray-600 text-sm font-serif">Saved</span>
       </MenuItem>
+      {user.role === "super_admin" ? (
+        <MenuItem
+          onClick={() => {
+            handleMenuClose("/admin/panel");
+          }}
+          className="!flex !items-center"
+        >
+          <GrUserAdmin className="mr-2" />{" "}
+          <span className="text-gray-600 text-sm font-serif">Panel</span>
+        </MenuItem>
+      ) : (
+        ""
+      )}
       <MenuItem
         onClick={() => {
           handleLogout();

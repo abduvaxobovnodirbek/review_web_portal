@@ -45,7 +45,12 @@ export default function Header() {
   useEffect(() => {
     dispatch(getCurrentUser())
       .unwrap()
-      .then((data) => cookie.set("userId", data._id));
+      .then((data) => {
+        cookie.set("userId", data._id);
+        if (data.role === "super_admin") {
+          cookie.set("role", data.role);
+        }
+      });
   }, [dispatch]);
 
   useEffect(() => {
@@ -84,6 +89,9 @@ export default function Header() {
     await logoutFunc(currentUser as User);
     dispatch(removeCurrentUser());
     cookie.remove("userId");
+    if (currentUser?.role === "super_admin") {
+      cookie.remove("role");
+    }
     navigate("/");
   };
 

@@ -46,7 +46,7 @@ export interface ReviewDetail {
   authorGrade: number;
   imageList: string[];
   likes: any[];
-  likeCount:number;
+  likeCount: number;
   rating: any[];
   comments?: any[];
   averageRate?: number;
@@ -80,4 +80,5 @@ export type FormValues = {
   authorGrade: number;
   imageList: any[] | undefined;
   review_id?: string;
+  userId?: string;
 };

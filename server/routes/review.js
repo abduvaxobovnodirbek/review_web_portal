@@ -12,13 +12,17 @@ const {
   getFollowingReviews,
   rateReview,
   getTrendReviews,
-  commentOnReview,
   getSuggestedReviews,
+  getAllReviews,
 } = require("../controllers/review/review");
 
 const router = express.Router();
 
-const { isAuthorized, isActiveUser } = require("../middlewares/routeProtect");
+const {
+  isAuthorized,
+  isActiveUser,
+  authorize,
+} = require("../middlewares/routeProtect");
 
 router
   .route("/")
@@ -27,6 +31,7 @@ router
 
 router.patch("/like/:id", isAuthorized, isActiveUser, likeReview);
 router.get("/following", isAuthorized, getFollowingReviews);
+router.get("/all", isAuthorized, authorize("super_admin"), getAllReviews);
 router.get("/personal", isAuthorized, getPersonalReviews);
 router.get("/user/:id", getUserAllReviews);
 router.patch("/rate/:id", isAuthorized, rateReview);

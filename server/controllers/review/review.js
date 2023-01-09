@@ -143,7 +143,7 @@ exports.createReview = asyncHandler(async (req, res, next) => {
 // route         PUT /api/v1/reviews/:id
 // access        Private
 exports.updateReview = asyncHandler(async (req, res, next) => {
-  req.body.user = req.user.id;
+  req.body = { ...req.body, user: req.body.userId };
 
   let review = await Review.findById(req.params.id);
   let images = [...req.body.imageList];
@@ -157,7 +157,6 @@ exports.updateReview = asyncHandler(async (req, res, next) => {
 
   if (
     review.user.toString() !== req.user.id &&
-    req.user.role !== "admin" &&
     req.user.role !== "super_admin"
   ) {
     return next(
@@ -201,6 +200,18 @@ exports.updateReview = asyncHandler(async (req, res, next) => {
   }
 });
 
+exports.getAllReviews = asyncHandler(async (req, res, next) => {
+  const reviews = await Review.find()
+    .populate("user category")
+    .sort("-createdAt");
+
+  if (!reviews) {
+    return next(new ErrorResponse(`Reviews not found`, 404));
+  }
+
+  res.status(200).json({ success: true, data: reviews });
+});
+
 // description    Delete Review
 // route          DELETE /api/v1/reviews/:id
 // access         Private
@@ -215,7 +226,6 @@ exports.deleteReview = asyncHandler(async (req, res, next) => {
 
   if (
     review.user.toString() !== req.user.id &&
-    req.user.role !== "admin" &&
     req.user.role !== "super_admin"
   ) {
     return next(

@@ -42,7 +42,15 @@ export const getCurrentUser = createAsyncThunk<
 
 export const editUser = createAsyncThunk<
   User,
-  { id: string; data: { name?: string; userInfo?: string; image?: any } },
+  {
+    id: string;
+    data: {
+      name?: string;
+      userInfo?: string;
+      image?: any;
+      email: string | undefined;
+    };
+  },
   { rejectValue: any }
 >("user/editUser", async function (user, { rejectWithValue }) {
   try {

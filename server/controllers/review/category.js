@@ -34,12 +34,10 @@ exports.updateCategory = asyncHandler(async (req, res, next) => {
     );
   }
 
-  category = await Category.findOneAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  category.name = req.body.name;
+  const updatedCategory = await category.save();
 
-  res.status(200).json({ success: true, data: category });
+  res.status(200).json({ success: true, data: updatedCategory });
 });
 
 // description    Delete Category

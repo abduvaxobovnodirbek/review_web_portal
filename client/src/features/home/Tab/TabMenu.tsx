@@ -4,6 +4,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import useWindowSize from "../../../hooks/useWindowSize";
 import { childrenProps, TabTypes } from "../../../types";
+import { useLocation } from "react-router-dom";
 
 export default function TabMenu({
   children,
@@ -14,9 +15,16 @@ export default function TabMenu({
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const location = useLocation();
 
   return (
-    <Box sx={width > 900 ? { width: "65%" } : { width: "100%" }}>
+    <Box
+      sx={
+        width > 900 && location.pathname !== "/admin/panel"
+          ? { width: "65%" }
+          : { width: "100%" }
+      }
+    >
       <Box
         sx={{ borderBottom: 1, borderColor: "divider" }}
         position="sticky"

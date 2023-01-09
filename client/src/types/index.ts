@@ -92,3 +92,24 @@ export interface ColumnProps {
     | undefined;
   reviews: ReviewDetail[] | undefined;
 }
+
+export interface ColumnUserProps {
+  handleDelete: (str: string) => void;
+  handleStatus: (val: User) => void;
+  handleShowProfile: () => void;
+  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
+  filterData: (data: User[]) => (formatter: any) =>
+    | {
+        text: any;
+        value: any;
+      }[]
+    | undefined;
+  users: User[] | undefined;
+}
+
+export interface panelProps {
+  users: User[] | undefined;
+  isLoading: boolean;
+  handleShowProfile: () => void;
+  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
+}

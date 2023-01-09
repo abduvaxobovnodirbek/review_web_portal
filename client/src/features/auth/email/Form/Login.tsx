@@ -26,6 +26,9 @@ const Login: React.FC = () => {
       const { payload } = await dispatch(getCurrentUser());
       if (payload) {
         cookie.set("userId", payload._id);
+        if (payload.role === "super_admin") {
+          cookie.set("role", payload.role);
+        }
         message.success("Successfully logged in !");
         navigate("/");
       }

@@ -10,6 +10,7 @@ import users from "./services/api/user/user";
 import authModal from "./services/ui/modalSlice";
 import reviewSteps from "./services/ui/reviewStepsSlice";
 import { searchApi } from "./services/api/search";
+import { adminControlApi } from "./services/api/admin/admin";
 
 const rootReducer = combineReducers({
   [reviewApi.reducerPath]: reviewApi.reducer,
@@ -19,6 +20,8 @@ const rootReducer = combineReducers({
   [rate_review.reducerPath]: rate_review.reducer,
   [trendReviewApi.reducerPath]: trendReviewApi.reducer,
   [searchApi.reducerPath]: searchApi.reducer,
+  [adminControlApi.reducerPath]: adminControlApi.reducer,
+
 
   authModal,
   reviewSteps,
@@ -37,7 +40,8 @@ const store = configureStore({
       .concat(basketApi.middleware)
       .concat(rate_review.middleware)
       .concat(searchApi.middleware)
-      .concat(trendReviewApi.middleware),
+      .concat(trendReviewApi.middleware)
+      .concat(adminControlApi.middleware),
 });
 
 setupListeners(store.dispatch);

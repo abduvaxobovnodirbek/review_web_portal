@@ -33,7 +33,27 @@ export const categoryApi = createApi({
         return baseQueryReturnValue.data;
       },
     }),
+    deleteCategory: build.mutation<any, string>({
+      query: (id) => ({
+        url: `categories/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "typeCategory", id: "LIST" }],
+    }),
+    editCategory: build.mutation<Category, Partial<Category>>({
+      query: (data) => ({
+        url: `categories/${data._id}`,
+        method: "PUT",
+        body: { name: data.name },
+      }),
+      invalidatesTags: [{ type: "typeCategory", id: "LIST" }],
+    }),
   }),
 });
 
-export const { useCreateCategoryMutation, useGetCategoriesQuery } = categoryApi;
+export const {
+  useCreateCategoryMutation,
+  useGetCategoriesQuery,
+  useEditCategoryMutation,
+  useDeleteCategoryMutation,
+} = categoryApi;
