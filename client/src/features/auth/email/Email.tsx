@@ -7,7 +7,7 @@ import {
   toggleEmailLoginForm,
   toggleSocialLoginForm,
   toggleEmailRegisterForm,
-} from "../../../services/modal/modalSlice";
+} from "../../../services/ui/modalSlice";
 
 const Email = () => {
   const dispatch = useAppDispatch();

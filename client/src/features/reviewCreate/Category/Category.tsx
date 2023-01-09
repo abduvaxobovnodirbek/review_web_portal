@@ -1,5 +1,5 @@
 import { Field } from "formik";
-import { useGetCategoriesQuery } from "../../../services/api/category";
+import { useGetCategoriesQuery } from "../../../services/api/review/category";
 
 const Category = ({ formik }: any) => {
   const { data } = useGetCategoriesQuery();

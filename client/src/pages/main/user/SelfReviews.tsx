@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useAppSelector } from "../../hooks/useAppSelector";
-import { useGetPersonalReviewsQuery } from "../../services/api/review";
-import { ReviewDetail } from "../../types/api";
-import Stepper from "../../features/reviewCreate/Stepper/Stepper";
-import EditForm from "../../features/selfReviews/EditForm";
-import ReviewsTable from "../../features/selfReviews/ReviewsTable";
-import useWindowSize from "../../hooks/useWindowSize";
-import ContextWrapper from "../../layouts/ContextWrapper";
+import { useAppSelector } from "../../../hooks/useAppSelector";
+import { useGetPersonalReviewsQuery } from "../../../services/api/review/review";
+import { ReviewDetail } from "../../../types/api";
+import Stepper from "../../../features/reviewCreate/Stepper/Stepper";
+import EditForm from "../../../features/selfReviews/EditForm";
+import ReviewsTable from "../../../features/selfReviews/ReviewsTable";
+import useWindowSize from "../../../hooks/useWindowSize";
+import ContextWrapper from "../../../layouts/ContextWrapper";
 
 const SelfReviews = () => {
   const { isLoading, data: reviews } = useGetPersonalReviewsQuery();

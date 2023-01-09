@@ -5,7 +5,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { TransitionProps } from "@mui/material/transitions";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { toggleProfileModal } from "../../services/modal/modalSlice";
+import { toggleProfileModal } from "../../services/ui/modalSlice";
 import { Fade } from "@mui/material";
 import ProfileForm from "./ProfileForm";
 

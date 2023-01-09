@@ -8,7 +8,7 @@ import {
   ReviewAndUser,
   ReviewDetail,
   ReviewsType,
-} from "../../types/api";
+} from "../../../types/api";
 
 export const reviewApi = createApi({
   reducerPath: "reviewApi",

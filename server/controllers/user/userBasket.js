@@ -1,7 +1,7 @@
-const ErrorResponse = require("../utils/errorResponse");
-const asyncHandler = require("../middlewares/async");
-const UserBasket = require("../models/UserBasket");
-const Review = require("../models/Review");
+const ErrorResponse = require("../../utils/errorResponse");
+const asyncHandler = require("../../middlewares/async");
+const UserBasket = require("../../models/UserBasket");
+const Review = require("../../models/Review");
 
 // description   Insert review to user saved basket
 // route         POST /api/v1/user/saved-reviews

@@ -8,8 +8,8 @@ import Spinner from "../../components/spinner/Spinner";
 import ProfileImage from "./ProfileImage";
 import { Avatar, Button } from "@mui/material";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { editUser } from "../../services/api/user";
-import { toggleProfileModal } from "../../services/modal/modalSlice";
+import { editUser } from "../../services/api/user/user";
+import { toggleProfileModal } from "../../services/ui/modalSlice";
 import Cloudinary from "../../components/CloudImage/Cloudinary";
 import { FaUserEdit } from "react-icons/fa";
 

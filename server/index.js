@@ -19,6 +19,8 @@ const authRouter = require("./routes/auth");
 const reviewRouter = require("./routes/review");
 const categoryRouter = require("./routes/category");
 const userRouter = require("./routes/user");
+const searchRouter = require("./routes/search");
+
 const Review = require("./models/Review");
 const User = require("./models/User");
 
@@ -63,6 +65,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/reviews", reviewRouter);
 app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/search", searchRouter);
 
 app.use(errorHandler);
 

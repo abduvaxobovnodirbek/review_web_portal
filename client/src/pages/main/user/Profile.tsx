@@ -2,16 +2,16 @@ import { Skeleton } from "antd";
 import { VscPreview } from "react-icons/vsc";
 import { FaUserEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useGetPersonalReviewsQuery } from "../../services/api/review";
-import { ReviewDetail } from "../../types/api";
-import { toggleProfileModal } from "../../services/modal/modalSlice";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { useAppSelector } from "../../hooks/useAppSelector";
-import ReviewCard from "../../components/review/ReviewCard";
-import UserProfile from "../../components/userProfile/UserProfile";
-import useWindowSize from "../../hooks/useWindowSize";
-import ContextWrapper from "../../layouts/ContextWrapper";
-import ProfileModal from "../../features/profile/ProfileModal";
+import { useGetPersonalReviewsQuery } from "../../../services/api/review/review";
+import { ReviewDetail } from "../../../types/api";
+import { toggleProfileModal } from "../../../services/ui/modalSlice";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { useAppSelector } from "../../../hooks/useAppSelector";
+import ReviewCard from "../../../components/review/ReviewCard";
+import UserProfile from "../../../components/userProfile/UserProfile";
+import useWindowSize from "../../../hooks/useWindowSize";
+import ContextWrapper from "../../../layouts/ContextWrapper";
+import ProfileModal from "../../../features/profile/ProfileModal";
 
 const Profile = () => {
   const { isLoading, data: reviews, refetch } = useGetPersonalReviewsQuery();

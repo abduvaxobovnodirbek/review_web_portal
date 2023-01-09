@@ -72,4 +72,6 @@ const ReviewSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+ReviewSchema.index({ "$**": "text" });
+
 module.exports = mongoose.model("Review", ReviewSchema);

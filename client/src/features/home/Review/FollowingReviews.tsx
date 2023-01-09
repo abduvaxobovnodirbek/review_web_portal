@@ -5,7 +5,7 @@ import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ReviewCard from "../../../components/review/ReviewCard";
 import { useAppSelector } from "../../../hooks/useAppSelector";
-import { useGetFollowingReviewsQuery } from "../../../services/api/review";
+import { useGetFollowingReviewsQuery } from "../../../services/api/review/review";
 import { ReviewDetail } from "../../../types/api";
 
 const FollowingReviews = ({

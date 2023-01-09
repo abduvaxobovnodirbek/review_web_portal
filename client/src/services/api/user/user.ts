@@ -4,9 +4,9 @@ import {
   createAsyncThunk,
   AnyAction,
 } from "@reduxjs/toolkit";
-import { User } from "../../types/api";
+import { User } from "../../../types/api";
 
-import api from "../../utils/api";
+import api from "../../../utils/api";
 
 type UserState = {
   list: User[];

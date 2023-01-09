@@ -6,12 +6,12 @@ const {
   updateUser,
   deleteUser,
   followToUser,
-} = require("../controllers/user");
+} = require("../controllers/user/user");
 const {
   getSavedReviews,
   createSavedReview,
   removeSavedReview,
-} = require("../controllers/userBasket");
+} = require("../controllers/user/userBasket");
 const {
   isAuthorized,
   authorize,

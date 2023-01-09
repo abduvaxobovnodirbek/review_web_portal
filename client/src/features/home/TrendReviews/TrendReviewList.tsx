@@ -1,5 +1,5 @@
 import { Skeleton } from "antd";
-import { useGetTrendReviewsQuery } from "../../../services/api/trendReviews";
+import { useGetTrendReviewsQuery } from "../../../services/api/review/trendReviews";
 import { ReviewDetail } from "../../../types/api";
 import TrendReviewCard from "./TrendReviewCard";
 

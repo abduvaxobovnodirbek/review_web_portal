@@ -1,11 +1,11 @@
 import { Skeleton } from "antd";
 import { useParams } from "react-router-dom";
-import { useGetReviewDetailQuery } from "../../services/api/review";
-import { useAppSelector } from "../../hooks/useAppSelector";
-import ReviewInfo from "../../components/review/ReviewInfo";
-import UserProfile from "../../components/userProfile/UserProfile";
-import useWindowSize from "../../hooks/useWindowSize";
-import ContextWrapper from "../../layouts/ContextWrapper";
+import { useGetReviewDetailQuery } from "../../../services/api/review/review";
+import { useAppSelector } from "../../../hooks/useAppSelector";
+import ReviewInfo from "../../../components/review/ReviewInfo";
+import UserProfile from "../../../components/userProfile/UserProfile";
+import useWindowSize from "../../../hooks/useWindowSize";
+import ContextWrapper from "../../../layouts/ContextWrapper";
 
 const ReviewDetail = () => {
   const { width } = useWindowSize();
@@ -16,6 +16,7 @@ const ReviewDetail = () => {
     isLoading: reviewLoading,
     refetch,
   } = useGetReviewDetailQuery(id || "");
+
   return (
     <ContextWrapper
       flexOptions={`justify-between items-start ${

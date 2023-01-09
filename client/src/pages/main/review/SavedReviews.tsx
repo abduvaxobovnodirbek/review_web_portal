@@ -4,11 +4,11 @@ import Cookies from "universal-cookie";
 import {
   useGetBasketQuery,
   useRemoveFromBasketMutation,
-} from "../../services/api/basket";
-import { ReviewDetail } from "../../types/api";
-import ReviewCard from "../../components/review/ReviewCard";
-import ContextWrapper from "../../layouts/ContextWrapper";
-import Spinner from "../../components/spinner/Spinner";
+} from "../../../services/api/user/basket";
+import { ReviewDetail } from "../../../types/api";
+import ReviewCard from "../../../components/review/ReviewCard";
+import ContextWrapper from "../../../layouts/ContextWrapper";
+import Spinner from "../../../components/spinner/Spinner";
 
 const SavedReviews = () => {
   const cookie = new Cookies();

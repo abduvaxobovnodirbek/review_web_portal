@@ -5,7 +5,7 @@ import {
   showStepFirst,
   showStepSecond,
   showStepThird,
-} from "../../../services/reviewSteps/reviewStepsSlice";
+} from "../../../services/ui/reviewStepsSlice";
 import { items, steps } from "./StepperConfigs";
 import useWindowSize from "../../../hooks/useWindowSize";
 

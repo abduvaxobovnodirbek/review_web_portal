@@ -1,9 +1,23 @@
+import { ChangeEvent, FormEvent, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
+import useNavigateParams from "../../hooks/useNavigateParams";
 
 const SearchInput = () => {
+  const [value, setValue] = useState<string>("");
+  const navigateParams = useNavigateParams();
+
+  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (value) {
+      navigateParams("", { q: value } as any);
+      setValue("");
+    }
+  };
+
   return (
     <div className="flex items-center">
-      <div
+      <form
+        onSubmit={handleSearch}
         className="relative text-gray-400  rounded-xl  px-2"
         style={{ width: "100%" }}
       >
@@ -19,8 +33,11 @@ const SearchInput = () => {
           style={{ background: "#FAFAFA", width: "100%" }}
           placeholder="Search quickly"
           autoComplete="off"
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setValue(e.target.value)
+          }
         />
-      </div>
+      </form>
     </div>
   );
 };

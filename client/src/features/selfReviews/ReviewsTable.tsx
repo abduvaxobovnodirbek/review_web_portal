@@ -1,5 +1,5 @@
 import { message, Table } from "antd";
-import { useDeleteReviewMutation } from "../../services/api/review";
+import { useDeleteReviewMutation } from "../../services/api/review/review";
 import { ReviewDetail } from "../../types/api";
 import useWindowSize from "../../hooks/useWindowSize";
 import ReviewInfo from "../../components/review/ReviewInfo";
@@ -26,7 +26,6 @@ const ReviewsTable = ({
       text: formatter(item),
       value: formatter(item),
     }));
-  
 
   const handleDelete = async (id: string) => {
     await deleteReview(id)
@@ -44,7 +43,7 @@ const ReviewsTable = ({
         setShowEditForm,
         setReview,
         filterData,
-        reviews
+        reviews,
       })}
       dataSource={reviews}
       rowKey="_id"

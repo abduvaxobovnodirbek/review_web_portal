@@ -10,7 +10,7 @@ const {
   authFacebookRedirect,
   passportLogin,
   passportRegister,
-} = require("../controllers/auth");
+} = require("../controllers/user/auth");
 const { isAuthorized } = require("../middlewares/routeProtect");
 
 router.post("/email_login", passportLogin, email_login);

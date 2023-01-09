@@ -1,6 +1,6 @@
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import { useCreateReviewMutation } from "../../services/api/review";
+import { useCreateReviewMutation } from "../../services/api/review/review";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import CreateTags from "./CreateTags/CreateTags";
 import ReviewedArticle from "./ReviewedArticle/ReviewedArticle";
@@ -53,13 +53,13 @@ const FormComponent = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit =  (data: FormValues, { resetForm }: any) => {
+  const handleSubmit = (data: FormValues, { resetForm }: any) => {
     const images: string[] = [];
     if (data.imageList) {
       data.imageList.forEach((file: any) => images.push(file.preview));
     }
 
-     createReview({ ...data, imageList: images })
+    createReview({ ...data, imageList: images })
       .unwrap()
       .then((data) => {
         message.success("Successfully created new review!");

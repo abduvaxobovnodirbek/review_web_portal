@@ -1,13 +1,15 @@
 import Error from "../pages/main/Error";
-import Home from "../pages/main/Home";
-import Search from "../pages/main/Search";
-import ReviewCreate from "../pages/main/ReviewCreate";
-import Profile from "../pages/main/Profile";
-import ReviewDetail from "../pages/main/ReviewDetail";
-import UsersAllReviews from "../pages/main/UsersAllReviews";
-import SavedReviews from "../pages/main/SavedReviews";
-import SelfReviews from "../pages/main/SelfReviews";
+import Home from "../pages/main/home/Home";
+import Search from "../pages/main/home/Search";
+import ReviewCreate from "../pages/main/review/ReviewCreate";
+import Profile from "../pages/main/user/Profile";
+import ReviewDetail from "../pages/main/review/ReviewDetail";
+import UsersAllReviews from "../pages/main/review/UsersAllReviews";
+import SavedReviews from "../pages/main/review/SavedReviews";
+import SelfReviews from "../pages/main/user/SelfReviews";
 import { routesType } from "../types";
+import Tags from "../pages/main/home/Tags";
+import Category from "../pages/main/home/Category";
 
 const routes: routesType = [
   {
@@ -39,6 +41,16 @@ const routes: routesType = [
     path: "/profile",
     element: Profile,
     protected: true,
+  },
+  {
+    path: "/tag/:id",
+    element: Tags,
+    protected: false,
+  },
+  {
+    path: "/category/:id",
+    element: Category,
+    protected: false,
   },
   {
     path: "/self-reviews",

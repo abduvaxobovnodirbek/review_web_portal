@@ -13,7 +13,8 @@ const {
   rateReview,
   getTrendReviews,
   commentOnReview,
-} = require("../controllers/review");
+  getSuggestedReviews,
+} = require("../controllers/review/review");
 
 const router = express.Router();
 
@@ -31,6 +32,7 @@ router.get("/user/:id", getUserAllReviews);
 router.patch("/rate/:id", isAuthorized, rateReview);
 router.get("/tags", getTags);
 router.get("/trend", getTrendReviews);
+router.get("/:reviewId/suggested", getSuggestedReviews);
 
 router
   .route("/:id")

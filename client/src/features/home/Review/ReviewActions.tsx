@@ -9,10 +9,13 @@ import Chip from "@mui/material/Chip";
 import { message } from "antd";
 import Cookies from "universal-cookie";
 import { ReviewDetail } from "../../../types/api";
-import { useLikeReviewMutation } from "../../../services/api/review";
+import { useLikeReviewMutation } from "../../../services/api/review/review";
 import { useAppSelector } from "../../../hooks/useAppSelector";
-import { useInsertToBasketMutation } from "../../../services/api/basket";
+import { useInsertToBasketMutation } from "../../../services/api/user/basket";
 import Spinner from "../../../components/spinner/Spinner";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { toggleModal } from "../../../services/ui/modalSlice";
+import { SyntheticEvent } from "react";
 
 const ReviewActions = ({ review }: { review: ReviewDetail }) => {
   const [likeReview, { isLoading: like_review_loading }] =
@@ -25,16 +28,21 @@ const ReviewActions = ({ review }: { review: ReviewDetail }) => {
   const getCookie = cookie.get("user_basket");
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleLikeReview = (e: any) => {
     e.stopPropagation();
-    likeReview(review._id)
-      .unwrap()
-      .then(() => {
-        message.success("review like has been updated successfully!");
-        navigate(location.pathname);
-      })
-      .catch((err) => message.error("something went wrong try again!"));
+    if (currentUser?._id) {
+      likeReview(review._id)
+        .unwrap()
+        .then(() => {
+          message.success("review like has been updated successfully!");
+          navigate(location.pathname);
+        })
+        .catch((err) => message.error("something went wrong try again!"));
+    } else {
+      dispatch(toggleModal(true));
+    }
   };
 
   const handleAddToBasket = (id: string) => {
@@ -57,7 +65,7 @@ const ReviewActions = ({ review }: { review: ReviewDetail }) => {
       )}
       <CardActions disableSpacing>
         <Tooltip title="Like" placement="top" className="!px-0">
-          <>
+          <span onClick={handleLikeReview}>
             <IconButton
               disabled={!currentUser}
               aria-label="like button"
@@ -66,12 +74,11 @@ const ReviewActions = ({ review }: { review: ReviewDetail }) => {
                   ? { color: "#03776f" }
                   : {}
               }
-              onClick={handleLikeReview}
             >
               <ThumbUpRoundedIcon />
             </IconButton>
             <span>{review.likes.length ? review.likes.length : ""}</span>
-          </>
+          </span>
         </Tooltip>
         {!getCookie?.includes(review?._id) ? (
           <Tooltip
@@ -84,6 +91,8 @@ const ReviewActions = ({ review }: { review: ReviewDetail }) => {
                 e.stopPropagation();
                 if (handleAddToBasket && currentUser?._id) {
                   handleAddToBasket(review?._id || "");
+                } else {
+                  dispatch(toggleModal(true));
                 }
               }}
             >
@@ -112,6 +121,10 @@ const ReviewActions = ({ review }: { review: ReviewDetail }) => {
             label={review.category.name}
             component={"div"}
             className="!cursor-pointer"
+            onClick={(e: SyntheticEvent) => {
+              e.stopPropagation();
+              navigate(`/category/${review.category.name}`);
+            }}
           />
         </Tooltip>
       </CardActions>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { message } from "antd";
 import { TabPanelProps } from "../../../types";
-import { useInsertToBasketMutation } from "../../../services/api/basket";
+import { useInsertToBasketMutation } from "../../../services/api/user/basket";
 import Spinner from "../../../components/spinner/Spinner";
 import FollowingReviews from "./FollowingReviews";
 import RecentlyAddedReviews from "./RecentlyAddedReviews";

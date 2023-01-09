@@ -16,7 +16,7 @@ import ReviewedArticle from "../reviewCreate/ReviewedArticle/ReviewedArticle";
 import useWindowSize from "../../hooks/useWindowSize";
 import { ReviewDetail } from "../../types/api";
 import { MdOutlineArrowBackIos } from "react-icons/md";
-import { useEditReviewMutation } from "../../services/api/review";
+import { useEditReviewMutation } from "../../services/api/review/review";
 
 let validationSchema = Yup.object({
   review_name: Yup.string().required("*review name  is required"),

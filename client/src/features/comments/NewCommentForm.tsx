@@ -3,6 +3,8 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { socket } from "../../App";
 import AddComment from "../../components/comments/AddComment";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { toggleModal } from "../../services/ui/modalSlice";
 import { User } from "../../types/api";
 
 let validationSchema = Yup.object({
@@ -22,20 +24,26 @@ const NewCommentForm = ({
     text: "",
   };
 
+  const dispatch = useAppDispatch();
+
   const handleSubmit = async (data: FormValues, { resetForm }: any) => {
-    await socket.emit("send_comment", {
-      ...data,
-      reviewId: reviewId || "",
-      currentUserId: currentUser?._id || "",
-    });
-    await socket.on("send_comment_result", (result: boolean) => {
-      if (!result) {
-        return message.error("Something went wrong try again please!");
-      } else {
-        message.success("you have successfuly commented!");
-        resetForm();
-      }
-    });
+    if (currentUser?._id) {
+      await socket.emit("send_comment", {
+        ...data,
+        reviewId: reviewId || "",
+        currentUserId: currentUser?._id || "",
+      });
+      await socket.on("send_comment_result", (result: boolean) => {
+        if (!result) {
+          return message.error("Something went wrong try again please!");
+        } else {
+          message.success("you have successfuly commented!");
+          resetForm();
+        }
+      });
+    } else {
+      dispatch(toggleModal(true));
+    }
   };
 
   return (

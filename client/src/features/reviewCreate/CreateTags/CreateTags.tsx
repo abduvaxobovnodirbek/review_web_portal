@@ -1,6 +1,6 @@
 import { Select } from "antd";
 import type { SelectProps } from "antd";
-import { useGetTagsQuery } from "../../../services/api/review";
+import { useGetTagsQuery } from "../../../services/api/review/review";
 
 const CreateTags = ({ formik }: any) => {
   const getTagsFunc = useGetTagsQuery();

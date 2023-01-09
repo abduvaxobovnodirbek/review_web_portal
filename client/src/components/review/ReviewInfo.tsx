@@ -10,10 +10,12 @@ import ReviewActions from "../../features/home/Review/ReviewActions";
 import Cloudinary from "../CloudImage/Cloudinary";
 import GradeForArt from "../../features/gradeForArt/GradeForArt";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { useEffect, useState } from "react";
+import { useGetSuggestedReviewsQuery } from "../../services/api/search";
+import { SyntheticEvent, useEffect, useState } from "react";
 
 import GradeText from "./GradeText";
 import Comments from "../../features/comments/Comments";
+import ReviewCard from "./ReviewCard";
 
 const ReviewInfo = ({
   width,
@@ -30,7 +32,10 @@ const ReviewInfo = ({
   const { currentUser } = useAppSelector((state) => state.users);
   const [grade, setGrade] = useState<number>(0);
   const [showRate, setShowRate] = useState<boolean>(false);
-
+  const { data: suggestedReviews } = useGetSuggestedReviewsQuery({
+    id: review?.category._id || "",
+    reviewId: review?._id || "",
+  });
   useEffect(() => {
     review?.rating.map((each) => {
       if (each.user === currentUser?._id) {
@@ -141,11 +146,36 @@ const ReviewInfo = ({
 
       <Stack direction="row" spacing={1} className={`ml-4 flex`}>
         {review?.tags.map((tag: string, i: number) => (
-          <Tag key={i} label={tag} />
+          <Tag
+            key={i}
+            label={tag}
+            handleClick={(e: SyntheticEvent) => {
+              e.stopPropagation();
+              navigate(`/tag/${tag}`);
+            }}
+          />
         ))}
       </Stack>
 
       <Comments reviewId={review?._id} currentUser={currentUser} />
+
+      {suggestedReviews && suggestedReviews.length ? (
+        <div className="my-3">
+          <h3 className="font-serif text-gray-600 text-sm mb-2">
+            You may also read review based on category: {review?.category.name}{" "}
+          </h3>
+          {suggestedReviews.map((review: ReviewDetail, i: number) => (
+            <ReviewCard
+              includeSaveBtn={false}
+              includeHead={true}
+              review={review}
+              key={i}
+            />
+          ))}
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

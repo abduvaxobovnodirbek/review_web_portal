@@ -1,8 +1,9 @@
-const ErrorResponse = require("../utils/errorResponse");
-const asyncHandler = require("../middlewares/async");
-const Review = require("../models/Review");
-const User = require("../models/User");
-const { cloudinary } = require("../utils/cloudinary");
+const ErrorResponse = require("../../utils/errorResponse");
+const asyncHandler = require("../../middlewares/async");
+const Review = require("../../models/Review");
+const User = require("../../models/User");
+const { cloudinary } = require("../../utils/cloudinary");
+const { default: mongoose } = require("mongoose");
 
 // description    Get all reviews
 // route          GET /api/v1/reviews
@@ -295,8 +296,6 @@ exports.likeReview = asyncHandler(async (req, res, next) => {
   res.status(201).json({ success: true, data: updatedReview });
 });
 
-
-
 // description   calculate review rate
 // route         PATCH /api/v1/reviews/rate/:id
 // access        Private
@@ -391,6 +390,29 @@ exports.getTrendReviews = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Reviews not found`, 404));
   }
 
+  res.status(200).json({ success: true, data: reviews });
+});
+
+// description   Get most relevant category  reviews
+// route         GET /api/v1/reviews/:reviewId/suggested/category=..?
+// access        Public
+exports.getSuggestedReviews = asyncHandler(async (req, res, next) => {
+  let reviews = await Review.find({
+    category: mongoose.Types.ObjectId(req.query.category),
+  })
+    .populate("user category")
+    .sort({ likeCount: -1, createdAt: -1 })
+    .limit(4);
+
+  if (!reviews) {
+    return next(new ErrorResponse(`Reviews not found`, 404));
+  }
+
+  console.log(req.params.reviewId);
+
+  reviews = reviews.filter(
+    (review) => review.id.toString() !== req.params.reviewId
+  );
   console.log(reviews);
 
   res.status(200).json({ success: true, data: reviews });

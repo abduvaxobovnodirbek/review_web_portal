@@ -10,6 +10,7 @@ import { useAppSelector } from "../../hooks/useAppSelector";
 import Cloudinary from "../CloudImage/Cloudinary";
 import { AiFillStar } from "react-icons/ai";
 import CardHead from "./CardHead";
+import { SyntheticEvent } from "react";
 
 export default function ReviewCard({
   includeHead,
@@ -43,7 +44,7 @@ export default function ReviewCard({
   return (
     <Card
       sx={{ maxWidth: "100%" }}
-      className="mb-2 cursor-pointer"
+      className="mb-2 cursor-pointer !bg-transparent"
       elevation={0}
       onClick={() => navigate(`/reviews/${review?._id}`)}
     >
@@ -107,6 +108,10 @@ export default function ReviewCard({
                 label={review.category.name}
                 component={"div"}
                 className="!cursor-pointer !px-4 !py-0 ml-2"
+                onClick={(e: SyntheticEvent) => {
+                  e.stopPropagation();
+                  navigate(`/category/${review.category.name}`);
+                }}
               />
             </Tooltip>
           </div>

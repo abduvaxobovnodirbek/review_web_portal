@@ -9,7 +9,7 @@ import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import {
   toggleModal,
   toggleSocialLoginForm,
-} from "../../../services/modal/modalSlice";
+} from "../../../services/ui/modalSlice";
 import logo from "../../../assets/logo/logo_black.png";
 import { Fade } from "@mui/material";
 

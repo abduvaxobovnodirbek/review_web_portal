@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ReviewDetail } from "../../types/api";
+import { ReviewDetail } from "../../../types/api";
 
 export const trendReviewApi = createApi({
   reducerPath: "trendReviewApi",

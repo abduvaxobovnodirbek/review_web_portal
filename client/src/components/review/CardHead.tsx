@@ -5,6 +5,8 @@ import { Avatar, CardHeader, IconButton, Tooltip } from "@mui/material";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import Cloudinary from "../CloudImage/Cloudinary";
 import { ReviewDetail, User } from "../../types/api";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { toggleModal } from "../../services/ui/modalSlice";
 
 const CardHead = ({
   review,
@@ -19,7 +21,7 @@ const CardHead = ({
 }) => {
   const navigate = useNavigate();
   const cookie = new Cookies();
-
+  const dispatch = useAppDispatch()
   return (
     <>
       <CardHeader
@@ -61,6 +63,8 @@ const CardHead = ({
                   e.stopPropagation();
                   if (handleAddToBasket && currentUser?._id) {
                     handleAddToBasket(review?._id || "");
+                  }else{
+                    dispatch(toggleModal(true))
                   }
                 }}
               >

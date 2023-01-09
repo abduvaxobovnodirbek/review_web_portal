@@ -8,6 +8,7 @@ import Comment from "../../components/comments/Comment";
 import NewCommentForm from "./NewCommentForm";
 import { User } from "../../types/api";
 import { socket } from "../../App";
+import useEffectOnce from "../../hooks/useEffectOnce";
 
 const useStyles = makeStyles({
   spacing: {
@@ -57,7 +58,7 @@ const Comments = ({
     receiveComments();
   }, [reviewId]);
 
-  useEffect(() => {
+  useEffectOnce(() => {
     socket.on(
       "updateComments",
       (data: { _id: string; comments: any[] } | null) => {
@@ -66,7 +67,7 @@ const Comments = ({
         }
       }
     );
-  }, []);
+  });
 
   return (
     <CssBaseline>

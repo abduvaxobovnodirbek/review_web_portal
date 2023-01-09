@@ -8,9 +8,9 @@ import {
   toggleModal,
   toggleSocialLoginForm,
   toggleSocialRegisterForm,
-} from "../../../../services/modal/modalSlice";
-import { useEmailRegisterMutation } from "../../../../services/api/auth";
-import { getCurrentUser } from "../../../../services/api/user";
+} from "../../../../services/ui/modalSlice";
+import { useEmailRegisterMutation } from "../../../../services/api/user/auth";
+import { getCurrentUser } from "../../../../services/api/user/user";
 import Spinner from "../../../../components/spinner/Spinner";
 
 const Register: React.FC = () => {

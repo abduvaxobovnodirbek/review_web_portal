@@ -1,6 +1,6 @@
 import { IconButton } from "@mui/material";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
-import { toggleModal } from "../../../services/modal/modalSlice";
+import { toggleModal } from "../../../services/ui/modalSlice";
 
 const SignIn = () => {
   const dispatch = useAppDispatch();

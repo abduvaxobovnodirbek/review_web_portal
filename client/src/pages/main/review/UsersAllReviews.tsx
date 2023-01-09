@@ -1,17 +1,21 @@
 import { Skeleton } from "antd";
 import { useParams } from "react-router-dom";
-import { useGetUserAllReviewsQuery } from "../../services/api/review";
-import { useAppSelector } from "../../hooks/useAppSelector";
-import ReviewCard from "../../components/review/ReviewCard";
-import Profile from "../../components/userProfile/UserProfile";
-import useWindowSize from "../../hooks/useWindowSize";
-import ContextWrapper from "../../layouts/ContextWrapper";
-import { ReviewDetail } from "../../types/api";
-import ProfileModal from "../../features/profile/ProfileModal";
+import { useGetUserAllReviewsQuery } from "../../../services/api/review/review";
+import { useAppSelector } from "../../../hooks/useAppSelector";
+import ReviewCard from "../../../components/review/ReviewCard";
+import Profile from "../../../components/userProfile/UserProfile";
+import useWindowSize from "../../../hooks/useWindowSize";
+import ContextWrapper from "../../../layouts/ContextWrapper";
+import { ReviewDetail } from "../../../types/api";
+import ProfileModal from "../../../features/profile/ProfileModal";
 
 const UsersAllReviews = () => {
   const { id } = useParams();
-  const { isLoading, data: reviews,refetch } = useGetUserAllReviewsQuery(id || "");
+  const {
+    isLoading,
+    data: reviews,
+    refetch,
+  } = useGetUserAllReviewsQuery(id || "");
   const { currentUser } = useAppSelector((state) => state.users);
 
   const { width } = useWindowSize();
@@ -28,7 +32,7 @@ const UsersAllReviews = () => {
           <>
             {" "}
             <Profile
-             refetch = {refetch}
+              refetch={refetch}
               user={reviews?.data?.user || undefined}
               showFollowBtn={
                 (currentUser && currentUser._id) !== reviews?.data?.user._id
@@ -66,7 +70,7 @@ const UsersAllReviews = () => {
       {width > 900 ? (
         <div className="w-[40%] border-l sticky top-0 min-h-screen">
           <Profile
-           refetch = {refetch}
+            refetch={refetch}
             user={reviews?.data?.user || undefined}
             showFollowBtn={
               (currentUser && currentUser._id) !== reviews?.data?.user._id

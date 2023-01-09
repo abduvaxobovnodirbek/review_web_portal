@@ -1,7 +1,7 @@
-const User = require("../models/User");
-const asyncHandler = require("../middlewares/async");
-const ErrorResponse = require("../utils/errorResponse");
-const { cloudinary } = require("../utils/cloudinary");
+const User = require("../../models/User");
+const asyncHandler = require("../../middlewares/async");
+const ErrorResponse = require("../../utils/errorResponse");
+const { cloudinary } = require("../../utils/cloudinary");
 
 // description    Get me (authenticated user)
 // route         GET /api/v1/user/me

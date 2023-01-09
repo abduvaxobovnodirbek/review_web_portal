@@ -9,20 +9,20 @@ import Grade from "../../../components/grade/Grade";
 import Tag from "../../../components/tag/Tag";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import Cloudinary from "../../../components/CloudImage/Cloudinary";
-
+import useEffectOnce from "../../../hooks/useEffectOnce";
 
 const DemoVisualization = ({ formik }: any) => {
   const [showImageList, setShowImageList] = useState<boolean>(false);
   const { imageList, review_name, reviewed_art, tags, authorGrade } =
     formik.values;
   const { currentUser } = useAppSelector((state) => state.users);
-  useEffect(() => {
+  useEffectOnce(() => {
     setTimeout(() => {
       setShowImageList(true);
     }, 200);
-  }, []);
+  });
 
-  const location = useLocation()
+  const location = useLocation();
 
   return (
     <div>
@@ -53,7 +53,7 @@ const DemoVisualization = ({ formik }: any) => {
       </h2>
 
       {showImageList && imageList.length ? (
-        <ImageCarousel images={imageList}  />
+        <ImageCarousel images={imageList} />
       ) : imageList.length && !showImageList ? (
         <Skeleton.Image active={true} className="!w-full !h-[300px]" />
       ) : (
@@ -86,7 +86,9 @@ const DemoVisualization = ({ formik }: any) => {
           type="submit"
           disabled={!formik.isValid}
         >
-         {location.pathname === "/review-create"? "Publish review":"Edit review"}
+          {location.pathname === "/review-create"
+            ? "Publish review"
+            : "Edit review"}
         </Button>
       </div>
     </div>

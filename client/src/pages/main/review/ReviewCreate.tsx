@@ -1,7 +1,7 @@
-import FormComponent from "../../features/reviewCreate/Form";
-import Stepper from "../../features/reviewCreate/Stepper/Stepper";
-import useWindowSize from "../../hooks/useWindowSize";
-import Wrapper from "../../layouts/ContextWrapper";
+import FormComponent from "../../../features/reviewCreate/Form";
+import Stepper from "../../../features/reviewCreate/Stepper/Stepper";
+import useWindowSize from "../../../hooks/useWindowSize";
+import Wrapper from "../../../layouts/ContextWrapper";
 
 const ReviewCreate = () => {
   const { width } = useWindowSize();

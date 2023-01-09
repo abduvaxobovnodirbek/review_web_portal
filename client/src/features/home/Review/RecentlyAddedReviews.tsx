@@ -2,7 +2,7 @@ import { Skeleton } from "antd";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ReviewCard from "../../../components/review/ReviewCard";
-import { useGetReviewsQuery } from "../../../services/api/review";
+import { useGetReviewsQuery } from "../../../services/api/review/review";
 import { ReviewDetail } from "../../../types/api";
 
 const RecentlyAddedReviews = ({

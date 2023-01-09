@@ -5,10 +5,10 @@ import { useAppDispatch } from "../../../../hooks/useAppDispatch";
 import {
   toggleSocialLoginForm,
   toggleModal,
-} from "../../../../services/modal/modalSlice";
-import { useEmailLoginMutation } from "../../../../services/api/auth";
+} from "../../../../services/ui/modalSlice";
+import { useEmailLoginMutation } from "../../../../services/api/user/auth";
 import { useNavigate } from "react-router-dom";
-import { getCurrentUser } from "../../../../services/api/user";
+import { getCurrentUser } from "../../../../services/api/user/user";
 import Spinner from "../../../../components/spinner/Spinner";
 import { useEffect, useState } from "react";
 

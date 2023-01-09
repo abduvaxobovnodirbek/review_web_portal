@@ -7,23 +7,26 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import useWindowSize from "../../hooks/useWindowSize";
 import logo from "../../assets/logo/logo_black.png";
 import LangSelector from "../../components/langSelector/LangSelector";
-import { Search, SearchIconWrapper, StyledInputBase } from "./HeaderStyle";
 import { renderMenu, renderMobileMenu, menuId, mobileMenuId } from "./Menu";
 import SignIn from "../../features/auth/button/SignIn";
 import NewReviewBtn from "../../components/button/NewReviewBtn";
 import { User } from "../../types/api";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { getCurrentUser, removeCurrentUser } from "../../services/api/user";
+import {
+  getCurrentUser,
+  removeCurrentUser,
+} from "../../services/api/user/user";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { isAuthenticated } from "../../utils/AuthUserDefiner";
-import { useLogoutMutation } from "../../services/api/auth";
+import { useLogoutMutation } from "../../services/api/user/auth";
 import Spinner from "../../components/spinner/Spinner";
 import Cloudinary from "../../components/CloudImage/Cloudinary";
+import useEffectOnce from "../../hooks/useEffectOnce";
+import SearchCustom from "../../components/searchInput/SearchCustom";
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -53,11 +56,11 @@ export default function Header() {
     }
   }, [isSuccess, isError]);
 
-  useEffect(() => {
+  useEffectOnce(() => {
     if (!cookie.get("user_basket")) {
       cookie.set("user_basket", []);
     }
-  }, []);
+  });
 
   const handleProfileMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -100,31 +103,7 @@ export default function Header() {
               onClick={() => navigate("/")}
               className="w-[150px] cursor-pointer"
             />
-            <Search
-              sx={
-                width < 600
-                  ? {
-                      height: "30px",
-                      maxWidth: "50px",
-                      marginLeft: "10px",
-                      cursor: "pointer",
-                    }
-                  : {}
-              }
-              onClick={() => (width > 600 ? "" : navigate("/search"))}
-            >
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              {width > 600 ? (
-                <StyledInputBase
-                  placeholder="Search…"
-                  inputProps={{ "aria-label": "search" }}
-                />
-              ) : (
-                ""
-              )}
-            </Search>
+            <SearchCustom />
             <Box sx={{ flexGrow: 1 }} />
 
             <Box sx={{ display: { sm: "none", xs: "none", md: "flex" } }}>

@@ -1,22 +1,24 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { reviewApi } from "./services/api/review";
-import { authApi } from "./services/api/auth";
-import { categoryApi } from "./services/api/category";
-import { rate_comment_api } from "./services/api/rating_comment";
-import { basketApi } from "./services/api/basket";
-import { trendReviewApi } from "./services/api/trendReviews";
-import users from "./services/api/user";
-import authModal from "./services/modal/modalSlice";
-import reviewSteps from "./services/reviewSteps/reviewStepsSlice";
+import { reviewApi } from "./services/api/review/review";
+import { authApi } from "./services/api/user/auth";
+import { categoryApi } from "./services/api/review/category";
+import { rate_review } from "./services/api/review/rating";
+import { basketApi } from "./services/api/user/basket";
+import { trendReviewApi } from "./services/api/review/trendReviews";
+import users from "./services/api/user/user";
+import authModal from "./services/ui/modalSlice";
+import reviewSteps from "./services/ui/reviewStepsSlice";
+import { searchApi } from "./services/api/search";
 
 const rootReducer = combineReducers({
   [reviewApi.reducerPath]: reviewApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
   [categoryApi.reducerPath]: categoryApi.reducer,
   [basketApi.reducerPath]: basketApi.reducer,
-  [rate_comment_api.reducerPath]: rate_comment_api.reducer,
+  [rate_review.reducerPath]: rate_review.reducer,
   [trendReviewApi.reducerPath]: trendReviewApi.reducer,
+  [searchApi.reducerPath]: searchApi.reducer,
 
   authModal,
   reviewSteps,
@@ -33,7 +35,8 @@ const store = configureStore({
       .concat(authApi.middleware)
       .concat(categoryApi.middleware)
       .concat(basketApi.middleware)
-      .concat(rate_comment_api.middleware)
+      .concat(rate_review.middleware)
+      .concat(searchApi.middleware)
       .concat(trendReviewApi.middleware),
 });
 
