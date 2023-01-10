@@ -3,8 +3,8 @@ const ErrorResponse = require("../../utils/errorResponse");
 const asyncHandler = require("../../middlewares/async");
 const User = require("../../models/User");
 
-const successLoginUrl = "http://localhost:3000";
-const errorLoginUrl = "http://localhost:3000";
+const successLoginUrl = "https://reportus.netlify.app";
+const errorLoginUrl = "https://reportus.netlify.app";
 
 // description    Register user
 // route         POST /api/v1/auth/email_register

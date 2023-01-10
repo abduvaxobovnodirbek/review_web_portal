@@ -7,7 +7,7 @@ import AuthModal from "./features/auth/index";
 import ProtectedRoute from "./middlewares/ProtectedRoute";
 import { useAppSelector } from "./hooks/useAppSelector";
 
-export const socket = io("http://localhost:5000");
+export const socket = io("https://reportus.onrender.com");
 
 const App = () => {
   const { darkMode } = useAppSelector((state) => state.authModal);

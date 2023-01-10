@@ -6,9 +6,10 @@ const FacebookStrategy = require("passport-facebook").Strategy;
 const User = require("./models/User");
 const { cloudinary } = require("./utils/cloudinary");
 
-const GOOGLE_CALLBACK_URL = "http://localhost:5000/api/v1/auth/google/callback";
+const GOOGLE_CALLBACK_URL =
+  "https://reportus.onrender.com/api/v1/auth/google/callback";
 const FACEBOOK_CALLBACK_URL =
-  "http://localhost:5000/api/v1/auth/facebook/callback";
+  "https://reportus.onrender.com/api/v1/auth/facebook/callback";
 
 passport.use(
   new GoogleStrategy(

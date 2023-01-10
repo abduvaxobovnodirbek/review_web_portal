@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://reportus.netlify.app/"],
+    origin: ["http://localhost:3000", "https://reportus.netlify.app"],
     credentials: true,
   })
 );
@@ -45,6 +45,7 @@ const store = new MongoDBStore({
 });
 
 const oneDay = 1000 * 60 * 60 * 24;
+app.set("trust proxy", 1);
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -53,6 +54,8 @@ app.use(
     cookie: {
       maxAge: oneDay,
       httpOnly: false,
+      secure: true,
+      sameSite: "none",
     },
     store,
   })
