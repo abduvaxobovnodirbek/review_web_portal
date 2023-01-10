@@ -60,10 +60,15 @@ const UsersTable = ({
         scroll={{ x: 1500, y: 600 }}
         loading={isLoading || deleteUserLoading || changeStatusLoader}
         pagination={false}
+        rowClassName={
+          "dark:!bg-zinc-800 dark:[&>*]:!bg-zinc-800 dark:text-white"
+        }
         expandable={{
           expandedRowRender: (record) => (
-            <div className={`${width > 500 ? "px-8" : "px-2"}`}>
-              <div className="flex items-center text-gray-600">
+            <div
+              className={`${width > 500 ? "px-8" : "px-2"} dark:bg-zinc-800`}
+            >
+              <div className="flex items-center text-gray-600 dark:text-white">
                 <h3>Bio of {record.name}:</h3>
                 <h3 className="ml-2 font-bold italic">{record.userInfo}</h3>
               </div>

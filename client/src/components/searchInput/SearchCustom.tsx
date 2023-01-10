@@ -43,10 +43,11 @@ const SearchCustom = () => {
         onClick={(e: MouseEvent) => (width > 600 ? "" : navigate("/search"))}
       >
         <SearchIconWrapper>
-          <SearchIcon />
+          <SearchIcon className="dark:text-white" />
         </SearchIconWrapper>
         {width > 600 ? (
           <StyledInputBase
+            className=" dark:!bg-zinc-700 dark:text-white"
             placeholder="Search…"
             inputProps={{ "aria-label": "search" }}
           />

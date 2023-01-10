@@ -13,7 +13,7 @@ const GradeText = ({
   const { width } = useWindowSize();
   return (
     <>
-      <h3 className="text-gray-600 text-sm font-serif relative top-5">
+      <h3 className="text-gray-600 text-sm font-serif relative top-5 dark:text-gray-300">
         {currentUser ? (
           <p className={`flex ${width < 500 ? "flex-col" : ""}`}>
             <span>

@@ -9,7 +9,7 @@ const SignIn = () => {
   };
   return (
     <IconButton size="small" aria-label="sign in" onClick={handleClickOpen}>
-      <p className="text-black text-sm font-medium">Sign In</p>
+      <p className="text-black text-sm font-medium dark:text-white">Sign In</p>
     </IconButton>
   );
 };

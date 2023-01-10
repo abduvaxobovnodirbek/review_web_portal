@@ -14,7 +14,7 @@ const UserProfile = ({
   showFollowBtn: boolean;
 }) => {
   return (
-    <div className="flex items-center flex-col">
+    <div className="flex items-center flex-col dark:text-white">
       {user?.image ? (
         <div className="!overflow-hidden !rounded-[100%] !h-[150px] !w-[150px]">
           <Cloudinary img={user?.image} />
@@ -24,16 +24,16 @@ const UserProfile = ({
           <AccountCircleIcon className="text-white !text-7xl" />
         </Avatar>
       )}
-      <span className="text-center mt-6 font-serif font-bold text-gray-600">
+      <span className="text-center mt-6 font-serif font-bold text-gray-600 dark:text-white">
         {user?.name}
       </span>
-      <span className="text-center mt-2 font-serif  text-gray-600">
+      <span className="text-center mt-2 font-serif  text-gray-600 dark:text-white">
         {user?.followers?.length} followers
       </span>
-      <span className="px-3 text-center mt-6 font-serif text-gray-600">
+      <span className="px-3 text-center mt-6 font-serif text-gray-600 dark:text-white">
         {user?.userInfo}
       </span>
-      {showFollowBtn ? <Follow user={user} refetch = {refetch} /> : ""}
+      {showFollowBtn ? <Follow user={user} refetch={refetch} /> : ""}
     </div>
   );
 };

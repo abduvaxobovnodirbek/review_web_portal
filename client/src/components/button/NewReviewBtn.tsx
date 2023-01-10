@@ -14,10 +14,11 @@ const NewReviewBtn = () => {
         size="small"
         aria-label="Write new review"
         sx={{ color: "black" }}
+        className="dark:text-white"
         onClick={handleClick}
       >
         <BsPencilSquare className="mr-3" />{" "}
-        <span className="font-serif text-gray-500 text-sm">Write</span>
+        <span className="font-serif text-gray-500 text-sm dark:text-white">Write</span>
       </IconButton>
     </>
   );

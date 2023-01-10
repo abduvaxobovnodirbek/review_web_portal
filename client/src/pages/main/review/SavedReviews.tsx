@@ -33,49 +33,51 @@ const SavedReviews = () => {
   };
 
   return (
-    <ContextWrapper flexOptions={"justify-center w-[90%] max-w-[800px]"}>
-      <div className="mx-4  w-[100%]">
-        {remove_basket_loading ? (
-          <Spinner isLoading={remove_basket_loading} />
-        ) : (
-          ""
-        )}
+    <div className="dark:min-h-screen">
+      <ContextWrapper flexOptions={"justify-center w-[90%] max-w-[800px]"}>
+        <div className="mx-4  w-[100%]">
+          {remove_basket_loading ? (
+            <Spinner isLoading={remove_basket_loading} />
+          ) : (
+            ""
+          )}
 
-        {get_reviews_loading ? (
-          <>
-            {" "}
-            <Skeleton active className="mb-8" />
-            <Skeleton active className="mb-8" />
-            <Skeleton active className="mb-8" />
-          </>
-        ) : (
-          ""
-        )}
-        {data?.map((review: ReviewDetail, i: number) => {
-          return (
-            <div className="border-b flex flex-col items-end mb-3" key={i}>
-              <MdBookmarkRemove
-                className="cursor-pointer text-2xl text-gray-600"
-                onClick={() => handleClear(review._id || "")}
-              />
-              <ReviewCard
-                includeHead={false}
-                includeSaveBtn={false}
-                review={review}
-              />
-            </div>
-          );
-        })}
+          {get_reviews_loading ? (
+            <>
+              {" "}
+              <Skeleton active className="mb-8" />
+              <Skeleton active className="mb-8" />
+              <Skeleton active className="mb-8" />
+            </>
+          ) : (
+            ""
+          )}
+          {data?.map((review: ReviewDetail, i: number) => {
+            return (
+              <div className="border-b flex flex-col items-end mb-3" key={i}>
+                <MdBookmarkRemove
+                  className="cursor-pointer text-2xl text-gray-600"
+                  onClick={() => handleClear(review._id || "")}
+                />
+                <ReviewCard
+                  includeHead={false}
+                  includeSaveBtn={false}
+                  review={review}
+                />
+              </div>
+            );
+          })}
 
-        {!data?.length && !get_reviews_loading ? (
-          <h3 className="text-center text-xl font-serif text-gray-600 shadow-md p-3">
-            You do not have saved reviews yet
-          </h3>
-        ) : (
-          ""
-        )}
-      </div>
-    </ContextWrapper>
+          {!data?.length && !get_reviews_loading ? (
+            <h3 className="text-center text-xl font-serif text-gray-600 dark:text-white dark:shadow-gray-300 shadow-md p-3">
+              You do not have saved reviews yet
+            </h3>
+          ) : (
+            ""
+          )}
+        </div>
+      </ContextWrapper>
+    </div>
   );
 };
 

@@ -21,7 +21,7 @@ const Category = ({ formik }: any) => {
         as="select"
         name="category"
         id="category"
-        className={`font-serif px-2 tracking-wider pb-3  outline-none border-b ${
+        className={`font-serif dark:bg-zinc-800 px-2 tracking-wider pb-3  outline-none border-b ${
           formik.touched.category && formik.errors.category
             ? "!border-red-500 "
             : ""

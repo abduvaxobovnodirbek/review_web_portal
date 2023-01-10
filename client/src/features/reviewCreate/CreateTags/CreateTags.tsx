@@ -29,7 +29,7 @@ const CreateTags = ({ formik }: any) => {
         mode="tags"
         id="tag"
         style={{ width: "100%" }}
-        className={`font-serif text-xl tracking-wider pb-3 ${
+        className={`font-serif dark:[&>*]:!bg-zinc-800 dark:[&>*]:!text-white text-xl tracking-wider pb-3 ${
           formik.touched.tags && formik.errors.tags
             ? "!border-red-500 border-b"
             : ""

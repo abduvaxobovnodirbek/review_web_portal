@@ -77,17 +77,17 @@ const ReviewInfo = ({
             )
           }
           title={review?.user?.name}
-          subheader={format(
+          subheader={<span className = "dark:text-gray-400">{format(
             new Date(review?.createdAt || Date.now()),
             "MMM do. yyyy"
-          )}
+          )}</span>}
           action={<ReviewActions review={review as ReviewDetail} />}
         />
       ) : (
         ""
       )}
 
-      <h2 className="font-serif tracking-wider ml-3 p-3 mb-2 flex flex-col  text-lg font-bold text-center">
+      <h2 className="font-serif tracking-wider ml-3 p-3 mb-2 flex flex-col  text-lg font-bold text-center dark:text-white">
         <span>{review?.review_name}</span>
         <span className="text-gray-400">({review?.reviewed_art})</span>
       </h2>
@@ -110,7 +110,7 @@ const ReviewInfo = ({
         }`}
       >
         <div>
-          <p className="text-gray-600 text-sm font-serif relative top-5">
+          <p className="text-gray-600 text-sm font-serif relative top-5 dark:text-gray-300">
             Review Author grade for{" "}
             <b className="ml-1 italic">{review?.reviewed_art}</b>{" "}
           </p>
@@ -161,7 +161,7 @@ const ReviewInfo = ({
 
       {suggestedReviews && suggestedReviews.length ? (
         <div className="my-3">
-          <h3 className="font-serif text-gray-600 text-sm mb-2">
+          <h3 className="font-serif text-gray-600 text-sm mb-2 dark:!text-gray-300">
             You may also read review based on category: {review?.category.name}{" "}
           </h3>
           {suggestedReviews.map((review: ReviewDetail, i: number) => (

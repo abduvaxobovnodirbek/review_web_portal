@@ -8,8 +8,12 @@ export default function Tag({
   handleClick?: (e: any) => void;
 }) {
   return handleClick ? (
-    <Chip label={label} onClick={handleClick} />
+    <Chip
+      label={label}
+      onClick={handleClick}
+      className="dark:bg-zinc-700 dark:text-white"
+    />
   ) : (
-    <Chip label={label} />
+    <Chip label={label} className="dark:bg-zinc-700 dark:text-white" />
   );
 }

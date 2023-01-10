@@ -1,6 +1,7 @@
 import { useState, MouseEvent, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { message } from "antd";
+import { DarkModeSwitch } from "react-toggle-dark-mode";
 import Cookies from "universal-cookie";
 import Avatar from "@mui/material/Avatar";
 import AppBar from "@mui/material/AppBar";
@@ -27,6 +28,7 @@ import Spinner from "../../components/spinner/Spinner";
 import Cloudinary from "../../components/CloudImage/Cloudinary";
 import useEffectOnce from "../../hooks/useEffectOnce";
 import SearchCustom from "../../components/searchInput/SearchCustom";
+import { toggleDarkMode } from "../../services/ui/modalSlice";
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -35,6 +37,8 @@ export default function Header() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const { currentUser } = useAppSelector((state) => state.users);
+  const { darkMode } = useAppSelector((state) => state.authModal);
+
   const dispatch = useAppDispatch();
   const { width } = useWindowSize();
   const navigate = useNavigate();
@@ -85,6 +89,10 @@ export default function Header() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleDarkMode = () => {
+    dispatch(toggleDarkMode(!darkMode));
+  };
+
   const handleLogout = async () => {
     await logoutFunc(currentUser as User);
     dispatch(removeCurrentUser());
@@ -102,7 +110,7 @@ export default function Header() {
         <AppBar
           position="static"
           elevation={1}
-          className="!bg-white !text-black"
+          className="!bg-white !text-black  dark:!bg-zinc-800 dark:!text-white "
         >
           <Toolbar>
             <img
@@ -116,6 +124,13 @@ export default function Header() {
 
             <Box sx={{ display: { sm: "none", xs: "none", md: "flex" } }}>
               <LangSelector />
+
+              <DarkModeSwitch
+                checked={darkMode}
+                className="mt-2 mx-2"
+                onChange={() => dispatch(toggleDarkMode(!darkMode))}
+              />
+
               {isAuthenticated() && currentUser ? <NewReviewBtn /> : ""}
               {isAuthenticated() && currentUser ? "" : <SignIn />}
               {isAuthenticated() && currentUser ? (
@@ -162,6 +177,7 @@ export default function Header() {
                   aria-controls={mobileMenuId}
                   aria-haspopup="true"
                   onClick={handleMobileMenuOpen}
+                  className="dark:text-white"
                 >
                   <MoreIcon />
                 </IconButton>
@@ -179,6 +195,8 @@ export default function Header() {
               handleMobileMenuClose,
               handleProfileMenuOpen,
               user: currentUser as User,
+              darkMode,
+              handleDarkMode,
             })
           : ""}
 

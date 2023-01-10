@@ -21,7 +21,7 @@ const AdminPanel = () => {
 
 const Panels = ({ value }: any) => {
   return (
-    <>
+    <div className="dark:min-h-screen">
       <TabPanel value={value} index={0}>
         <AllUsers />
       </TabPanel>
@@ -31,7 +31,7 @@ const Panels = ({ value }: any) => {
       <TabPanel value={value} index={2}>
         <AllCategories />
       </TabPanel>
-    </>
+    </div>
   );
 };
 

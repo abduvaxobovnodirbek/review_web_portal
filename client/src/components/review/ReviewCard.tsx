@@ -44,7 +44,7 @@ export default function ReviewCard({
   return (
     <Card
       sx={{ maxWidth: "100%" }}
-      className="mb-2 cursor-pointer !bg-transparent"
+      className="mb-2 cursor-pointer !bg-transparent dark:!bg-zinc-800 dark:text-white dark:p-2"
       elevation={0}
       onClick={() => navigate(`/reviews/${review?._id}`)}
     >
@@ -69,7 +69,7 @@ export default function ReviewCard({
             <Typography
               variant="body1"
               color="text.primary"
-              className="!font-bold !text-lg"
+              className="!font-bold !text-lg dark:!text-white"
             >
               {review?.review_name}
             </Typography>
@@ -107,7 +107,7 @@ export default function ReviewCard({
               <Chip
                 label={review.category.name}
                 component={"div"}
-                className="!cursor-pointer !px-4 !py-0 ml-2"
+                className="!cursor-pointer !px-4 !py-0 ml-2 dark:!bg-zinc-700 dark:!text-gray-300"
                 onClick={(e: SyntheticEvent) => {
                   e.stopPropagation();
                   navigate(`/category/${review.category.name}`);
@@ -118,9 +118,9 @@ export default function ReviewCard({
           <p className="flex items-center font-serif text-gray-500">
             <span className="mr-1">
               <span className=" text-sm mr-2">average rate:</span>
-              {review?.averageRate ? review?.averageRate : 0}
+              <span className="dark:!text-gray-300">{review?.averageRate ? review?.averageRate : 0}</span>
             </span>{" "}
-            <AiFillStar />
+            <AiFillStar className="dark:!text-gray-300"/>
           </p>
         </div>
       ) : (

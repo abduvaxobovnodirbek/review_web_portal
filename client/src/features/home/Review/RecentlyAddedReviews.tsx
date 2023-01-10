@@ -25,7 +25,7 @@ const RecentlyAddedReviews = ({
       loading={getReviewsFunc.isLoading}
       avatar
       active
-      className="mb-14"
+      className="mb-14  dark:!text-gray-400"
     />
   );
 

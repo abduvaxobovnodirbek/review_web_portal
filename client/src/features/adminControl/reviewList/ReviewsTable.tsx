@@ -56,9 +56,14 @@ const ReviewsTable = ({
       scroll={{ x: 1500, y: 600 }}
       loading={isLoading || deleteReviewLoading}
       pagination={false}
+      rowClassName={"dark:!bg-zinc-800 dark:[&>*]:!bg-zinc-800 dark:text-white"}
       expandable={{
         expandedRowRender: (record) => (
-          <div className={`${width > 500 ? "px-8" : "px-2"}`}>
+          <div
+            className={`${
+              width > 500 ? "px-8" : "px-2"
+            } dark:bg-zinc-800 dark:text-white`}
+          >
             <ReviewInfo
               reviewActionExist={false}
               cardExist={false}

@@ -21,7 +21,7 @@ const ReviewGroup = ({ formik }: any) => {
           id="reviewedArticle"
           name="reviewed_art"
           type="text"
-          className={`border-b outline-none w-[100%] focus:border-gray-400 p-3 transition-colors font-serif text-xl tracking-wider ${
+          className={`border-b dark:bg-zinc-800 outline-none w-[100%] focus:border-gray-400 p-3 transition-colors font-serif text-xl tracking-wider ${
             formik.touched.reviewed_art && formik.errors.reviewed_art
               ? " text-red-500  border-red-500 focus:border-red-500"
               : ""

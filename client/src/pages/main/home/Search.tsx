@@ -15,15 +15,17 @@ const Search = () => {
   );
 
   return (
-    <ContextWrapper flexOptions={"justify-between items-start"}>
-      <SearchList data={data} reviewLoading={isLoading} />
-      {width > 900 ? (
-        <div className="w-[30%] border-l sticky top-0 min-h-screen">
-          <TrendReviewList />
-          <Sharing />
-        </div>
-      ) : null}
-    </ContextWrapper>
+    <div className="dark:min-h-screen">
+      <ContextWrapper flexOptions={"justify-between items-start"}>
+        <SearchList data={data} reviewLoading={isLoading} />
+        {width > 900 ? (
+          <div className="w-[30%] border-l sticky top-0 min-h-screen">
+            <TrendReviewList />
+            <Sharing />
+          </div>
+        ) : null}
+      </ContextWrapper>
+    </div>
   );
 };
 

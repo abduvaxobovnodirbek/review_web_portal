@@ -8,6 +8,7 @@ const initialState: ModalState = {
   showSocialRegisterForm: false,
   showSocialLoginForm: true,
   showProfileModal: false,
+  darkMode: localStorage.getItem("darkMode") === "true",
 };
 
 const modalSlice = createSlice({
@@ -40,6 +41,10 @@ const modalSlice = createSlice({
     toggleProfileModal(state, action: PayloadAction<boolean>) {
       state.showProfileModal = action.payload;
     },
+    toggleDarkMode(state, action: PayloadAction<boolean>) {
+      state.darkMode = action.payload;
+      localStorage.setItem("darkMode", String(action.payload));
+    },
   },
 });
 
@@ -50,6 +55,7 @@ export const {
   toggleSocialRegisterForm,
   toggleSocialLoginForm,
   toggleProfileModal,
+  toggleDarkMode,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

@@ -37,14 +37,14 @@ const Stepper: FC = () => {
   return (
     <>
       {width > 1000 ? (
-        <div className="w-[20%] border-r h-[80vh] sticky top-20">
+        <div className="w-[20%] border-r h-[80vh] sticky top-20 dark:[&>*]:!text-white">
           <Steps
             current={current}
             items={items}
             direction="vertical"
-            className=" h-[300px] mt-12"
+            className=" h-[300px] mt-12  dark:[&>*]:!text-white "
           />
-          <div className="steps-action">
+          <div className="steps-action dark:text-white">
             {current > 0 && (
               <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
                 Previous
@@ -64,7 +64,7 @@ const Stepper: FC = () => {
             items={items}
             type="inline"
             direction="horizontal"
-            className="!flex !justify-center !font-bold"
+            className="!flex !justify-center !font-bol dark:!text-white dark:!bg-zinc-800"
             onChange={(num) => setCurrent(num)}
           />
         </div>

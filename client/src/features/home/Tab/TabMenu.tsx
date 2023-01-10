@@ -29,7 +29,7 @@ export default function TabMenu({
         sx={{ borderBottom: 1, borderColor: "divider" }}
         position="sticky"
         top={0}
-        className="!bg-white  z-50"
+        className="!bg-white  z-50 dark:!bg-zinc-900"
       >
         <Tabs
           value={value}
@@ -37,7 +37,7 @@ export default function TabMenu({
           aria-label="basic tabs example"
         >
           {tabOptions.names.map((tab, i) => (
-            <Tab label={tab} key={i} />
+            <Tab label={tab} key={i} className="dark:!text-white" />
           ))}
         </Tabs>
       </Box>

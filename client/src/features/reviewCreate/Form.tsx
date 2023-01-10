@@ -116,7 +116,7 @@ const FormComponent = () => {
                   !formik.values.description ? (
                     <>
                       <header
-                        className="font-serif tracking-wider p-3 text-white"
+                        className="font-serif tracking-wider p-3 text-white dark:!bg-zinc-800"
                         style={{ background: "#f6f6f6", color: "red" }}
                       >
                         Please step back and fill the required form
@@ -128,7 +128,11 @@ const FormComponent = () => {
                         {Object.values(formik.errors).map(
                           (errName: any, i: number) => {
                             return (
-                              <Alert severity="error" key={i}>
+                              <Alert
+                                severity="error"
+                                key={i}
+                                className="dark:!bg-zinc-800 dark:text-red-600"
+                              >
                                 {errName}
                               </Alert>
                             );

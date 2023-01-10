@@ -54,10 +54,10 @@ const AllCategories = () => {
         {data?.map((category: Category, i: number) => {
           return (
             <h3
-              className="flex items-center justify-between font-serif text-gray-500 shadow-sm p-3 mb-3"
+              className="flex items-center justify-between font-serif text-gray-500 shadow-sm p-3 mb-3 dark:bg-zinc-800 mt-2"
               key={i}
             >
-              <p>{category.name}</p>
+              <p className="dark:text-white">{category.name}</p>
               <>
                 <div className="flex items-center">
                   <AiFillEdit

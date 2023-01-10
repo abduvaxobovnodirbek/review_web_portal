@@ -6,6 +6,7 @@ import Wrapper from "../../../layouts/ContextWrapper";
 const ReviewCreate = () => {
   const { width } = useWindowSize();
   return (
+    <div className="min-h-screen">
     <Wrapper
       flexOptions={`w-[90%] ${
         width > 1000 ? "justify-between" : "flex-col items-center"
@@ -14,6 +15,7 @@ const ReviewCreate = () => {
       <Stepper />
       <FormComponent />
     </Wrapper>
+    </div>
   );
 };
 

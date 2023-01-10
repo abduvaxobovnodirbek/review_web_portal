@@ -29,7 +29,7 @@ const SearchInput = () => {
         <input
           type="search"
           name=""
-          className="py-3 text-sm border rounded-xl pl-8 outline-none bg-gray-400 text-gray-900"
+          className="py-3 text-sm border rounded-xl pl-8 outline-none bg-gray-400 text-gray-900 dark:!bg-zinc-800 dark:text-white"
           style={{ background: "#FAFAFA", width: "100%" }}
           placeholder="Search quickly"
           autoComplete="off"

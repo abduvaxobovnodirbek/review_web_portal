@@ -1,3 +1,4 @@
+import { DarkModeSwitch } from "react-toggle-dark-mode";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
@@ -40,7 +41,7 @@ export const renderMenu = ({
         onClick={() => {
           handleMenuClose("/profile");
         }}
-        className="!flex !items-center"
+        className="!flex !items-center dark:!bg-zinc-700"
       >
         <FaUser className="mr-2" />{" "}
         <span className="text-gray-600 text-sm font-serif">Profile</span>
@@ -98,6 +99,8 @@ export const renderMobileMenu = ({
   handleMobileMenuClose,
   handleProfileMenuOpen,
   user,
+  darkMode,
+  handleDarkMode,
 }: headerMobileMenu) => {
   return (
     <Menu
@@ -114,6 +117,7 @@ export const renderMobileMenu = ({
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
+      className="dark:!bg-zinc-700"
     >
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -132,6 +136,14 @@ export const renderMobileMenu = ({
             </Avatar>
           )}
         </IconButton>
+      </MenuItem>
+
+      <MenuItem>
+        <DarkModeSwitch
+          checked={darkMode}
+          className="mt-2 mx-2"
+          onChange={handleDarkMode}
+        />
       </MenuItem>
 
       <MenuItem>

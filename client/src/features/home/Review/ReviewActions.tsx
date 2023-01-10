@@ -69,9 +69,10 @@ const ReviewActions = ({ review }: { review: ReviewDetail }) => {
             <IconButton
               disabled={!currentUser}
               aria-label="like button"
+              className="dark:text-zinc-800 "
               sx={
                 currentUser && review.likes.includes(currentUser?._id)
-                  ? { color: "#03776f" }
+                  ? { color: "#03776f !important" }
                   : {}
               }
             >
@@ -112,7 +113,7 @@ const ReviewActions = ({ review }: { review: ReviewDetail }) => {
 
         <Tooltip title="Share" placement="top" sx={{ color: "black" }}>
           <IconButton aria-label="share">
-            <ShareIcon />
+            <ShareIcon className="dark:text-white"/>
           </IconButton>
         </Tooltip>
 
@@ -120,7 +121,7 @@ const ReviewActions = ({ review }: { review: ReviewDetail }) => {
           <Chip
             label={review.category.name}
             component={"div"}
-            className="!cursor-pointer"
+            className="!cursor-pointer dark:text-white dark:bg-zinc-800"
             onClick={(e: SyntheticEvent) => {
               e.stopPropagation();
               navigate(`/category/${review.category.name}`);

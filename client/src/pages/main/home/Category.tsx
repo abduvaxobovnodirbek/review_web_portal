@@ -16,6 +16,7 @@ const Category = () => {
   });
 
   return (
+    <div className="dark:min-h-screen">
     <ContextWrapper flexOptions={"justify-between items-start"}>
       <ReviewCategory data={data} reviewLoading={isLoading} />
       {width > 900 ? (
@@ -25,6 +26,7 @@ const Category = () => {
         </div>
       ) : null}
     </ContextWrapper>
+    </div>
   );
 };
 

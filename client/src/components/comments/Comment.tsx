@@ -30,7 +30,7 @@ const Comment = ({ comments }: { comments: any[] }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   return (
-    <List className={classes.root}>
+    <List className={classes.root + " dark:bg-zinc-700"}>
       {comments.map((comment, i: number) => {
         return (
           <React.Fragment key={i}>
@@ -63,9 +63,9 @@ const Comment = ({ comments }: { comments: any[] }) => {
               </ListItemAvatar>
               <ListItemText
                 primary={
-                  <Typography className={classes.fonts}>
+                  <Typography className={classes.fonts + " dark:text-white"}>
                     {comment?.user?.name}
-                    <span className="text-sm text-gray-500 ml-2">
+                    <span className="text-sm text-gray-500 ml-2 dark:text-white">
                       {format(
                         new Date(comment?.createdAt || Date.now()),
                         "hh:mm a (MMM do. yyyy)"
@@ -73,7 +73,9 @@ const Comment = ({ comments }: { comments: any[] }) => {
                     </span>
                   </Typography>
                 }
-                secondary={<>{` - ${comment?.text}`}</>}
+                secondary={
+                  <span className="dark:text-white">{` - ${comment?.text}`}</span>
+                }
               />
             </ListItem>
             <Divider />

@@ -50,10 +50,10 @@ const CardHead = ({
           )
         }
         title={review?.user?.name}
-        subheader={format(
+        subheader={<span className = "dark:text-gray-400">{format(
           new Date(review?.createdAt || Date.now()),
           "MMM do. yyyy"
-        )}
+        )}</span>}
         action={
           includeSaveBtn &&
           !cookie.get("user_basket")?.includes(review?._id) ? (

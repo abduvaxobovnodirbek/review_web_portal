@@ -45,7 +45,9 @@ const TextEditor = ({
           {description && (
             <div>
               <div className="sun-editor">
-                <div className="sun-editor-editable">{parser(description)}</div>
+                <div className="sun-editor-editable dark:bg-zinc-800 dark:text-white">
+                  {parser(description)}
+                </div>
               </div>
             </div>
           )}

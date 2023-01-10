@@ -9,9 +9,9 @@ const AddComment = ({ formik }: { formik: any }) => {
         </label>
         <Field
           as="textarea"
-          className={`w-full h-20 p-2 border rounded focus:outline-none focus:ring-gray-300 focus:ring-1 ${
+          className={`w-full h-20 p-2 dark:bg-zinc-700 dark:text-white border rounded focus:outline-none focus:ring-gray-300 focus:ring-1 ${
             formik.touched.text && formik.errors.text
-              ? " placeholder:text-red-500 placeholder:text-sm  italic border-red-500 focus:border-red-500"
+              ? " placeholder:text-red-500 placeholder:text-sm  dark:text-gray-300 italic border-red-500 focus:border-red-500"
               : ""
           }`}
           name="text"

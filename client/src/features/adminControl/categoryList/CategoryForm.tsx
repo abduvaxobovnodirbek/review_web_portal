@@ -88,7 +88,7 @@ const CategoryForm = ({
               <Field
                 name="category"
                 type="text"
-                className={`text-center border-b outline-none w-[100%] focus:border-gray-400 py-3 transition-colors font-serif text-2xl tracking-wider ${
+                className={`text-center border-b dark:bg-zinc-800 outline-none w-[100%] focus:border-gray-400 py-3 transition-colors font-serif text-2xl tracking-wider ${
                   formik.touched.category && formik.errors.category
                     ? " placeholder:text-red-500 placeholder:text-sm  italic border-red-300 focus:border-red-300"
                     : ""

@@ -79,7 +79,10 @@ const Comments = ({
           className={classes.spacing}
         >
           <Grid item>
-            <Typography className={classes.header} variant="h4">
+            <Typography
+              className={classes.header + " dark:text-gray-300"}
+              variant="h4"
+            >
               Comments
             </Typography>
           </Grid>

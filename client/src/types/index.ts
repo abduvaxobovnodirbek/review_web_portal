@@ -10,6 +10,8 @@ export type headerMobileMenu = {
   user: User;
   handleMobileMenuClose: any;
   handleProfileMenuOpen: any;
+  darkMode: boolean;
+  handleDarkMode:()=>void
 };
 
 export type headerMenu = {
@@ -42,6 +44,7 @@ export type ModalState = {
   showSocialRegisterForm: boolean;
   showSocialLoginForm: boolean;
   showProfileModal: boolean;
+  darkMode: boolean;
 };
 
 export type Steps = {

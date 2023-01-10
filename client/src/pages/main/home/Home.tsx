@@ -11,16 +11,13 @@ const Home = () => {
     <Wrapper flexOptions={"justify-between items-start"}>
       <TabMenu
         tabOptions={{
-          names:
-            width > 900
-              ? ["Recently Added", "Following"]
-              : ["Recently Added", "Following", "In Trend"],
+          names: ["Recently Added", "Following"],
         }}
       >
         <ReviewList detailed={true} />
       </TabMenu>
       {width > 900 ? (
-        <div className="w-[30%] border-l sticky top-0 min-h-screen">
+        <div className="w-[30%] border-l sticky top-0 min-h-screen dark:!text-white">
           <TrendReviews />
           <Sharing />
         </div>

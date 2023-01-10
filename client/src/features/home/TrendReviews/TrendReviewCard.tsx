@@ -28,7 +28,7 @@ export default function TrendReviewCard({ review }: { review: ReviewDetail }) {
 
   return (
     <Card
-      className="mb-1 cursor-pointer"
+      className="mb-1 cursor-pointer dark:bg-zinc-800 dark:!text-white"
       elevation={0}
       onClick={() => navigate(`/reviews/${review?._id}`)}
     >
@@ -58,17 +58,17 @@ export default function TrendReviewCard({ review }: { review: ReviewDetail }) {
           )
         }
         title={review?.user?.name}
-        subheader={format(
+        subheader={<span className = "dark:text-gray-400">{format(
           new Date(review?.createdAt || Date.now()),
           "MMM do. yyyy"
-        )}
+        )}</span>}
       />
 
       <CardContent>
         <Typography
           variant="body1"
           color="text.primary"
-          className="!font-bold !text-sm"
+          className="!font-bold !text-sm dark:text-white"
         >
           {review?.review_name}
         </Typography>
