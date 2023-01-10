@@ -17,7 +17,7 @@ const Sharing = () => {
         Invite friends
       </h3>
       <TelegramShareButton
-        url={"http://localhost:3000/"}
+        url={"https://reportus.netlify.app/"}
         className="mt-3 mb-3 ant-btn  ant-btn !px-4 !py-1 rounded-2xl dark:!bg-zinc-800"
         style={{ border: "1px solid blue !important" }}
       >
