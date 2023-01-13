@@ -1,15 +1,16 @@
 import _ from "lodash";
 import { Popconfirm } from "antd";
 import { format } from "date-fns";
+import { Avatar } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import type { ColumnsType } from "antd/es/table";
-import { User } from "../../../types/api";
 import { MdDelete } from "react-icons/md";
 import { AiFillEdit, AiOutlineUser } from "react-icons/ai";
 import { RiUserFollowFill } from "react-icons/ri";
+import { User } from "../../../types/api";
 import { ColumnUserProps } from "../../../types";
 import Cloudinary from "../../../components/CloudImage/Cloudinary";
 import Checkbox from "../../../components/switch/Switcher";
-import { Avatar } from "@mui/material";
 
 const ColumnData = ({
   handleDelete,
@@ -19,9 +20,10 @@ const ColumnData = ({
   users,
   handleStatus,
 }: ColumnUserProps) => {
+  const { t } = useTranslation();
   const columns: ColumnsType<User> = [
     {
-      title: "Full name",
+      title: t("p89"),
       width: 100,
       dataIndex: "name",
       key: "1",
@@ -35,7 +37,7 @@ const ColumnData = ({
         record.name.startsWith(value as string),
     },
     {
-      title: "Profile avatar",
+      title: t("p90"),
       width: 100,
       dataIndex: "image",
       key: "2",
@@ -67,7 +69,7 @@ const ColumnData = ({
       },
     },
     {
-      title: "Email Address",
+      title: t("p91"),
       dataIndex: "email",
       key: "3",
       width: 100,
@@ -84,7 +86,7 @@ const ColumnData = ({
         record.email.startsWith(value as string),
     },
     {
-      title: "Followers",
+      title: t("p50"),
       dataIndex: "followers",
       key: "4",
       width: 60,
@@ -103,7 +105,7 @@ const ColumnData = ({
       },
     },
     {
-      title: "Following",
+      title: t("p33"),
       dataIndex: "following",
       key: "5",
       width: 60,
@@ -120,7 +122,7 @@ const ColumnData = ({
         (a?.following?.length || 0) - (b?.following?.length || 0),
     },
     {
-      title: "Status",
+      title: t("p92"),
       dataIndex: "status",
       key: "9",
       width: 60,
@@ -129,7 +131,7 @@ const ColumnData = ({
       ),
     },
     {
-      title: "Created date",
+      title: t("p81"),
       dataIndex: "createdAt",
       key: "6",
       width: 100,
@@ -144,7 +146,7 @@ const ColumnData = ({
         new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
     },
     {
-      title: "Action",
+      title: t("p82"),
       key: "operation",
       fixed: "right",
       width: 50,
@@ -160,7 +162,7 @@ const ColumnData = ({
               }}
             />
             <Popconfirm
-              title="Sure to delete?"
+              title={t("p84") || ""}
               onConfirm={() => handleDelete(record._id || "")}
             >
               <MdDelete className="text-lg cursor-pointer text-red-600 ml-2" />

@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { useGetAllUsersQuery } from "../../../services/api/admin/admin";
 import { toggleProfileModal } from "../../../services/ui/modalSlice";
@@ -11,7 +12,8 @@ const AllUsers = () => {
   const { data: users, isLoading } = useGetAllUsersQuery();
   const [user, setUser] = useState<User | undefined>(undefined);
   const dispatch = useAppDispatch();
-
+  const { t } = useTranslation();
+  
   const handleShowProfile = () => {
     dispatch(toggleProfileModal(true));
   };
@@ -22,7 +24,7 @@ const AllUsers = () => {
         className="text-center text-xl font-serif text-white  shadow-md p-3 mb-8"
         style={{ background: "#03776f" }}
       >
-        All Registered users
+        {t("p87")}
       </h3>
       <UsersTable
         users={users}

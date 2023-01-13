@@ -1,4 +1,5 @@
 import { message, Table } from "antd";
+import { useTranslation } from "react-i18next";
 import useWindowSize from "../../../hooks/useWindowSize";
 import {
   useChangeUserStatusMutation,
@@ -19,6 +20,7 @@ const UsersTable = ({
     useDeleteUserMutation();
   const [changeStatus, { isLoading: changeStatusLoader }] =
     useChangeUserStatusMutation();
+  const {t} = useTranslation()  
 
   const filterData = (data: User[]) => (formatter: any) =>
     users?.map((item) => ({
@@ -30,18 +32,18 @@ const UsersTable = ({
     await deleteUser(id)
       .unwrap()
       .then(() => {
-        message.success("Successfully deleted!");
+        message.success(t("p95"));
       })
-      .catch(() => message.error("Something went wrong try again!"));
+      .catch(() => message.error(t('p31')));
   };
 
   const handleStatus = async (user: User) => {
     await changeStatus({ status: !user.status, id: user._id })
       .unwrap()
       .then(() => {
-        message.success("Successfully status changed!");
+        message.success(t('p98'));
       })
-      .catch(() => message.error("Something went wrong try again!"));
+      .catch(() => message.error(t('p31')));
   };
 
   return (

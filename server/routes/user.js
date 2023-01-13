@@ -19,8 +19,8 @@ const {
   isActiveUser,
 } = require("../middlewares/routeProtect");
 
-router.get("/me", isAuthorized, getMe);
-router.put("/follow", isAuthorized, followToUser);
+router.get("/me", isAuthorized, isActiveUser, getMe);
+router.put("/follow", isAuthorized, isActiveUser, followToUser);
 
 router.get(
   "/all",

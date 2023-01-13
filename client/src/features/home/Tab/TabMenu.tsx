@@ -1,10 +1,10 @@
 import { useState, SyntheticEvent, cloneElement } from "react";
+import { useLocation } from "react-router-dom";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import useWindowSize from "../../../hooks/useWindowSize";
 import { childrenProps, TabTypes } from "../../../types";
-import { useLocation } from "react-router-dom";
 
 export default function TabMenu({
   children,

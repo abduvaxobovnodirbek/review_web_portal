@@ -1,5 +1,6 @@
 import { message } from "antd";
 import { Form, Formik } from "formik";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import Grade from "../../components/grade/Grade";
 import Spinner from "../../components/spinner/Spinner";
@@ -25,7 +26,7 @@ const GradeForArt = ({
 }) => {
   const [rateReview, { isLoading }] = useRateReviewMutation();
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation()
   const initialValues: FormValues = {
     userGrade: grade,
   };
@@ -34,7 +35,7 @@ const GradeForArt = ({
     rateReview({ userGrade: Number(data.userGrade), reviewId })
       .unwrap()
       .then(() => {
-        message.success("Successfully rated!");
+        message.success(t('p103'));
         dispatch(
           reviewApi.util.invalidateTags([
             { type: "Review", id: "LIST" },
@@ -43,7 +44,7 @@ const GradeForArt = ({
         );
       })
       .catch((err) => {
-        message.error("Something went wrong try again!");
+        message.error(t('p31'));
       });
   };
 

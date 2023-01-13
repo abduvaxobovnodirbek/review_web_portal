@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { ReviewDetail } from "../../../types/api";
 import ReviewsTable from "./ReviewsTable";
 import { useGetAllReviewsQuery } from "../../../services/api/admin/admin";
@@ -8,11 +9,13 @@ import EditForm from "../../selfReviews/EditForm";
 import ContextWrapper from "../../../layouts/ContextWrapper";
 import useWindowSize from "../../../hooks/useWindowSize";
 
+
 const AllReviews = () => {
   const { isLoading, data: reviews } = useGetAllReviewsQuery();
   const [showEditForm, setShowEditForm] = useState<boolean>(false);
   const [review, setReview] = useState<ReviewDetail | undefined>(undefined);
   const { width } = useWindowSize();
+  const { t } = useTranslation();
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -22,7 +25,7 @@ const AllReviews = () => {
             className="text-center text-xl font-serif text-white  shadow-md p-3 mb-8"
             style={{ background: "#03776f" }}
           >
-            Users all associated reviews
+            {t("p83")}
           </h3>
           <ReviewsTable
             reviews={reviews}

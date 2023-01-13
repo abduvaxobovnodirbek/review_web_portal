@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import React, { useEffect, useState } from "react";
 import { Button, Form, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +14,7 @@ import { useEmailRegisterMutation } from "../../../../services/api/user/auth";
 import { getCurrentUser } from "../../../../services/api/user/user";
 import Spinner from "../../../../components/spinner/Spinner";
 
+
 const Register: React.FC = () => {
   const dispatch = useAppDispatch();
   const [startTime, setTime] = useState(false);
@@ -20,6 +22,7 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
   const cookie = new Cookies();
   const [form] = Form.useForm();
+  const { t } = useTranslation();
 
   const onFinish = async (values: any) => {
     try {
@@ -27,14 +30,13 @@ const Register: React.FC = () => {
       const { payload } = await dispatch(getCurrentUser());
       if (payload) {
         cookie.set("userId", payload._id);
-        message.success("Successfully registered !");
+        message.success(t('p100'));
         navigate("/");
       }
       form.resetFields();
       dispatch(toggleModal(false));
       dispatch(toggleSocialLoginForm(true));
     } catch (error) {
-      console.log(error);
       setTime(true);
     }
   };
@@ -81,13 +83,13 @@ const Register: React.FC = () => {
                       marginLeft: "5px",
                     }}
                   >
-                    Please input your full name!
+                    {t("p27")}
                   </p>
                 ),
               },
             ]}
           >
-            <Input placeholder="enter full name" className="ant-btn_login" />
+            <Input placeholder={t("p27") || ""} className="ant-btn_login" />
           </Form.Item>
 
           <Form.Item
@@ -97,7 +99,7 @@ const Register: React.FC = () => {
                 type: "email",
                 message: (
                   <p style={{ fontSize: "12px", fontStyle: "italic" }}>
-                    The input is not valid E-mail!
+                    {t("p25")}
                   </p>
                 ),
               },
@@ -111,7 +113,7 @@ const Register: React.FC = () => {
                       marginLeft: "5px",
                     }}
                   >
-                    Please input your E-mail!
+                    {t("p21")}
                   </p>
                 ),
               },
@@ -119,7 +121,7 @@ const Register: React.FC = () => {
           >
             <Input
               type="email"
-              placeholder="enter email address"
+              placeholder={t("p19") || ""}
               className="ant-btn_login"
             />
           </Form.Item>
@@ -137,21 +139,21 @@ const Register: React.FC = () => {
                       marginLeft: "5px",
                     }}
                   >
-                    Please input your password!
+                    {t("p22")}
                   </p>
                 ),
               },
             ]}
           >
             <Input.Password
-              placeholder="enter password"
+              placeholder={t("p20") || ""}
               className="ant-btn_login"
             />
           </Form.Item>
 
           {isError && startTime ? (
             <span className="text-red-600 italic mb-2">
-              Something went wrong try again !
+              {t('p31')}
             </span>
           ) : (
             ""
@@ -159,7 +161,7 @@ const Register: React.FC = () => {
 
           <Form.Item className="text-center">
             <Button className="ant-btn_submit w-[120px]" htmlType="submit">
-              Register
+            {t('p28')}
             </Button>
           </Form.Item>
         </Form>
@@ -171,7 +173,7 @@ const Register: React.FC = () => {
           }}
           onClick={backToSocialRegisterForm}
         >
-          <ArrowBackIosIcon sx={{ fontSize: "15px" }} /> All register options
+          <ArrowBackIosIcon sx={{ fontSize: "15px" }} />{t('p29')}
         </span>
       </div>
     </>

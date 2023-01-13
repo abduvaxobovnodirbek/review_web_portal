@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { useGetPersonalReviewsQuery } from "../../../services/api/review/review";
 import { ReviewDetail } from "../../../types/api";
@@ -8,12 +9,14 @@ import ReviewsTable from "../../../features/selfReviews/ReviewsTable";
 import useWindowSize from "../../../hooks/useWindowSize";
 import ContextWrapper from "../../../layouts/ContextWrapper";
 
+
 const SelfReviews = () => {
   const { isLoading, data: reviews } = useGetPersonalReviewsQuery();
   const [showEditForm, setShowEditForm] = useState<boolean>(false);
   const { currentUser } = useAppSelector((state) => state.users);
   const [review, setReview] = useState<ReviewDetail | undefined>(undefined);
   const { width } = useWindowSize();
+  const {t} = useTranslation()
 
   return (
     <div className="dark:min-h-screen">
@@ -24,7 +27,7 @@ const SelfReviews = () => {
               className="text-center text-xl font-serif text-white  shadow-md p-3 mb-8"
               style={{ background: "#03776f" }}
             >
-              Reviews created by {currentUser?.name}
+              {t('p78')} {currentUser?.name}
             </h3>
           ) : (
             ""

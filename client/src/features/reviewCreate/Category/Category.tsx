@@ -1,8 +1,10 @@
 import { Field } from "formik";
+import { useTranslation } from "react-i18next";
 import { useGetCategoriesQuery } from "../../../services/api/review/category";
 
 const Category = ({ formik }: any) => {
   const { data } = useGetCategoriesQuery();
+  const { t } = useTranslation();
   return (
     <div className="mt-3">
       <label
@@ -15,7 +17,7 @@ const Category = ({ formik }: any) => {
       >
         {formik.touched.category && formik.errors.category
           ? formik.errors.category
-          : "Category:"}
+          : t("p67")}
       </label>
       <Field
         as="select"

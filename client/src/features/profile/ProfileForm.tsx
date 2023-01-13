@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { FaUserEdit } from "react-icons/fa";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { AccountCircle } from "@mui/icons-material";
@@ -11,9 +13,9 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { editUser, getCurrentUser } from "../../services/api/user/user";
 import { toggleProfileModal } from "../../services/ui/modalSlice";
 import Cloudinary from "../../components/CloudImage/Cloudinary";
-import { FaUserEdit } from "react-icons/fa";
 import { User } from "../../types/api";
 import { adminControlApi } from "../../services/api/admin/admin";
+
 
 let validationSchema = Yup.object({
   image: Yup.array(),
@@ -26,7 +28,7 @@ const ProfileForm = ({ user }: { user?: User }) => {
   let { currentUser, loading } = useAppSelector((state) => state.users);
   const dispatch = useAppDispatch();
   const [newProfileImg, setNewProfileImg] = useState<boolean>(false);
-
+  const { t } = useTranslation();
   const initialValues: FormValues = {
     image: [],
     name: user?.name || currentUser?.name || "",
@@ -55,7 +57,7 @@ const ProfileForm = ({ user }: { user?: User }) => {
     )
       .unwrap()
       .then(() => {
-        message.success("Successfully  profile edited!");
+        message.success(t('p106'));
         dispatch(toggleProfileModal(false));
         if (user) {
           dispatch(
@@ -65,7 +67,7 @@ const ProfileForm = ({ user }: { user?: User }) => {
         }
       })
       .catch(() => {
-        message.error("Something went wrong");
+        message.error(t('p31'));
       });
   };
 
@@ -143,7 +145,7 @@ const ProfileForm = ({ user }: { user?: User }) => {
                   placeholder={
                     formik.touched.name && formik.errors.name
                       ? formik.errors.name
-                      : "Add your username"
+                      : t("p76")
                   }
                 />
                 <Field
@@ -154,7 +156,7 @@ const ProfileForm = ({ user }: { user?: User }) => {
                       ? "border-red-300 focus:border-red-300"
                       : ""
                   }`}
-                  placeholder={"Add Bio"}
+                  placeholder={t("p77") || ""}
                 />
                 {formik.touched.userInfo && formik.errors.userInfo ? (
                   <span className="text-red-500 text-sm  italic">
@@ -168,7 +170,7 @@ const ProfileForm = ({ user }: { user?: User }) => {
                   type="submit"
                   disabled={!formik.isValid}
                 >
-                  Confirm Changes
+                  {t("p75")}
                 </button>
               </div>
             </Form>

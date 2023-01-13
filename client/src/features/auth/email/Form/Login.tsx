@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button, Form, Input, message } from "antd";
 import Cookies from "universal-cookie";
+import { useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useAppDispatch } from "../../../../hooks/useAppDispatch";
 import {
@@ -7,10 +10,8 @@ import {
   toggleModal,
 } from "../../../../services/ui/modalSlice";
 import { useEmailLoginMutation } from "../../../../services/api/user/auth";
-import { useNavigate } from "react-router-dom";
 import { getCurrentUser } from "../../../../services/api/user/user";
 import Spinner from "../../../../components/spinner/Spinner";
-import { useEffect, useState } from "react";
 
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -19,6 +20,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const cookie = new Cookies();
   const [form] = Form.useForm();
+  const { t } = useTranslation();
 
   const onFinish = async (values: any) => {
     try {
@@ -29,14 +31,13 @@ const Login: React.FC = () => {
         if (payload.role === "super_admin") {
           cookie.set("role", payload.role);
         }
-        message.success("Successfully logged in !");
+        message.success(t("p99"));
         navigate("/");
       }
       form.resetFields();
       backToSocialLoginForm();
       dispatch(toggleModal(false));
     } catch (error) {
-      console.log(error);
       setTime(true);
     }
   };
@@ -76,7 +77,7 @@ const Login: React.FC = () => {
                 type: "email",
                 message: (
                   <p style={{ fontSize: "12px", fontStyle: "italic" }}>
-                    The input is not valid E-mail!
+                    {t("p25")}
                   </p>
                 ),
               },
@@ -90,7 +91,7 @@ const Login: React.FC = () => {
                       marginLeft: "5px",
                     }}
                   >
-                    Please input your E-mail!
+                    {t("p21")}
                   </p>
                 ),
               },
@@ -98,7 +99,7 @@ const Login: React.FC = () => {
           >
             <Input
               type="email"
-              placeholder="enter email address"
+              placeholder={t("p19") || ""}
               className="ant-btn_login"
             />
           </Form.Item>
@@ -116,7 +117,7 @@ const Login: React.FC = () => {
                       marginLeft: "5px",
                     }}
                   >
-                    Please input your password!
+                    {t("p22")}
                   </p>
                 ),
               },
@@ -128,16 +129,14 @@ const Login: React.FC = () => {
             />
           </Form.Item>
           {isError && startTime ? (
-            <span className="text-red-600 italic mb-2">
-              Please enter valid credentials
-            </span>
+            <span className="text-red-600 italic mb-2">{t("p30")}</span>
           ) : (
             ""
           )}
 
           <Form.Item className="text-center">
             <Button className="ant-btn_submit w-[120px]" htmlType="submit">
-              Login
+              {t("p23")}
             </Button>
           </Form.Item>
         </Form>
@@ -149,7 +148,7 @@ const Login: React.FC = () => {
           }}
           onClick={backToSocialLoginForm}
         >
-          <ArrowBackIosIcon sx={{ fontSize: "15px" }} /> All sign in options
+          <ArrowBackIosIcon sx={{ fontSize: "15px" }} /> {t("p24")}
         </span>
       </div>
     </>

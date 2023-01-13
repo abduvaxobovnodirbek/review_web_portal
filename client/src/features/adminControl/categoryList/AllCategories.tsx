@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { message, Popconfirm, Skeleton } from "antd";
+import { useTranslation } from "react-i18next";
 import { AiFillEdit } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 import Spinner from "../../../components/spinner/Spinner";
@@ -10,10 +11,12 @@ import {
 import { Category } from "../../../types/api";
 import CategoryForm from "./CategoryForm";
 
+
 const AllCategories = () => {
   const [currentCategory, setCategory] = useState<Category | undefined>(
     undefined
   );
+  const { t } = useTranslation();
   const { data, isLoading: getCategoryLoading } = useGetCategoriesQuery();
   const [deleteCategory, { isLoading: deleteCategoryLoading }] =
     useDeleteCategoryMutation();
@@ -22,10 +25,10 @@ const AllCategories = () => {
     deleteCategory(id)
       .unwrap()
       .then(() => {
-        message.success("successfully deleted!");
+        message.success(t('p95'));
       })
       .catch((err) => {
-        message.error("something went wrong try again!");
+        message.error(t('p31'));
       });
   };
 
@@ -66,7 +69,7 @@ const AllCategories = () => {
                     onClick={() => setCategory(category)}
                   />
                   <Popconfirm
-                    title="Sure to delete?"
+                    title={t("p84") || ""}
                     onConfirm={() => handleDeleteCategory(category._id)}
                   >
                     <MdDelete className="text-lg cursor-pointer text-red-600 ml-2" />

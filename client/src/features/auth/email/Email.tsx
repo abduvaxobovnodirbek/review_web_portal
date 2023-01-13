@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import emailIcon from "../../../assets/socialMedia/email.svg";
 import CustomButton from "../../../components/button/Button";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
@@ -11,6 +12,7 @@ import {
 
 const Email = () => {
   const dispatch = useAppDispatch();
+  const {t} = useTranslation()
   const { showSocialRegisterForm, showSocialLoginForm } = useAppSelector(
     (state) => state.authModal
   );
@@ -31,23 +33,23 @@ const Email = () => {
           }
         }}
         icon={emailIcon}
-        text={`${showSocialRegisterForm ? "Register" : "Sign in"} with Email`}
+        text={`${showSocialRegisterForm ? t("p26") : t("p11")}`}
       />
 
       {showSocialLoginForm ? (
         <p className="mt-5 text-center font-serif">
-          No account?{" "}
+          {t("p12")}{" "}
           <span
             style={{ color: "#03776f", fontWeight: "bold", cursor: "pointer" }}
             onClick={openRegisterSocialForm}
           >
-            Create one
+            {t("p13")}
           </span>
         </p>
       ) : showSocialRegisterForm ? (
         <>
           <p className="mt-5 text-center font-serif">
-            Already have an account?
+          {t("p17")}
           </p>
           <p
             style={{
@@ -58,7 +60,7 @@ const Email = () => {
             }}
             onClick={openLoginSocialForm}
           >
-            Sign In
+            {t("p7")}
           </p>
         </>
       ) : (

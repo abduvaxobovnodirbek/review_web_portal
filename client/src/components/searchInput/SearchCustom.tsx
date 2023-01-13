@@ -1,5 +1,6 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import useNavigateParams from "../../hooks/useNavigateParams";
 import useWindowSize from "../../hooks/useWindowSize";
@@ -13,7 +14,7 @@ const SearchCustom = () => {
   const [value, setValue] = useState<string>("");
   const navigateParams = useNavigateParams();
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const { width } = useWindowSize();
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
@@ -48,7 +49,7 @@ const SearchCustom = () => {
         {width > 600 ? (
           <StyledInputBase
             className=" dark:!bg-zinc-700 dark:text-white"
-            placeholder="Search…"
+            placeholder={t("p0") || ""}
             inputProps={{ "aria-label": "search" }}
           />
         ) : (

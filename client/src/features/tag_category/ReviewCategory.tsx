@@ -1,4 +1,5 @@
 import { message, Skeleton } from "antd";
+import { useTranslation } from "react-i18next";
 import { AiFillTag } from "react-icons/ai";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Cookies from "universal-cookie";
@@ -21,7 +22,7 @@ const ReviewCategory = ({
   const params = useParams();
 
   const { width } = useWindowSize();
-
+  const { t } = useTranslation();
   const [insertToBasket, { isLoading }] = useInsertToBasketMutation();
 
   const SkeletonElement = () => (
@@ -33,15 +34,16 @@ const ReviewCategory = ({
       .unwrap()
       .then(() => {
         cookie.set("user_basket", [...cookie.get("user_basket"), id]);
-        message.success("Successfully inserted to saved reviews!");
+        message.success(t("p105"));
         navigate(location.pathname);
       })
-      .catch((err) => message.error("something went wrong try again!"));
+      .catch((err) => message.error(t('p31')));
   };
   return (
     <div style={width > 900 ? { width: "65%" } : { width: "100%" }}>
       <div className=" flex items-center mb-4 border-b">
-        <AiFillTag /> <h3 className="font-serif text-xl ml-2 text-gray-600">{params.id}</h3>
+        <AiFillTag />{" "}
+        <h3 className="font-serif text-xl ml-2 text-gray-600">{params.id}</h3>
       </div>
       <SkeletonElement />
       <SkeletonElement />

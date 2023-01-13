@@ -1,8 +1,10 @@
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, Stack } from "@mui/material";
 import { message } from "antd";
+import { MdOutlineArrowBackIos } from "react-icons/md";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import Spinner from "../../components/spinner/Spinner";
 import Title from "../reviewCreate/Title/Title";
@@ -15,10 +17,10 @@ import DemoVisualization from "../reviewCreate/Demo/DemoVisualization";
 import ReviewedArticle from "../reviewCreate/ReviewedArticle/ReviewedArticle";
 import useWindowSize from "../../hooks/useWindowSize";
 import { ReviewDetail } from "../../types/api";
-import { MdOutlineArrowBackIos } from "react-icons/md";
 import { useEditReviewMutation } from "../../services/api/review/review";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { adminControlApi } from "../../services/api/admin/admin";
+
 
 let validationSchema = Yup.object({
   review_name: Yup.string().required("*review name  is required"),
@@ -56,7 +58,7 @@ const EditForm = ({
   const { currentUser } = useAppSelector((state) => state.users);
   const location = useLocation();
   const { width } = useWindowSize();
-
+  const {t} = useTranslation()
   const { stepFirst, stepSecond } = useAppSelector(
     (state) => state.reviewSteps
   );
@@ -79,7 +81,7 @@ const EditForm = ({
     })
       .unwrap()
       .then((data) => {
-        message.success("Successfully edited  review!");
+        message.success(t('p108'));
         if (location.pathname !== "/admin/panel") {
           navigate("/profile");
         } else {
@@ -92,8 +94,7 @@ const EditForm = ({
         }
       })
       .catch((err) => {
-        console.log(err);
-        message.error("something went wrong try again!");
+        message.error(t('p31'));
       });
   };
 

@@ -1,5 +1,6 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Avatar } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import Follow from "../../features/followToUser/Follow";
 import { User } from "../../types/api";
 import Cloudinary from "../CloudImage/Cloudinary";
@@ -13,6 +14,7 @@ const UserProfile = ({
   user: User | undefined;
   showFollowBtn: boolean;
 }) => {
+  const {t} = useTranslation()
   return (
     <div className="flex items-center flex-col dark:text-white">
       {user?.image ? (
@@ -28,7 +30,7 @@ const UserProfile = ({
         {user?.name}
       </span>
       <span className="text-center mt-2 font-serif  text-gray-600 dark:text-white">
-        {user?.followers?.length} followers
+        {user?.followers?.length} {t('p50')}
       </span>
       <span className="px-3 text-center mt-6 font-serif text-gray-600 dark:text-white">
         {user?.userInfo}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
@@ -9,6 +10,7 @@ import NewCommentForm from "./NewCommentForm";
 import { User } from "../../types/api";
 import { socket } from "../../App";
 import useEffectOnce from "../../hooks/useEffectOnce";
+
 
 const useStyles = makeStyles({
   spacing: {
@@ -35,7 +37,7 @@ const Comments = ({
   const [comments, setComments] = useState<any[]>([]);
   const [isFetching, setFetching] = useState<boolean>(true);
   const [showComments, setShowComments] = useState<boolean>(false);
-
+  const { t } = useTranslation();
   const classes = useStyles();
 
   const handleOpenComments = () => {
@@ -83,7 +85,7 @@ const Comments = ({
               className={classes.header + " dark:text-gray-300"}
               variant="h4"
             >
-              Comments
+              {t("p45")}
             </Typography>
           </Grid>
           <Grid item>

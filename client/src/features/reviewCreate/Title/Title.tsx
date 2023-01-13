@@ -1,6 +1,9 @@
 import { Field } from "formik";
+import { useTranslation } from "react-i18next";
 
 export default function Title({ formik }: any) {
+  const { t } = useTranslation();
+
   return (
     <div className="mb-4">
       <Field
@@ -14,7 +17,7 @@ export default function Title({ formik }: any) {
         placeholder={
           formik.touched.review_name && formik.errors.review_name
             ? formik.errors.review_name
-            : "Add a title"
+            : t("p63")
         }
       />
     </div>

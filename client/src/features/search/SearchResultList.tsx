@@ -1,12 +1,13 @@
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { message, Skeleton } from "antd";
+import { useTranslation } from "react-i18next";
+import { CgSearchFound } from "react-icons/cg";
 import Grid from "@mui/material/Grid";
+import Cookies from "universal-cookie";
 import Input from "../../components/searchInput/SearchInput";
 import ReviewCard from "../../components/review/ReviewCard";
 import useWindowSize from "../../hooks/useWindowSize";
-import Cookies from "universal-cookie";
 import { useInsertToBasketMutation } from "../../services/api/user/basket";
-import { CgSearchFound } from "react-icons/cg";
 import Spinner from "../../components/spinner/Spinner";
 import { ReviewDetail } from "../../types/api";
 
@@ -22,7 +23,7 @@ const SearchList = ({
   const cookie = new Cookies();
   const location = useLocation();
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const [insertToBasket, { isLoading }] = useInsertToBasketMutation();
 
   const SkeletonElement = () => (
@@ -34,10 +35,10 @@ const SearchList = ({
       .unwrap()
       .then(() => {
         cookie.set("user_basket", [...cookie.get("user_basket"), id]);
-        message.success("Successfully inserted to saved reviews!");
+        message.success(t('p105'));
         navigate(location.pathname);
       })
-      .catch((err) => message.error("something went wrong try again!"));
+      .catch((err) => message.error(t('p31')));
   };
 
   return (
@@ -52,7 +53,7 @@ const SearchList = ({
         )}
       </Grid>
       <div className=" flex items-center font-serif mb-4 border-b text-gray-600">
-        Search Result:{" "}
+        {t("p53")}:{" "}
         <h3 className="text-xl ml-2">{searchParams.get("q") || ""}</h3>
       </div>
       <SkeletonElement />
@@ -74,10 +75,8 @@ const SearchList = ({
         <div className="text-gray-600 mt-24 font-serif flex justify-center flex-col items-center">
           <CgSearchFound className="text-gray-200 text-[100px]" />
           <div className="text-center">
-            <h3>The result is not found </h3>
-            <p>
-              Please search it with longer sentences or with meaningful contents
-            </p>
+            <h3>{t("p51")} </h3>
+            <p>{t("p52")}</p>
           </div>
         </div>
       )}

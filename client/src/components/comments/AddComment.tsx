@@ -1,11 +1,13 @@
 import { Field } from "formik";
+import { useTranslation } from "react-i18next";
 
 const AddComment = ({ formik }: { formik: any }) => {
+  const { t } = useTranslation();
   return (
     <div className="w-full p-4">
       <div className="mb-2">
         <label htmlFor="comment" className="text-lg text-gray-600">
-          Add a comment
+          {t("p47")}
         </label>
         <Field
           as="textarea"
@@ -18,7 +20,7 @@ const AddComment = ({ formik }: { formik: any }) => {
           placeholder={
             formik.touched.text && formik.errors.text
               ? formik.errors.text
-              : "Add a comment"
+              : t("p47") || ""
           }
         ></Field>
       </div>
@@ -27,7 +29,7 @@ const AddComment = ({ formik }: { formik: any }) => {
         type="submit"
         className="px-3 py-2 text-sm text-blue-100 bg-blue-600 rounded"
       >
-        Comment
+        {t("p1")}
       </button>
     </div>
   );

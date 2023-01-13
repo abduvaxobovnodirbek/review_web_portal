@@ -11,9 +11,15 @@ const {
   passportLogin,
   passportRegister,
 } = require("../controllers/user/auth");
-const { isAuthorized } = require("../middlewares/routeProtect");
+const { isAuthorized, isActiveUser } = require("../middlewares/routeProtect");
 
-router.post("/email_login", passportLogin,isAuthorized, email_login);
+router.post(
+  "/email_login",
+  passportLogin,
+  isAuthorized,
+  isActiveUser,
+  email_login
+);
 router.post("/email_register", passportRegister, email_register);
 router.get("/google", authGoogle);
 router.get("/google/callback", authGoogleRedirect);

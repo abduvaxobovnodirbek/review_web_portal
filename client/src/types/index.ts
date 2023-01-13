@@ -21,6 +21,7 @@ export type headerMenu = {
   handleLogout: () => void;
   handleMenuClose: (str: string) => void;
   location: any;
+  t:any
 };
 
 export type routesType = {

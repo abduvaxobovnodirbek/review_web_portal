@@ -20,7 +20,9 @@ export const renderMenu = ({
   handleLogout,
   location,
   user,
+  t
 }: headerMenu) => {
+  
   return (
     <Menu
       anchorEl={anchorEl}
@@ -44,7 +46,7 @@ export const renderMenu = ({
         className="!flex !items-center dark:!bg-zinc-700"
       >
         <FaUser className="mr-2" />{" "}
-        <span className="text-gray-600 text-sm font-serif">Profile</span>
+        <span className="text-gray-600 text-sm font-serif">{t("p2")}</span>
       </MenuItem>
       <MenuItem
         onClick={() => {
@@ -53,7 +55,7 @@ export const renderMenu = ({
         className="!flex !items-center"
       >
         <MdOutlineRateReview className="mr-2" />{" "}
-        <span className="text-gray-600 text-sm font-serif">Review List</span>
+        <span className="text-gray-600 text-sm font-serif">{t("p3")}</span>
       </MenuItem>
       <MenuItem
         onClick={() => {
@@ -62,7 +64,7 @@ export const renderMenu = ({
         className="!flex !items-center"
       >
         <BiBookmarks className="mr-2" />{" "}
-        <span className="text-gray-600 text-sm font-serif">Saved</span>
+        <span className="text-gray-600 text-sm font-serif">{t("p4")}</span>
       </MenuItem>
       {user.role === "super_admin" ? (
         <MenuItem
@@ -72,7 +74,7 @@ export const renderMenu = ({
           className="!flex !items-center"
         >
           <GrUserAdmin className="mr-2" />{" "}
-          <span className="text-gray-600 text-sm font-serif">Panel</span>
+          <span className="text-gray-600 text-sm font-serif">{t("p6")}</span>
         </MenuItem>
       ) : (
         ""
@@ -85,7 +87,7 @@ export const renderMenu = ({
         className="!flex !items-center"
       >
         <BiLogOut className="mr-2" />{" "}
-        <span className="text-gray-600 text-sm font-serif">Log out</span>
+        <span className="text-gray-600 text-sm font-serif">{t("p5")}</span>
       </MenuItem>
     </Menu>
   );

@@ -31,7 +31,7 @@ router
 
 router.patch("/like/:id", isAuthorized, isActiveUser, likeReview);
 router.get("/following", isAuthorized, getFollowingReviews);
-router.get("/all", isAuthorized, authorize("super_admin"), getAllReviews);
+router.get("/all", isAuthorized, authorize("super_admin",), getAllReviews);
 router.get("/personal", isAuthorized, getPersonalReviews);
 router.get("/user/:id", getUserAllReviews);
 router.patch("/rate/:id", isAuthorized, rateReview);

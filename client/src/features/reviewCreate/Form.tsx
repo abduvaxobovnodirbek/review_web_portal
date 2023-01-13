@@ -1,5 +1,9 @@
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Form, Formik } from "formik";
+import { message } from "antd";
 import * as Yup from "yup";
+import { Alert, Stack } from "@mui/material";
 import { useCreateReviewMutation } from "../../services/api/review/review";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import CreateTags from "./CreateTags/CreateTags";
@@ -10,30 +14,28 @@ import Image from "./Image/Image";
 import Category from "./Category/Category";
 import Grade from "../../components/grade/Grade";
 import TextEditor from "../../components/Editor/TextEditor";
-import { Alert, Stack } from "@mui/material";
 import useWindowSize from "../../hooks/useWindowSize";
-import { message } from "antd";
 import Spinner from "../../components/spinner/Spinner";
-import { useNavigate } from "react-router-dom";
-
-let validationSchema = Yup.object({
-  review_name: Yup.string().required("*review name  is required"),
-  reviewed_art: Yup.string().required("*reviewed piece of art  is required"),
-  category: Yup.string().required("*review category  is required"),
-  tags: Yup.array()
-    .min(1, "*at least 1 tag must be provided")
-    .required("*review tag is required"),
-  description: Yup.string()
-    .min(100)
-    .required("*review description is required"),
-  authorGrade: Yup.number().required("*author grade is required"),
-  imageList: Yup.array(),
-});
-
-type FormValues = Yup.InferType<typeof validationSchema>;
 
 const FormComponent = () => {
   const [createReview, { isLoading }] = useCreateReviewMutation();
+  const { t } = useTranslation();
+
+  let validationSchema = Yup.object({
+    review_name: Yup.string().required(t("p56") || ""),
+    reviewed_art: Yup.string().required(t("p57") || ""),
+    category: Yup.string().required(t("p58") || ""),
+    tags: Yup.array()
+      .min(1, t("p59") || "")
+      .required(t("p60") || ""),
+    description: Yup.string()
+      .min(100)
+      .required(t("p61") || ""),
+    authorGrade: Yup.number().required(t("p62") || ""),
+    imageList: Yup.array(),
+  });
+
+  type FormValues = Yup.InferType<typeof validationSchema>;
 
   const initialValues: FormValues = {
     review_name: "",
@@ -46,7 +48,6 @@ const FormComponent = () => {
   };
 
   const { width } = useWindowSize();
-
   const { stepFirst, stepSecond } = useAppSelector(
     (state) => state.reviewSteps
   );
@@ -62,12 +63,11 @@ const FormComponent = () => {
     createReview({ ...data, imageList: images })
       .unwrap()
       .then((data) => {
-        message.success("Successfully created new review!");
+        message.success(t("p107"));
         navigate("/profile");
       })
       .catch((err) => {
-        console.log(err);
-        message.error("something went wrong try again!");
+        message.error(t('p31'));
       });
   };
 
@@ -104,7 +104,7 @@ const FormComponent = () => {
                     defaultValue={formik.values.authorGrade}
                     disabled={false}
                     authorGrade={true}
-                    labelText="Author Grade:"
+                    labelText={t("p68") || ""}
                     count={10}
                   />
 
@@ -119,7 +119,7 @@ const FormComponent = () => {
                         className="font-serif tracking-wider p-3 text-white dark:!bg-zinc-800"
                         style={{ background: "#f6f6f6", color: "red" }}
                       >
-                        Please step back and fill the required form
+                        {t("p69")}
                       </header>
                       <Stack
                         sx={{ width: "100%", marginTop: "35px" }}

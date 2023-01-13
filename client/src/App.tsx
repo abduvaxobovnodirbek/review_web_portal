@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import io from "socket.io-client";
 import Header from "./layouts/header/Header";
@@ -7,7 +6,7 @@ import AuthModal from "./features/auth/index";
 import ProtectedRoute from "./middlewares/ProtectedRoute";
 import { useAppSelector } from "./hooks/useAppSelector";
 
-export const socket = io("https://reportus.onrender.com");
+export const socket = io("http://localhost:5000");
 
 const App = () => {
   const { darkMode } = useAppSelector((state) => state.authModal);

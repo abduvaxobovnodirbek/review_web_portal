@@ -1,6 +1,8 @@
 import { Field } from "formik";
+import { useTranslation } from "react-i18next";
 
 const ReviewGroup = ({ formik }: any) => {
+  const { t } = useTranslation();
   return (
     <>
       <label
@@ -13,7 +15,7 @@ const ReviewGroup = ({ formik }: any) => {
       >
         {formik.touched.reviewed_art && formik.errors.reviewed_art
           ? formik.errors.reviewed_art
-          : "Reviewed piece of art:"}
+          : t("p65")}
       </label>
 
       <div className="mb-4">

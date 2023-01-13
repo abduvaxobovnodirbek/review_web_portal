@@ -1,3 +1,5 @@
+import { SyntheticEvent } from "react";
+import { useTranslation } from "react-i18next";
 import HTMLReactParser, { domToReact } from "html-react-parser";
 import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
@@ -10,7 +12,7 @@ import { useAppSelector } from "../../hooks/useAppSelector";
 import Cloudinary from "../CloudImage/Cloudinary";
 import { AiFillStar } from "react-icons/ai";
 import CardHead from "./CardHead";
-import { SyntheticEvent } from "react";
+
 
 export default function ReviewCard({
   includeHead,
@@ -26,6 +28,8 @@ export default function ReviewCard({
   const { currentUser } = useAppSelector((state) => state.users);
   const { width } = useWindowSize();
   const navigate = useNavigate();
+  const {t} = useTranslation()
+
 
   const options = {
     replace: (domeNode: any) => {
@@ -101,7 +105,7 @@ export default function ReviewCard({
         <div className="flex justify-between items-center border-b pb-1">
           <div>
             <span className="font-serif text-gray-500 text-sm">
-              review category |
+              {t('p34')} |
             </span>
             <Tooltip title="Category" placement="top">
               <Chip
@@ -117,7 +121,7 @@ export default function ReviewCard({
           </div>
           <p className="flex items-center font-serif text-gray-500">
             <span className="mr-1">
-              <span className=" text-sm mr-2">average rate:</span>
+              <span className=" text-sm mr-2">{t('p35')}:</span>
               <span className="dark:!text-gray-300">{review?.averageRate ? review?.averageRate : 0}</span>
             </span>{" "}
             <AiFillStar className="dark:!text-gray-300"/>

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
+import { ImCancelCircle } from "react-icons/im";
 import { Modal, Spin, Upload } from "antd";
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
 import { getBase64 } from "../../utils/Base64Conventer";
-import { ImCancelCircle } from "react-icons/im";
+
 
 const ProfileImage = ({
   formik,

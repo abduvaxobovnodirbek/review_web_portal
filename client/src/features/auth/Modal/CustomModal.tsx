@@ -1,4 +1,6 @@
 import * as React from "react";
+import { Fade } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -11,7 +13,7 @@ import {
   toggleSocialLoginForm,
 } from "../../../services/ui/modalSlice";
 import logo from "../../../assets/logo/logo_black.png";
-import { Fade } from "@mui/material";
+
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -26,6 +28,7 @@ export default function CustomModal({ children }: childrenProps) {
   const { showModal, showEmailLoginForm, showEmailRegisterForm } =
     useAppSelector((state) => state.authModal);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const handleClose = (): void => {
     dispatch(toggleModal(false));
@@ -62,20 +65,14 @@ export default function CustomModal({ children }: childrenProps) {
             className="flex justify-center  relative top-5"
             sx={{ color: "#03776f" }}
           >
-            <span className="font-serif text-center">
-              {" "}
-              Sign in with email and password
-            </span>
+            <span className="font-serif text-center"> {t("p18")}</span>
           </DialogTitle>
         ) : showEmailRegisterForm ? (
           <DialogTitle
             className="flex justify-center  relative top-5"
             sx={{ color: "#03776f" }}
           >
-            <span className="font-serif text-center">
-              {" "}
-              Register with email and password
-            </span>
+            <span className="font-serif text-center"> {t("p26")}</span>
           </DialogTitle>
         ) : (
           ""

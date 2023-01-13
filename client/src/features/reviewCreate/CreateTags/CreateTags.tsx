@@ -1,9 +1,11 @@
 import { Select } from "antd";
 import type { SelectProps } from "antd";
+import { useTranslation } from "react-i18next";
 import { useGetTagsQuery } from "../../../services/api/review/review";
 
 const CreateTags = ({ formik }: any) => {
   const getTagsFunc = useGetTagsQuery();
+  const { t } = useTranslation();
   const options: SelectProps["options"] =
     getTagsFunc.data?.map((tag) => {
       return { value: tag, label: tag };
@@ -23,7 +25,7 @@ const CreateTags = ({ formik }: any) => {
       >
         {formik.touched.tags && formik.errors.tags
           ? formik.errors.tags
-          : "Tags you defined:"}
+          : t("p66")}
       </label>
       <Select
         mode="tags"

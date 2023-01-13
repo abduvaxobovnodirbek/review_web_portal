@@ -1,5 +1,6 @@
 import { Avatar, CardHeader, Stack } from "@mui/material";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { ReviewDetail } from "../../types/api";
 import ImageCarousel from "../carousel/ImageCarousel";
@@ -17,6 +18,7 @@ import GradeText from "./GradeText";
 import Comments from "../../features/comments/Comments";
 import ReviewCard from "./ReviewCard";
 
+
 const ReviewInfo = ({
   width,
   review,
@@ -29,6 +31,7 @@ const ReviewInfo = ({
   review: ReviewDetail | undefined;
 }) => {
   const navigate = useNavigate();
+  const {t} = useTranslation()
   const { currentUser } = useAppSelector((state) => state.users);
   const [grade, setGrade] = useState<number>(0);
   const [showRate, setShowRate] = useState<boolean>(false);
@@ -111,7 +114,7 @@ const ReviewInfo = ({
       >
         <div>
           <p className="text-gray-600 text-sm font-serif relative top-5 dark:text-gray-300">
-            Review Author grade for{" "}
+           {t('p44')}{" "}
             <b className="ml-1 italic">{review?.reviewed_art}</b>{" "}
           </p>
           <Grade
@@ -162,7 +165,7 @@ const ReviewInfo = ({
       {suggestedReviews && suggestedReviews.length ? (
         <div className="my-3">
           <h3 className="font-serif text-gray-600 text-sm mb-2 dark:!text-gray-300">
-            You may also read review based on category: {review?.category.name}{" "}
+           {t('p46')}: {review?.category.name}{" "}
           </h3>
           {suggestedReviews.map((review: ReviewDetail, i: number) => (
             <ReviewCard

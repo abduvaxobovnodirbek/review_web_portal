@@ -1,4 +1,5 @@
 import { Button, message } from "antd";
+import { useTranslation } from "react-i18next";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { reviewApi } from "../../services/api/review/review";
@@ -16,7 +17,7 @@ const Follow = ({
   const dispatch = useAppDispatch();
 
   const { currentUser, loading } = useAppSelector((state) => state.users);
-
+  const { t } = useTranslation();
   const handleClick = (): void => {
     if (currentUser?._id) {
       dispatch(
@@ -24,7 +25,7 @@ const Follow = ({
       )
         .unwrap()
         .then((data) => {
-          message.success("Success!");
+          message.success(t('p102'));
           refetch();
           dispatch(
             reviewApi.util.invalidateTags([
@@ -33,8 +34,7 @@ const Follow = ({
           );
         })
         .catch((err) => {
-          console.log(err);
-          message.error("Something went wrong try again!");
+          message.error(t('p31'));
         });
     } else {
       dispatch(toggleModal(true));
@@ -49,8 +49,8 @@ const Follow = ({
         disabled={currentUser?._id === undefined}
       >
         {user?.followers?.includes(currentUser?._id || "")
-          ? "Unfollow user"
-          : "Follow user"}
+          ? t("p49")
+          : t("p48")}
       </Button>
     </div>
   );

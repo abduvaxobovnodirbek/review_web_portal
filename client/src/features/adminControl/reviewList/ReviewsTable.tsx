@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { message, Table } from "antd";
 import { useDeleteReviewMutation } from "../../../services/api/review/review";
 import { ReviewDetail } from "../../../types/api";
@@ -6,6 +7,7 @@ import ReviewInfo from "../../../components/review/ReviewInfo";
 import ColumnData from "./TableColumns";
 import { adminControlApi } from "../../../services/api/admin/admin";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
+
 
 const ReviewsTable = ({
   reviews,
@@ -22,8 +24,9 @@ const ReviewsTable = ({
     useDeleteReviewMutation();
 
   const { width } = useWindowSize();
+  const {t} = useTranslation()
   const dispatch = useAppDispatch();
-
+  
   const filterData = (data: ReviewDetail[]) => (formatter: any) =>
     reviews?.map((item) => ({
       text: formatter(item),
@@ -37,9 +40,9 @@ const ReviewsTable = ({
         dispatch(
           adminControlApi.util.invalidateTags([{ type: "Reviews", id: "LIST" }])
         );
-        message.success("Successfully deleted!");
+        message.success(t("p95"));
       })
-      .catch((err) => message.error("Something went wrong try again!"));
+      .catch((err) => message.error(t('p31')));
   };
 
   return (

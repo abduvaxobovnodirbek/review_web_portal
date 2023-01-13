@@ -1,12 +1,14 @@
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { TransitionProps } from "@mui/material/transitions";
+import { Fade } from "@mui/material";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { toggleProfileModal } from "../../services/ui/modalSlice";
-import { Fade } from "@mui/material";
+
 import ProfileForm from "./ProfileForm";
 import { User } from "../../types/api";
 
@@ -19,10 +21,10 @@ const Transition = React.forwardRef(function Transition(
   return <Fade ref={ref} {...props} />;
 });
 
-export default function ProfileModal({user}:{user?:User}) {
+export default function ProfileModal({ user }: { user?: User }) {
   const { showProfileModal } = useAppSelector((state) => state.authModal);
   const dispatch = useAppDispatch();
-
+  const { t } = useTranslation();
   const handleClose = (): void => {
     dispatch(toggleProfileModal(false));
   };
@@ -52,10 +54,10 @@ export default function ProfileModal({user}:{user?:User}) {
           className="relative top-5 w-[100%]"
           sx={{ color: "#03776f" }}
         >
-          <p className="font-serif text-center w-[100%]"> Edit Profile</p>
+          <p className="font-serif text-center w-[100%]"> {t("p74")}</p>
         </DialogTitle>
         <DialogContent className="mt-12">
-          <ProfileForm user = {user}/>
+          <ProfileForm user={user} />
         </DialogContent>
       </Dialog>
     </div>

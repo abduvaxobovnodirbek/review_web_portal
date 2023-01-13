@@ -1,5 +1,6 @@
 import { message } from "antd";
 import { Field, Form, Formik } from "formik";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import Spinner from "../../../components/spinner/Spinner";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
@@ -30,23 +31,24 @@ const CategoryForm = ({
   const [editCategory, { isLoading: editCategoryLoading }] =
     useEditCategoryMutation();
   const dispatch = useAppDispatch();
-
+  const {t} =useTranslation()
+  
   const handleSubmit = (data: FormValues, { resetForm }: any) => {
     if (!currentCategory) {
       createCategory({ name: data.category })
         .unwrap()
         .then((data) => {
-          message.success("Successfully created new category!");
+          message.success(t('p96'));
           resetForm();
         })
         .catch((err) => {
-          message.error("something went wrong try again!");
+          message.error(t('p31'));
         });
     } else {
       editCategory({ name: data.category, _id: currentCategory._id })
         .unwrap()
         .then((data) => {
-          message.success("Successfully edited  category!");
+          message.success(t('p97'));
           resetForm();
           setCategory(undefined);
           dispatch(
@@ -54,7 +56,7 @@ const CategoryForm = ({
           );
         })
         .catch((err) => {
-          message.error("something went wrong try again!");
+          message.error(t('p31'));
         });
     }
   };
@@ -97,8 +99,8 @@ const CategoryForm = ({
                   formik.touched.category && formik.errors.category
                     ? formik.errors.category
                     : currentCategory
-                    ? "Edit category"
-                    : "Add a category"
+                    ? t('p94')
+                    : t('p93')
                 }
               />
             </Form>

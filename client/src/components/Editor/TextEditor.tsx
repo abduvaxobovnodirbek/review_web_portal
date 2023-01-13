@@ -1,9 +1,11 @@
 import { SetStateAction } from "react";
+import { useTranslation } from "react-i18next";
 import parser from "html-react-parser";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 import { setOptions } from "./TextEditorConfig";
 import { textEditorTypes } from "../../types";
+
 
 const TextEditor = ({
   displayMode,
@@ -16,7 +18,7 @@ const TextEditor = ({
       formik.setFieldValue("description", content);
     }
   };
-
+  const { t } = useTranslation();
   const description = createReview ? formik.values.description : review;
   return (
     <>
@@ -31,7 +33,7 @@ const TextEditor = ({
             placeholder={
               formik && formik.errors.description
                 ? formik.errors.description
-                : "type review ..."
+                : t("p64")
             }
             onBlur={() => {
               if (formik) {

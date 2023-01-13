@@ -1,6 +1,7 @@
 import { MdBookmarkRemove } from "react-icons/md";
 import { message, Skeleton } from "antd";
 import Cookies from "universal-cookie";
+import { useTranslation } from "react-i18next";
 import {
   useGetBasketQuery,
   useRemoveFromBasketMutation,
@@ -12,6 +13,7 @@ import Spinner from "../../../components/spinner/Spinner";
 
 const SavedReviews = () => {
   const cookie = new Cookies();
+  const { t } = useTranslation();
   const [removeFromBasket, { isLoading: remove_basket_loading }] =
     useRemoveFromBasketMutation();
 
@@ -25,10 +27,10 @@ const SavedReviews = () => {
       .unwrap()
       .then(() => {
         cookie.set("user_basket", newCookie);
-        message.success("Successfully removed from saved reviews!");
+        message.success(t("p110"));
       })
       .catch((err) => {
-        message.error("Something went wrong!");
+        message.error(t("p31"));
       });
   };
 
@@ -70,7 +72,7 @@ const SavedReviews = () => {
 
           {!data?.length && !get_reviews_loading ? (
             <h3 className="text-center text-xl font-serif text-gray-600 dark:text-white dark:shadow-gray-300 shadow-md p-3">
-              You do not have saved reviews yet
+              {t("p73")}
             </h3>
           ) : (
             ""

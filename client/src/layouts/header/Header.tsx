@@ -2,6 +2,7 @@ import { useState, MouseEvent, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { message } from "antd";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
+import { useTranslation } from "react-i18next";
 import Cookies from "universal-cookie";
 import Avatar from "@mui/material/Avatar";
 import AppBar from "@mui/material/AppBar";
@@ -38,7 +39,7 @@ export default function Header() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const { currentUser } = useAppSelector((state) => state.users);
   const { darkMode } = useAppSelector((state) => state.authModal);
-
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { width } = useWindowSize();
   const navigate = useNavigate();
@@ -59,9 +60,9 @@ export default function Header() {
 
   useEffect(() => {
     if (isSuccess) {
-      message.success("successfully logged out!");
+      message.success(t("p109"));
     } else if (isError) {
-      message.error("something went wrong!");
+      message.error(t('p31'));
     }
   }, [isSuccess, isError]);
 
@@ -208,6 +209,7 @@ export default function Header() {
               user: currentUser as User,
               handleLogout,
               location,
+              t,
             })
           : ""}
       </Box>

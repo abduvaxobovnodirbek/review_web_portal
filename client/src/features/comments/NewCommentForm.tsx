@@ -1,5 +1,6 @@
 import { message } from "antd";
 import { Form, Formik } from "formik";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { socket } from "../../App";
 import AddComment from "../../components/comments/AddComment";
@@ -25,6 +26,7 @@ const NewCommentForm = ({
   };
 
   const dispatch = useAppDispatch();
+  const {t} = useTranslation()
 
   const handleSubmit = async (data: FormValues, { resetForm }: any) => {
     if (currentUser?._id) {
@@ -35,9 +37,9 @@ const NewCommentForm = ({
       });
       await socket.on("send_comment_result", (result: boolean) => {
         if (!result) {
-          return message.error("Something went wrong try again please!");
+          return message.error(t('p31'));
         } else {
-          message.success("you have successfuly commented!");
+          message.success(t('p101'));
           resetForm();
         }
       });

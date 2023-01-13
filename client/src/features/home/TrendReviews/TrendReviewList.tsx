@@ -1,4 +1,5 @@
 import { Skeleton } from "antd";
+import { useTranslation } from "react-i18next";
 import { useGetTrendReviewsQuery } from "../../../services/api/review/trendReviews";
 import { ReviewDetail } from "../../../types/api";
 import TrendReviewCard from "./TrendReviewCard";
@@ -6,6 +7,7 @@ import TrendReviewCard from "./TrendReviewCard";
 const TrendReviewList = () => {
   const trendReviewFunc = useGetTrendReviewsQuery();
   const reviews = trendReviewFunc?.data ?? [];
+  const { t } = useTranslation();
 
   const SkeletonElement = () => (
     <Skeleton loading={trendReviewFunc.isLoading} active className="mb-14" />
@@ -17,7 +19,7 @@ const TrendReviewList = () => {
         style={{ background: "#03776f", color: "white" }}
         className="p-2 font-serif font-bold"
       >
-        Reviews in Trend
+        {t("p36")}
       </h3>
       <SkeletonElement />
       <SkeletonElement />

@@ -1,4 +1,6 @@
+import { SyntheticEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import ShareIcon from "@mui/icons-material/Share";
@@ -15,7 +17,7 @@ import { useInsertToBasketMutation } from "../../../services/api/user/basket";
 import Spinner from "../../../components/spinner/Spinner";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { toggleModal } from "../../../services/ui/modalSlice";
-import { SyntheticEvent } from "react";
+
 
 const ReviewActions = ({ review }: { review: ReviewDetail }) => {
   const [likeReview, { isLoading: like_review_loading }] =
@@ -29,6 +31,7 @@ const ReviewActions = ({ review }: { review: ReviewDetail }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const {t} = useTranslation()
 
   const handleLikeReview = (e: any) => {
     e.stopPropagation();
@@ -36,10 +39,10 @@ const ReviewActions = ({ review }: { review: ReviewDetail }) => {
       likeReview(review._id)
         .unwrap()
         .then(() => {
-          message.success("review like has been updated successfully!");
+          message.success(t("p104"));
           navigate(location.pathname);
         })
-        .catch((err) => message.error("something went wrong try again!"));
+        .catch((err) => message.error(t('p31')));
     } else {
       dispatch(toggleModal(true));
     }
@@ -50,10 +53,10 @@ const ReviewActions = ({ review }: { review: ReviewDetail }) => {
       .unwrap()
       .then(() => {
         cookie.set("user_basket", [...cookie.get("user_basket"), id]);
-        message.success("Successfully inserted to saved reviews!");
+        message.success(t('p105'));
         navigate(location.pathname);
       })
-      .catch((err) => message.error("something went wrong try again!"));
+      .catch((err) => message.error(t('p31')));
   };
 
   return (
@@ -113,7 +116,7 @@ const ReviewActions = ({ review }: { review: ReviewDetail }) => {
 
         <Tooltip title="Share" placement="top" sx={{ color: "black" }}>
           <IconButton aria-label="share">
-            <ShareIcon className="dark:text-white"/>
+            <ShareIcon className="dark:text-white" />
           </IconButton>
         </Tooltip>
 

@@ -2,6 +2,7 @@ import { Star } from "@mui/icons-material";
 import { AlertTitle, Alert } from "@mui/material";
 import { Skeleton } from "antd";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ReviewCard from "../../../components/review/ReviewCard";
 import { useAppSelector } from "../../../hooks/useAppSelector";
@@ -17,6 +18,7 @@ const FollowingReviews = ({
   const getFollowingReviewFunc = useGetFollowingReviewsQuery(page);
   const followingReviews = getFollowingReviewFunc?.data?.data ?? [];
   const { currentUser } = useAppSelector((state) => state.users);
+  const { t } = useTranslation();
 
   const functionNext = () => {
     if (getFollowingReviewFunc.data?.nextPage) {
@@ -59,18 +61,14 @@ const FollowingReviews = ({
           <div className="text-gray-600 font-serif shadow-md flex justify-center flex-col items-center">
             <Star className="text-gray-200" sx={{ fontSize: "100px" }} />
             <div className="text-center">
-              <h3>You are not following any review publishers</h3>
-              <p>
-                Following on review publishers make it easy to find specific
-                reviews, start your journey right now
-              </p>
+              <h3>{t("p40")}</h3>
+              <p>{t("p41")}</p>
             </div>
           </div>
         ) : (
           <Alert severity="info">
             <AlertTitle>Info</AlertTitle>
-            Please login and get your following publishers review —{" "}
-            <strong>check it out!</strong>
+            {t("p39")}
           </Alert>
         )}
       </InfiniteScroll>

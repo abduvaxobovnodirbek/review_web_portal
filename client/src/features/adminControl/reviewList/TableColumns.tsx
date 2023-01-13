@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { useTranslation } from "react-i18next";
 import { Popconfirm } from "antd";
 import ThumbUpRoundedIcon from "@mui/icons-material/ThumbUpRounded";
 import { format } from "date-fns";
@@ -8,6 +9,7 @@ import { MdDelete } from "react-icons/md";
 import { AiFillEdit, AiFillStar } from "react-icons/ai";
 import { ColumnProps } from "../../../types";
 
+
 const ColumnData = ({
   handleDelete,
   setShowEditForm,
@@ -15,9 +17,11 @@ const ColumnData = ({
   filterData,
   reviews,
 }: ColumnProps) => {
+  const { t } = useTranslation();
+
   const columns: ColumnsType<ReviewDetail> = [
     {
-      title: "Reviewed Art",
+      title: t("p65"),
       width: 100,
       dataIndex: "reviewed_art",
       key: "1",
@@ -31,7 +35,7 @@ const ColumnData = ({
         record.reviewed_art.startsWith(value as string),
     },
     {
-      title: "Review Name",
+      title: t("p79"),
       width: 100,
       dataIndex: "review_name",
       key: "2",
@@ -46,7 +50,7 @@ const ColumnData = ({
     },
 
     {
-      title: "Category",
+      title: t("p67"),
       dataIndex: "category",
       key: "3",
       width: 100,
@@ -63,7 +67,7 @@ const ColumnData = ({
         record.category.name.startsWith(value as string),
     },
     {
-      title: "Author Grade",
+      title: t("p68"),
       dataIndex: "authorGrade",
       key: "4",
       width: 60,
@@ -79,7 +83,7 @@ const ColumnData = ({
       },
     },
     {
-      title: "Likes",
+      title: t("p80"),
       dataIndex: "likes",
       key: "5",
       width: 60,
@@ -95,7 +99,7 @@ const ColumnData = ({
       sorter: (a, b) => a.likeCount - b.likeCount,
     },
     {
-      title: "Created date",
+      title: t("p81"),
       dataIndex: "createdAt",
       key: "6",
       width: 100,
@@ -110,7 +114,7 @@ const ColumnData = ({
         new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
     },
     {
-      title: "Action",
+      title: t("p82"),
       key: "operation",
       fixed: "right",
       width: 50,
@@ -126,7 +130,7 @@ const ColumnData = ({
               }}
             />
             <Popconfirm
-              title="Sure to delete?"
+              title={t("p84") || ""}
               onConfirm={() => handleDelete(record._id || "")}
             >
               <MdDelete className="text-lg cursor-pointer text-red-600 ml-2" />

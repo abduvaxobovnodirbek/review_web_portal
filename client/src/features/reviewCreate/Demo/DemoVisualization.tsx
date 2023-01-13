@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { Skeleton } from "antd";
+import { useTranslation } from "react-i18next";
 import { Avatar, Button, CardHeader, Stack } from "@mui/material";
 import { format } from "date-fns";
 import { useLocation } from "react-router-dom";
@@ -30,6 +31,7 @@ const DemoVisualization = ({
   });
 
   const location = useLocation();
+  const { t } = useTranslation();
 
   return (
     <div>
@@ -37,7 +39,7 @@ const DemoVisualization = ({
         className="font-serif tracking-wider ml-3 p-3 text-white"
         style={{ background: "#03776f" }}
       >
-        Demo visualization
+        {t("p70")}
       </header>
 
       <CardHeader
@@ -50,7 +52,7 @@ const DemoVisualization = ({
             )}
           </Avatar>
         }
-        title={review?.user.name|| currentUser?.name}
+        title={review?.user.name || currentUser?.name}
         subheader={format(new Date(Date.now()), "MMM do. yyyy")}
       />
 
@@ -97,9 +99,7 @@ const DemoVisualization = ({
           type="submit"
           disabled={!formik.isValid}
         >
-          {location.pathname === "/review-create"
-            ? "Publish review"
-            : "Edit review"}
+          {location.pathname === "/review-create" ? t("p71") : t("p72")}
         </Button>
       </div>
     </div>
